@@ -5,11 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
+<<<<<<< HEAD
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}"
+=======
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-CrunchServerApplication<crunch_server>",
+            "request": "launch",
+            "mainClass": "com.crunch.crunch_server.CrunchServerApplication",
+            "projectName": "crunch_server"
+>>>>>>> 35425ab68c7bed8d872c76bccaa3bff70a481df5
         }
     ]
 }
