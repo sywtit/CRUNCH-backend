@@ -13,27 +13,29 @@ ssh -i "crunch.pem" ubuntu@ec2-3-35-136-163.ap-northeast-2.compute.amazonaws.com
 mysql -u admin -p -h db-crunch.cbyzchmu8dpf.ap-northeast-2.rds.amazonaws.com
 ```
 2. 비밀번호를 친다
+
 * * *
 ### ec2구성
 
-> home
->> ubuntu
->>> usr
->>>> git
->>>>> HAISHEN-project
->>>>>> backend
->>>>>>> crunch_server
->>>>>>>> gradlew
->>>>>>>> build
->>>>>>>> nohup.out
->>>>>>> crunch_server*.jar
->>>>> deploy.sh
->>>>>> docs
->>>>>> frontend
->>>>>> node_modules
->>>>>> package-lock.json
->>>>>> README.md
->>> tmp(임시파일)
+home
+ ubuntu
+  usr
+   git
+    HAISHEN-project
+     backend
+      crunch_server
+       gradlew
+       build
+       nohup.out
+      crunch_server*.jar
+    deploy.sh
+     docs
+     frontend
+     node_modules
+     package-lock.json
+     README.md
+   tmp(임시파일)
+   
 * * *
 ### rds instance << local: mysql database 'crunch' import
 
@@ -67,7 +69,7 @@ show tables;
 * * *
 ## springboot(gradle)-ec2배포
 
-###환경 조성
+### 환경 조성
 
 1. jdk 설치
 ```
@@ -106,7 +108,7 @@ source /etc/profile
 echo $JAVA_HOME
 $JAVA_HOME/bin/javac -version
 ```
-###git clone && git remote add(언제든 pull할 수 있는 환경 조성)
+### git clone && git remote add(언제든 pull할 수 있는 환경 조성)
 
 ```
 cd ~/usr/git
@@ -119,9 +121,9 @@ git pull
 
 ls -al
 ```
-###project test,build,run
+### project test,build,run
 
-####deploy script 생성
+#### deploy script 생성
 
 vim ~/usr/git/deploy.sh
 1. REPOSITORY 에 build directory 주소 저장
@@ -133,19 +135,19 @@ vim ~/usr/git/deploy.sh
 7. 복사했던 build 파일명 저장
 8. 복사했던 build 파일 실행
 
-####deploy script 실행
+#### deploy script 실행
 
 ```
 chomod 755 ./deploy.sh
 ./deploy.sh
 ps -ef|grep crunch_server
 ```
-####실행로그 확인
+#### 실행로그 확인
 ```
 tail -f /home/ubuntu/usr/git/HAISHEN-project/backend/crunch_server/nohup.out
 ```
 * * *
-##외부 서비스로 배포
+## 외부 서비스로 배포
 ubuntu@ec2-3-35-136-163.ap-northeast-2.compute.amazonaws.com:3000
 
 * 인바운드 편집 필요
