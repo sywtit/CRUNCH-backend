@@ -1,4 +1,4 @@
-package com.crunch.crunch_server.model;
+package com.crunch.crunch_server.domain.User;
 
 public class UserVO {
     
