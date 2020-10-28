@@ -21,7 +21,7 @@ home
  ubuntu
   usr
    git
-    HAISHEN-project
+    CRUNCH-backend
      backend
       crunch_server
        gradlew
@@ -30,8 +30,6 @@ home
       crunch_server*.jar
     deploy.sh
      docs
-     frontend
-     node_modules
      package-lock.json
      README.md
    tmp(임시파일)
@@ -112,11 +110,11 @@ $JAVA_HOME/bin/javac -version
 
 ```
 cd ~/usr/git
-git clone https://github.com/HAISHEN-CapstonDesign/HAISHEN-project.git
+git clone https://github.com/HAISHEN-CapstonDesign/CRUNCH-backend.git
 
 cd HAISHEN-project
 git init
-git remote add origin https://github.com/HAISHEN-CapstonDesign/HAISHEN-project.git
+git remote add origin https://github.com/HAISHEN-CapstonDesign/CRUNCH-backend.git
 git pull
 
 ls -al
@@ -144,7 +142,7 @@ ps -ef|grep crunch_server
 ```
 #### 실행로그 확인
 ```
-tail -f /home/ubuntu/usr/git/HAISHEN-project/backend/crunch_server/nohup.out
+tail -f /home/ubuntu/usr/git/CRUNCH-backend/backend/crunch_server/nohup.out
 ```
 * * *
 ## 외부 서비스로 배포
