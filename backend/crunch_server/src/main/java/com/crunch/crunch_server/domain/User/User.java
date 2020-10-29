@@ -1,15 +1,32 @@
 package com.crunch.crunch_server.domain.User;
 
-public class UserVO {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name="user")
+public class User {
     
+    @Id
+    @GeneratedValue
+    private int id;
     private String identity;
     private String password;
     private String name;
     private String nickname;
     private String gender;
-    private String picture;
+    private byte[] picture;
     private String record;
-    private String point;
+    private int point;
 
     
     /**
@@ -85,14 +102,14 @@ public class UserVO {
     /**
      * @return String return the picture
      */
-    public String getPicture() {
+    public byte[] getPicture() {
         return picture;
     }
 
     /**
      * @param picture the picture to set
      */
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
     }
 
@@ -113,15 +130,19 @@ public class UserVO {
     /**
      * @return String return the point
      */
-    public String getPoint() {
+    public int getPoint() {
         return point;
     }
 
     /**
      * @param point the point to set
      */
-    public void setPoint(String point) {
+    public void setPoint(int point) {
         this.point = point;
     }
+
+	public Integer getId() {
+		return id;
+	}
 
 }
