@@ -19,13 +19,17 @@ public class UserService{
     private UserMapper userMapper;
 
 
+    // //post
+    // public User saveUser(UserDTO userDTO)
+    // {
+    //     User user = userMapper.userDtoToEntity(userDTO);
+    //     return repository.save(user);
+    // }
     //post
-    public User saveUser(UserDTO userDTO)
+    public User saveUser(User user)
     {
-        User user = userMapper.userDtoToEntity(userDTO);
         return repository.save(user);
     }
-
     // //post user list
     // public List<User> saveUsers(List<User> users)
     // {
