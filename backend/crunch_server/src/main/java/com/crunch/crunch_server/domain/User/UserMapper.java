@@ -25,9 +25,9 @@ public interface UserMapper {
     
     //User : id,picture,point exception
     //with no password encoding
-    @Mapping(target = "id", constant = "0L")
+    @Mapping(target = "id", constant = "0")
     @Mapping(target =  "picture", defaultValue = "")
-    @Mapping(target = "point", constant = "0L")
+    @Mapping(target = "point", constant = "0")
     User userDtoToEntity(UserDTO userDTO);
 
 
