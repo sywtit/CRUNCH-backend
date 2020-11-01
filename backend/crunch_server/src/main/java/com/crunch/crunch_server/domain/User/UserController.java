@@ -23,16 +23,16 @@ public class UserController {
     ///user/account/signup
     @PostMapping("/user/account/signup")
     @ResponseStatus(value=HttpStatus.OK)
-    public User addUser(@RequestBody User user)
+    public User addUser(@RequestBody UserDTO userDTO)
     {
-        return service.saveUser(user);
+        return service.saveUser(userDTO);
     }
 
-    //have to delete later this is just for developer to check
-    public List<User> addUsers(@RequestBody List<User> users)
-    {
-        return service.saveUsers(users);
-    }
+    // //have to delete later this is just for developer to check
+    // public List<User> addUsers(@RequestBody List<User> users)
+    // {
+    //     return service.saveUsers(users);
+    // }
 
     ///users/{userId}/mypage
     @GetMapping("/user/{userId}/mypage")

@@ -2,27 +2,35 @@ package com.crunch.crunch_server.domain.User;
 
 import com.crunch.crunch_server.domain.User.UserRepository;
 
+import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 @Service
-public class UserService {
+public class UserService{
+
     @Autowired
     private UserRepository repository;
+    private UserMapper userMapper;
+
 
     //post
-    public User saveUser(User user)
+    public User saveUser(UserDTO userDTO)
     {
+        User user = userMapper.userDtoToEntity(userDTO);
         return repository.save(user);
     }
 
-    //post user list
-    public List<User> saveUsers(List<User> users)
-    {
-        return repository.saveAll(users);
-    }
+    // //post user list
+    // public List<User> saveUsers(List<User> users)
+    // {
+    //     return repository.saveAll(users);
+    // }
 
     //get all
     public List<User> getUsers()
