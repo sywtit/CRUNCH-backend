@@ -16,20 +16,20 @@ import lombok.Value;
 @Mapper
 public interface UserMapper {
 
-    //input stream to get png location
-    //public static String DEFAULT_USER_IMAGE = "../../../../../../../resources/static/img/default-user.jpg";
-    // InputStream is = new BufferedInputStream(
-    //     new FileInputStream(new ClassPathResource("img/default-user.png")));
+    // //input stream to get png location
+    // //public static String DEFAULT_USER_IMAGE = "../../../../../../../resources/static/img/default-user.jpg";
+    // // InputStream is = new BufferedInputStream(
+    // //     new FileInputStream(new ClassPathResource("img/default-user.png")));
     
-    UserMapper Instance = Mappers.getMapper(UserMapper.class);
+    // UserMapper Instance = Mappers.getMapper(UserMapper.class);
     
-    //User : id,picture,point exception
-    //with no password encoding
-    @Mapping(target = "id", constant = "0")
-    @Mapping(target =  "picture", defaultValue = "")
-    @Mapping(target = "point", constant = "0")
-    User userDtoToEntity(UserDTO userDTO);
+    // //User : id,picture,point exception
+    // //with no password encoding
+    // @Mapping(target = "id", constant = "0")
+    // @Mapping(target = "picture", defaultValue = "")
+    // @Mapping(target = "point", constant = "0")
+    // User userDtoToEntity(UserDTO userDTO);
 
 
-    UserDTO userToDto(User user);
+    // UserDTO userToDto(User user);
 }

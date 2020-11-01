@@ -20,12 +20,20 @@ public class UserController {
     @Autowired
     private UserService service;
 
+    // ///user/account/signup
+    // @PostMapping("/user/account/signup")
+    // @ResponseStatus(value=HttpStatus.OK)
+    // public User addUser(@RequestBody UserDTO userDTO)
+    // {
+    //     return service.saveUser(userDTO);
+    // }
+
     ///user/account/signup
     @PostMapping("/user/account/signup")
     @ResponseStatus(value=HttpStatus.OK)
-    public User addUser(@RequestBody UserDTO userDTO)
+    public User addUser(@RequestBody User user)
     {
-        return service.saveUser(userDTO);
+        return service.saveUser(user);
     }
 
     // //have to delete later this is just for developer to check
