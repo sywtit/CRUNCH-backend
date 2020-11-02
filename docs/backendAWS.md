@@ -32,6 +32,9 @@ home
      docs
      package-lock.json
      README.md
+   git-frontend
+    HAISHEN-project
+    deploy.sh
    tmp(임시파일)
    
 * * *
@@ -146,13 +149,13 @@ tail -f /home/ubuntu/usr/git/CRUNCH-backend/backend/crunch_server/nohup.out
 ```
 * * *
 ## 외부 서비스로 배포
-ubuntu@ec2-3-35-136-163.ap-northeast-2.compute.amazonaws.com:3000
+3.35.136.163:3000
 
-* 인바운드 편집 필요
+* 인바운드 편집 필요 -> 완료
 * pm2 예정
 <https://artiiicy.tistory.com/12>
 <https://javaexpert.tistory.com/957>
-* hibernate 적용 필요
+* hibernate 적용 필요 -> 완료
 <https://osc131.tistory.com/117>
 
 * 참고자료
