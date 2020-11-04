@@ -1,6 +1,4 @@
-package com.crunch.crunch_server.domain.User;
-
-import com.crunch.crunch_server.domain.User.UserRepository;
+package com.crunch.crunch_server.domain.user.service;
 
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,27 +7,28 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import com.crunch.crunch_server.domain.user.dto.UserDTO;
+import com.crunch.crunch_server.domain.user.entity.User;
+import com.crunch.crunch_server.domain.user.mapper.UserMapper;
+import com.crunch.crunch_server.domain.user.respository.UserRepository;
+
 @Service
-public class UserService{
+public class UserService {
 
     @Autowired
     private UserRepository repository;
     private UserMapper userMapper;
 
-
-    // //post
-    // public User saveUser(UserDTO userDTO)
-    // {
-    //     User user = userMapper.userDtoToEntity(userDTO);
-    //     return repository.save(user);
-    // }
     //post
-    public User saveUser(User user)
+    public User saveUser(UserDTO userDTO)
     {
+        User user = UserMapper.Instance.toEntity(userDTO);
         return repository.save(user);
     }
+    
     // //post user list
     // public List<User> saveUsers(List<User> users)
     // {
@@ -69,4 +68,5 @@ public class UserService{
         existingUser.setName(user.getName());
         return repository.save(existingUser);
     }
+    
 }
