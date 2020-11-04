@@ -1,11 +1,17 @@
-package com.crunch.crunch_server.domain.User;
+package com.crunch.crunch_server.domain.user.controller;
 
-import java.util.List;
+import com.crunch.crunch_server.domain.user.dto.UserDTO;
+
+//#region importThings
+
+import com.crunch.crunch_server.domain.user.entity.User;
+import com.crunch.crunch_server.domain.user.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+//#endregion importThings
 
 @RestController
 @RequestMapping("/api")
@@ -22,20 +29,12 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    // ///user/account/signup
-    // @PostMapping("/user/account/signup")
-    // @ResponseStatus(value=HttpStatus.OK)
-    // public User addUser(@RequestBody UserDTO userDTO)
-    // {
-    //     return service.saveUser(userDTO);
-    // }
-
     ///user/account/signup
     @PostMapping("/user/account/signup")
     @ResponseStatus(value=HttpStatus.OK)
-    public User addUser(@RequestBody User user)
+    public User addUser(@RequestBody UserDTO userDTO)
     {
-        return service.saveUser(user);
+        return service.saveUser(userDTO);
     }
 
     // //have to delete later this is just for developer to check
@@ -44,25 +43,25 @@ public class UserController {
     //     return service.saveUsers(users);
     // }
 
-    ///users/{userId}/mypage
-    @GetMapping("/user/{userId}/mypage")
-    public User findUserById(@PathVariable int id)
-    {
-        return service.getUserById(id);
-    }
+    // ///users/{userId}/mypage
+    // @GetMapping("/user/{userId}/mypage")
+    // public User findUserById(@PathVariable int id)
+    // {
+    //     return service.getUserById(id);
+    // }
 
-    ///users/{userId}/mypage/update
-    @PutMapping("/{userId}/mypage/update")
-    public User updateUserInfo(@RequestBody User user)
-    {
-        return service.updateUser(user);
-    }
+    // ///users/{userId}/mypage/update
+    // @PutMapping("/{userId}/mypage/update")
+    // public User updateUserInfo(@RequestBody User user)
+    // {
+    //     return service.updateUser(user);
+    // }
 
-    ///users/{userId}/mypage
-    @DeleteMapping("/{userId}/mypage")
-    public String deleteUserById(@PathVariable int id)
-    {
-        return service.deleteUser(id);
-    }
+    // ///users/{userId}/mypage
+    // @DeleteMapping("/{userId}/mypage")
+    // public String deleteUserById(@PathVariable int id)
+    // {
+    //     return service.deleteUser(id);
+    // }
 
 }

@@ -1,4 +1,4 @@
-package com.crunch.crunch_server.domain.User;
+package com.crunch.crunch_server.domain.user.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,11 +24,28 @@ public class User {
     private String name;
     private String nickname;
     private String gender;
-    private byte[] picture;
+    private String picture;
     private String record;
     private int point;
+    private String salt;
 
     
+
+
+    /**
+     * @return int return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
     /**
      * @return String return the identity
      */
@@ -102,14 +119,14 @@ public class User {
     /**
      * @return String return the picture
      */
-    public byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
 
     /**
      * @param picture the picture to set
      */
-    public void setPicture(byte[] picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
@@ -128,7 +145,7 @@ public class User {
     }
 
     /**
-     * @return String return the point
+     * @return int return the point
      */
     public int getPoint() {
         return point;
@@ -141,8 +158,18 @@ public class User {
         this.point = point;
     }
 
-	public Integer getId() {
-		return id;
-	}
+    /**
+     * @return String return the salt
+     */
+    public String getSalt() {
+        return salt;
+    }
+
+    /**
+     * @param salt the salt to set
+     */
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
 }

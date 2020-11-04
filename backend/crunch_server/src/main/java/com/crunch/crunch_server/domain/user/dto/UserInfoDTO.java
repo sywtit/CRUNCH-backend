@@ -1,4 +1,4 @@
-package com.crunch.crunch_server.domain.User;
+package com.crunch.crunch_server.domain.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
