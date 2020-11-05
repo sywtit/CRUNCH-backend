@@ -1,15 +1,29 @@
 package com.crunch.crunch_server.configuration;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.crunch.crunch_server.util.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import lombok.RequiredArgsConstructor;
+
+@Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityJavaConfig extends WebSecurityConfigurerAdapter
 {
     @Value("{jwt.secret}")
@@ -27,28 +41,34 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http)throws Exception{
         http.authorizeRequests()
-                .antMatchers("/").anonymous()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/myinfo").hasRole("MEMBER")
-                .antMatchers("/project/work").hasRole("MEMBER")
-                .antMatchers("/**").permitAll();
-                // .and()
-                // // login configuration
-                // .formLogin()
-                //     .loginPage("/user/login")
-                //     .failureUrl("/user/login?error=1")
-                //     .defaultSuccessUrl("/", false)
-                // .and()
-                // // log out configuration
-                // .logout()
-                //     .logoutUrl("/logout")
-                //     .logoutSuccessUrl("/")
-                //     .invalidateHttpSession(true)
-                //     .deleteCookies("JSESSIONID")
-                //     .clearAuthentication(true)
-                //     .permitAll();
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/user/myinfo").hasRole("MEMBER")
+                .antMatchers("/api/project/work").hasRole("MEMBER")
+                .antMatchers(HttpMethod.POST, "/api/user/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
+                .anyRequest().permitAll();
+        http.cors();
+        http.csrf().disable();
+        http.headers().frameOptions().disable()
+        .and()
+            .exceptionHandling()
+                .authenticationEntryPoint((req,rsp,e)-> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+        http.formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/api/user/acccount/auth")
+                .failureUrl("/user/login?result=fail")
+                .defaultSuccessUrl("/",true)
+                .usernameParameter("identity")
+                .passwordParameter("password");
+        http.logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .clearAuthentication(true);
+       
     }
-
+    
     @Override
     public void configure(WebSecurity web) throws Exception
     {
@@ -61,4 +81,31 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter
     {
         return new JwtUtil(secret);
     }
+
+    // @Override
+    // protected void configure(HttpSecurity http) throws Exception {
+    //     // 인터셉터로 요청을 안전하게 보호하는 방법을 설정하기 위한 오버라이딩이다.
+    //     super.configure(http); // 모든 url 막고있음
+    // }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // 사용자 세부 서비스를 설정하기 위한 오버라이딩이다.
+        super.configure(auth);
+    }
+
+    // @Bean
+    // public CorsConfigurationSource corsConfigurationSource() {
+    //     CorsConfiguration configuration = new CorsConfiguration();
+
+    //     configuration.addAllowedOrigin("http://localhost:3000");
+    //     configuration.addAllowedHeader("*");
+    //     configuration.addAllowedMethod("*");
+    //     configuration.setAllowCredentials(true);
+
+    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //     source.registerCorsConfiguration("/**", configuration);
+    //     return source;
+    // }
+
 }

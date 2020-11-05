@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @SpringBootApplication
 public class CrunchServerApplication {
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(CrunchServerApplication.class, args);
 
