@@ -29,6 +29,7 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter
     @Value("{jwt.secret}")
     private String secret;
 
+
     private final String[] PERMITTED_URL = {
         "","/","/api/user/account/signup", "/api/user/account/auth",
         "/project/search/**","/user","/user/**","/api/**","/login"
