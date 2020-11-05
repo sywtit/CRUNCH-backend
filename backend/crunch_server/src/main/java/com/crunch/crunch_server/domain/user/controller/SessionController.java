@@ -4,12 +4,14 @@ package com.crunch.crunch_server.domain.user.controller;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import com.crunch.crunch_server.domain.user.Role;
 import com.crunch.crunch_server.domain.user.dto.SessionRequestDTO;
 import com.crunch.crunch_server.domain.user.dto.SessionResponseDTO;
 import com.crunch.crunch_server.domain.user.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +40,7 @@ public class SessionController {
 
         return ResponseEntity.created(new URI("/user/account/auth")).body(SessionResponseDTO
             .builder()
+            .role(Role.MEMBER)
             .accessToken(token)
             .build());
     }
