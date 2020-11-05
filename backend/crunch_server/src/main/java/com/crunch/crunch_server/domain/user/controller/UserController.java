@@ -1,6 +1,7 @@
 package com.crunch.crunch_server.domain.user.controller;
 
 import com.crunch.crunch_server.domain.user.dto.UserDTO;
+import com.crunch.crunch_server.domain.user.dto.SessionRequestDTO;
 
 //#region importThings
 
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 //#endregion importThings
 
@@ -37,6 +40,8 @@ public class UserController {
         return service.saveUser(userDTO);
     }
 
+
+    
     // //have to delete later this is just for developer to check
     // public List<User> addUsers(@RequestBody List<User> users)
     // {

@@ -1,4 +1,4 @@
-package com.crunch.crunch_server.domain.user;
+package com.crunch.crunch_server.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

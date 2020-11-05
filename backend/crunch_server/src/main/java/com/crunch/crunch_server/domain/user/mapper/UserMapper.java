@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 
-import com.crunch.crunch_server.domain.user.EncryptionUtil;
 import com.crunch.crunch_server.domain.user.dto.UserDTO;
 import com.crunch.crunch_server.domain.user.entity.User;
 
