@@ -2,9 +2,9 @@ package com.crunch.crunch_server.domain.user.mapper;
 
 import javax.annotation.Generated;
 
-import com.crunch.crunch_server.domain.user.EncryptionUtil;
 import com.crunch.crunch_server.domain.user.dto.UserDTO;
 import com.crunch.crunch_server.domain.user.entity.User;
+import com.crunch.crunch_server.util.EncryptionUtil;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor"
@@ -21,7 +21,7 @@ public class UserMapperImpl implements UserMapper{
         user.setName(userDTO.getName());
         user.setNickname(userDTO.getNickname());
         user.setGender(userDTO.getGender());
-        
+
         user.setSalt(salt);
         user.setPassword(EncryptionUtil.getEncrypt(userDTO.getPassword(), salt.getBytes()));
         return user;
