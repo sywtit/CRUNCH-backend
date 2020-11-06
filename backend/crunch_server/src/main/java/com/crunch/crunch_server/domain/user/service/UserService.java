@@ -24,6 +24,8 @@ public class UserService {
     @Autowired
     private UserRepository repository;
     private UserMapper userMapper;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
     //post

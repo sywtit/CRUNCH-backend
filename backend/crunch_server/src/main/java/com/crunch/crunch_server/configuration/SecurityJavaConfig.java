@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityJavaConfig extends WebSecurityConfigurerAdapter
 {
-    @Value("{jwt.secret}")
+    @Value("${jwt.secret}")
     private String secret;
 
 
