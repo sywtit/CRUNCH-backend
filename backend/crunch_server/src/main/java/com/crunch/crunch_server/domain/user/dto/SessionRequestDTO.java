@@ -1,10 +1,12 @@
 package com.crunch.crunch_server.domain.user.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
-@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class SessionRequestDTO {
 
     private String identity;

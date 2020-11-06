@@ -26,8 +26,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityJavaConfig extends WebSecurityConfigurerAdapter
 {
-    @Value("{jwt.secret}")
+    @Value("${jwt.secret}")
     private String secret;
+
 
     private final String[] PERMITTED_URL = {
         "","/","/api/user/account/signup", "/api/user/account/auth",
