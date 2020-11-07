@@ -21,5 +21,5 @@ public class ProjectDTO {
     private int target_funding_money;
     private String target_d_day;
 
-    public void 
+    
 }
