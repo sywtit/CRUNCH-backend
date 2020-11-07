@@ -33,6 +33,7 @@ public class SessionController {
         try
         {
             token = service.createToken(sessionRequestDTO);
+            
         }catch(Exception e)
         {
             e.printStackTrace();
