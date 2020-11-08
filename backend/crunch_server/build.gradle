@@ -62,6 +62,9 @@ dependencies {
 	runtime 'io.jsonwebtoken:jjwt-impl:0.10.7'
 	runtime 'io.jsonwebtoken:jjwt-jackson:0.10.7'
 
+	//diffs
+	implementation "io.github.java-diff-utils:java-diff-utils:4.5"
+
 	compile('org.springframework.boot:spring-boot-starter-web')
     compile 'org.springframework.boot:spring-boot-starter-jdbc'
 

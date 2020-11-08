@@ -4,8 +4,10 @@ package com.crunch.crunch_server.domain.project.controller;
 import com.crunch.crunch_server.domain.project.dto.*;
 
 import com.crunch.crunch_server.domain.project.entity.*;
-import com.crunch.crunch_server.domain.uprojectser.service.*;
+import com.crunch.crunch_server.domain.project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 // Restcontroller는 json 형태로 객체 데이터를 반환 
@@ -14,8 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RequestMapping("/api")
 public class ProjectController{
 
-    @Autowired
-    private ProjectService service;
+    //@Autowired
+    //private ProjectService service;
 
 
 
