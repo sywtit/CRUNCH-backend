@@ -25,6 +25,7 @@ public class SessionController {
     private UserService service;
 
     //login
+    @CrossOrigin(origins="*")
     @PostMapping("/user/account/auth")
     public ResponseEntity<SessionResponseDTO> loginUser(@RequestBody SessionRequestDTO sessionRequestDTO) throws URISyntaxException
     {
