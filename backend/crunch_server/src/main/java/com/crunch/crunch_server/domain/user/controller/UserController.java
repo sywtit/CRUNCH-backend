@@ -34,6 +34,7 @@ public class UserController {
     private UserService service;
 
     ///user/account/signup
+    @CrossOrigin(origins="*")
     @PostMapping("/user/account/signup")
     @ResponseStatus(value=HttpStatus.OK)
     public User addUser(@RequestBody UserDTO userDTO)
