@@ -50,7 +50,7 @@ public class JwtUtil {
     }
 
     //find authentication info with JWT token
-    public Authentication getAutehntication(String token)
+    public Authentication getAuthentication(String token)
     {
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
@@ -59,13 +59,15 @@ public class JwtUtil {
     //get userinfo from the token
     public String getUserPk(String token)
     {
+        System.out.println(Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject());
         return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
     }
 
     //get token value from the request header
     public String resolveToken(HttpServletRequest request)
     {
-        return request.getHeader("X-AUTH-TOKEN");
+       // return request.getHeader("X-AUTH-TOKEN");
+       return request.getHeader("token");
     }
 
     // public boolean validateToken(String jwtToken)
