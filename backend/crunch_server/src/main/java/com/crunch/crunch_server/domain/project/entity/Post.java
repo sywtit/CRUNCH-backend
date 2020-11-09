@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -16,22 +15,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Getter
-@Table(name="project")
-public class Project {
+@Table(name="post")
+public class Post {
     
     @Id
     @GeneratedValue
-    private String title;
-    private String introduction;
-    private int process;
-    private int mwn;
-    private String state;
-    private double rating;
-    private String genre;
-    private int freeornot;
-    private String complete_time;
-    private int target_funding_money;
-    private String target_d_day;
+    private int id;
+    private int index_id;
+    private int project_id;
+    private String complete_post;
     
 
 }
