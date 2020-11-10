@@ -4,12 +4,10 @@ import com.crunch.crunch_server.util.JwtInterceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer{
     
     private final String[] EXCLUDE_PATHS = {
@@ -28,7 +26,7 @@ public class WebConfig implements WebMvcConfigurer{
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(jwtInterceptor)
-						.addPathPatterns("/**")
+						.addPathPatterns("/api/**")
 						.excludePathPatterns(EXCLUDE_PATHS);
     }
 }
