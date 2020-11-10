@@ -16,8 +16,6 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class UserInfoDTO implements Serializable{
 
-    private String identity;
-    private String password;
     private String name;
     private String nickname;
     private String gender;
@@ -25,33 +23,7 @@ public class UserInfoDTO implements Serializable{
     private String record;
     private int point;
 
-    /**
-     * @return String return the identity
-     */
-    public String getIdentity() {
-        return identity;
-    }
 
-    /**
-     * @param identity the identity to set
-     */
-    public void setIdentity(String identity) {
-        this.identity = identity;
-    }
-
-    /**
-     * @return String return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     /**
      * @return String return the name

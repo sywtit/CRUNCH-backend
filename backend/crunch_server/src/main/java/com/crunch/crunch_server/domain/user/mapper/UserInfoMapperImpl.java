@@ -18,10 +18,8 @@ public class UserInfoMapperImpl implements UserInfoMapper{
         UserInfoDTO userInfoDTO = new UserInfoDTO();
 
         userInfoDTO.setGender(user.getGender());
-        userInfoDTO.setIdentity(user.getIdentity());
         userInfoDTO.setName(user.getName());
         userInfoDTO.setNickname(user.getNickname());
-        userInfoDTO.setPassword(user.getPassword());
         userInfoDTO.setPoint(user.getPoint());
         userInfoDTO.setRecord(user.getRecord());
         userInfoDTO.setS3key(user.getS3key());
