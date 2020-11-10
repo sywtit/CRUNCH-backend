@@ -19,15 +19,14 @@ public class RecentCommitDTO {
     @Id
     @GeneratedValue
     private int id;
-    private int post_id;
-    private int user_id;
+    private int postId;
+    private int userId;
     private String commit_comment;
     private Date time;
     private String s3key;
     private String post;
 
     
-
     /**
      * @return int return the id
      */
@@ -43,31 +42,31 @@ public class RecentCommitDTO {
     }
 
     /**
-     * @return int return the post_id
+     * @return int return the postId
      */
-    public int getPost_id() {
-        return post_id;
+    public int getPostId() {
+        return postId;
     }
 
     /**
-     * @param post_id the post_id to set
+     * @param postId the postId to set
      */
-    public void setPost_id(int post_id) {
-        this.post_id = post_id;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 
     /**
-     * @return int return the user_id
+     * @return int return the userId
      */
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
     /**
-     * @param user_id the user_id to set
+     * @param userId the userId to set
      */
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     /**
@@ -125,5 +124,5 @@ public class RecentCommitDTO {
     public void setPost(String post) {
         this.post = post;
     }
-    
+
 }

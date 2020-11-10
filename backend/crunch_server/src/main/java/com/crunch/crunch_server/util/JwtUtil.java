@@ -56,27 +56,31 @@ public class JwtUtil {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    //get userinfo from the token
+    //get user Identity from the token
     public String getUserPk(String token)
     {
-        System.out.println(Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject());
         return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    //get user Identity from the token
+    public String getUserIdentity(String token)
+    {
+        return (String) Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().get("Identity");
     }
 
     //get token value from the request header
     public String resolveToken(HttpServletRequest request)
     {
-       // return request.getHeader("X-AUTH-TOKEN");
        return request.getHeader("token");
     }
 
-    // public boolean validateToken(String jwtToken)
-    // {
-    //     try {
-    //         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
-    //         return !claims.getBody().getExpiration().before(new Date());
-    //     } catch (Exception e) {
-    //         return false;
-    //     }
-    // }
+    public boolean validateToken(String jwtToken)
+    {
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(key).parseClaimsJws(jwtToken);
+            return !claims.getBody().getExpiration().before(new Date());
+        } catch (Exception e) {
+            throw new UnauthorizedException();
+        }
+    }
 }

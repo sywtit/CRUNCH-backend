@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
     
-    @Query("select * from post where project_id= :projectId and index_id= :indexId")
-    Integer findByProject_IdAndIndex_Id(@Param("projectId") Integer projectId, @Param("indexId") Integer indexId);
+   // @Query("select * from post where project_id= :projectId and index_id= :indexId")
+    Post findByProjectIdAndIndexId(@Param("projectId") Integer projectId, @Param("indexId") Integer indexId);
 }

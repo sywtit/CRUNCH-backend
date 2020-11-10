@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PostDTO {
     
-    private int index_id;
-    private int project_id;
+    private int indexId;
+    private int projectId;
     private String complete_post;
     
     
