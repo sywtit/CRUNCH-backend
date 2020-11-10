@@ -11,8 +11,10 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import com.crunch.crunch_server.domain.user.dto.UserDTO;
+import com.crunch.crunch_server.domain.user.dto.UserInfoDTO;
 import com.crunch.crunch_server.domain.user.dto.SessionRequestDTO;
 import com.crunch.crunch_server.domain.user.entity.User;
+import com.crunch.crunch_server.domain.user.mapper.UserInfoMapper;
 import com.crunch.crunch_server.domain.user.mapper.UserMapper;
 import com.crunch.crunch_server.domain.user.respository.UserRepository;
 import com.crunch.crunch_server.util.EncryptionUtil;
@@ -60,7 +62,13 @@ public class UserService {
         
     }
 
-    //find User Identity by token
+    //user info with login
+    public UserInfoDTO getUserInfo(String identity)
+    {
+        User user = repository.findByIdentity(identity);
+        return UserInfoMapper.Instance.toDTO(user);
+    }
+
     
     
     // //post user list

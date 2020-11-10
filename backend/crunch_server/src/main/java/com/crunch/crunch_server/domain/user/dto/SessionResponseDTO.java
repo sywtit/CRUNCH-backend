@@ -1,6 +1,7 @@
 package com.crunch.crunch_server.domain.user.dto;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
@@ -17,6 +18,10 @@ public class SessionResponseDTO {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @Embedded
+    private UserInfoDTO userInfoDTO;
+    
 
     public String getRoleKey() 
     {
