@@ -66,7 +66,7 @@ public class UserService {
     public UserInfoDTO getUserInfo(String identity)
     {
         User user = repository.findByIdentity(identity);
-        return UserInfoMapper.Instance.toDTO(user);
+        return UserInfoMapper.Instance.toUserInfoDTO(user);
     }
 
     
