@@ -26,7 +26,7 @@ public class BlobMapperImpl implements BlobMapper{
         blobDTO.setS3key(recentCommitDTO.getS3key());
         blobDTO.setTime(recentCommitDTO.getTime());
 
-        user = service.getUserById(recentCommitDTO.getUser_id());
+        user = service.getUserById(recentCommitDTO.getUserId());
         String username = user.getName();
 
         blobDTO.setWriterName(username);

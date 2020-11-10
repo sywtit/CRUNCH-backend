@@ -21,6 +21,7 @@ public class Project {
     
     @Id
     @GeneratedValue
+    private int id;
     private String title;
     private String introduction;
     private int process;

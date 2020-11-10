@@ -2,8 +2,10 @@ package com.crunch.crunch_server.configuration;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.crunch.crunch_server.util.JwtInterceptor;
 import com.crunch.crunch_server.util.JwtUtil;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,11 +15,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,16 +27,6 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter
 {
     @Value("${jwt.secret}")
     private String secret;
-
-
-    private final String[] PERMITTED_URL = {
-        "","/","/api/user/account/signup", "/api/user/account/auth",
-        "/project/search/**","/user","/user/**","/api/**","/login"
-    };
-
-    private final String[] UNPERMITTED_URL = { 
-        "/users/**", "/project/work/**", "/notice/**"
-    };
 
     @Override
     protected void configure(HttpSecurity http)throws Exception{
@@ -94,6 +83,7 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter
         // 사용자 세부 서비스를 설정하기 위한 오버라이딩이다.
         super.configure(auth);
     }
+
 
     // @Bean
     // public CorsConfigurationSource corsConfigurationSource() {
