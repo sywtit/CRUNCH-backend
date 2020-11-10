@@ -19,7 +19,6 @@ public class WebConfig implements WebMvcConfigurer{
         "/users/**", "/project/work/**", "/notice/**"
     };
 
-
     @Autowired
     private JwtInterceptor jwtInterceptor;
 
