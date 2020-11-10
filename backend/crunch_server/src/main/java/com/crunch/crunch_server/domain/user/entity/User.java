@@ -24,12 +24,10 @@ public class User {
     private String name;
     private String nickname;
     private String gender;
-    private String picture;
+    private String s3key;
     private String record;
     private int point;
     private String salt;
-
-    
 
 
     /**
@@ -119,15 +117,15 @@ public class User {
     /**
      * @return String return the picture
      */
-    public String getPicture() {
-        return picture;
+    public String getS3key() {
+        return s3key;
     }
 
     /**
      * @param picture the picture to set
      */
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setS3key(String s3key) {
+        this.s3key = s3key;
     }
 
     /**

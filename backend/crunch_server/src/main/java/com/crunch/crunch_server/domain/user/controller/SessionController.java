@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import com.crunch.crunch_server.domain.user.Role;
 import com.crunch.crunch_server.domain.user.dto.SessionRequestDTO;
 import com.crunch.crunch_server.domain.user.dto.SessionResponseDTO;
+import com.crunch.crunch_server.domain.user.dto.UserInfoDTO;
 import com.crunch.crunch_server.domain.user.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class SessionController {
+
     @Autowired
     private UserService service;
+    private UserInfoDTO userInfoDTO;
 
     //login
     @CrossOrigin(origins="*")
@@ -30,11 +33,12 @@ public class SessionController {
     public ResponseEntity<SessionResponseDTO> loginUser(@RequestBody SessionRequestDTO sessionRequestDTO) throws URISyntaxException
     {
         String token = null;
-
+        
         try
         {
             token = service.createToken(sessionRequestDTO);
-            
+            userInfoDTO = service.getUserInfo(sessionRequestDTO.getIdentity());
+
         }catch(Exception e)
         {
             e.printStackTrace();
@@ -44,6 +48,7 @@ public class SessionController {
             .builder()
             .role(Role.MEMBER)
             .accessToken(token)
+            .userInfoDTO(userInfoDTO)
             .build());
     }
     
