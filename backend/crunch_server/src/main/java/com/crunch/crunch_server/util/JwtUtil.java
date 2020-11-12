@@ -31,7 +31,7 @@ public class JwtUtil {
 
     }
 
-    public String createToken(String identity, String salt)
+    public String createToken(int id, String password)
     {
         Date now = new Date();
         Date validity = new Date(now.getTime()
@@ -39,8 +39,8 @@ public class JwtUtil {
 
 
         String token = Jwts.builder()
-            .claim("Identity", identity)
-            .claim("salt", salt)
+            .claim("id", id)
+            .claim("password", password)
             .setIssuedAt(now)
             .setExpiration(validity)
             .signWith(key, SignatureAlgorithm.HS256)
@@ -63,9 +63,9 @@ public class JwtUtil {
     }
 
     //get user Identity from the token
-    public String getUserIdentity(String token)
+    public String getUserId(String token)
     {
-        return (String) Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().get("Identity");
+        return (String) Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().get("id");
     }
 
     //get token value from the request header
