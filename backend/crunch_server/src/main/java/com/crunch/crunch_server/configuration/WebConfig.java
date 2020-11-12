@@ -13,7 +13,6 @@ public class WebConfig implements WebMvcConfigurer{
     private final String[] EXCLUDE_PATHS = {
         "","/","/api/user/account/signup", "/api/user/account/auth",
         "/project/search/**","/user","/user/**","/api/**","/login","/api/user/**",
-        "/difftest/requestDiff"
     };
 
     private final String[] INCLUDE_PATHS = { 

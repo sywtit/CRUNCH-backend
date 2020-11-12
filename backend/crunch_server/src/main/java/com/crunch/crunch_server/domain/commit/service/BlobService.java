@@ -26,7 +26,7 @@ public class BlobService {
 
     public RecentCommitDTO getRecentCommitInfo(int postId)
     {
-        List<Commit> commits = repository.findBypostId(postId);
+        List<Commit> commits = repository.findByPostId(postId);
         int last  = commits.size() -1;
 
         RecentCommitDTO commitDTO = CommitMapper.Instance.toRecentDTO(commits.get(last));

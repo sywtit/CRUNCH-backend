@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BlobRepository extends JpaRepository<Commit, Integer>{
 
-	List<Commit> findBypostId(int postId);
+	List<Commit> findByPostId(int postId);
 
 
 }
