@@ -1,5 +1,5 @@
 package com.crunch.crunch_server.domain.buyerCrew.entity;
 
-public class Account {
+public class BuyerCrew {
     
 }
