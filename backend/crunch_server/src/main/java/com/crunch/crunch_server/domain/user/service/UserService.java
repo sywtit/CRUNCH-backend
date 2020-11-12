@@ -47,6 +47,7 @@ public class UserService {
 
         String salt = user.getSalt();
         String password = user.getPassword();
+        int id = user.getId();
 
         String getHashPassword = EncryptionUtil.getEncrypt(sessionRequestDTO.getPassword(),salt.getBytes());
         if(!password.equals(getHashPassword))
@@ -55,7 +56,7 @@ public class UserService {
         }
         else
         {
-            return jwtUtil.createToken(sessionRequestDTO.getIdentity(), salt);
+            return jwtUtil.createToken(id, password);
         }
         
         
@@ -68,8 +69,6 @@ public class UserService {
         User user = repository.findByIdentity(identity);
         return UserInfoMapper.Instance.toUserInfoDTO(user);
     }
-
-    
     
     // //post user list
     // public List<User> saveUsers(List<User> users)
