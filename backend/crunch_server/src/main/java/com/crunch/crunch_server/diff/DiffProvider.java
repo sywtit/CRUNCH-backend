@@ -11,7 +11,7 @@ import static java.util.stream.Collectors.toList;
 
 public class DiffProvider {
     
-    public String getDiffStr(String left, String right, String label) throws Exception {
+    public static String getDiffStr(String left, String right, String label) throws Exception {
 
         var originalLines = Arrays.stream(left.split("\n")).collect(toList());
         var patch = DiffUtils.diff(left, right, null);
