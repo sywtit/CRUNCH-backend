@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectTitleDdayDTO {
-
+    private int id;
     private String title;
     // private String introduction;
     // private int process;

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostDTO {
-    
+    private int id;
     private int indexId;
     private int projectId;
     private String complete_post;
