@@ -64,9 +64,12 @@ dependencies {
 
 	//diffs
 	implementation "io.github.java-diff-utils:java-diff-utils:4.5"
+	implementation "org.webjars.npm:diff2html:2.11.2"
+	
 
 	compile('org.springframework.boot:spring-boot-starter-web')
     compile 'org.springframework.boot:spring-boot-starter-jdbc'
+
 
 }
 

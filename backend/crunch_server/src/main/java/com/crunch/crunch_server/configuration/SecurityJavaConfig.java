@@ -35,6 +35,7 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/api/user/myinfo").hasRole("MEMBER")
                 .antMatchers("/api/project/work").hasRole("MEMBER")
                 .antMatchers(HttpMethod.POST, "/api/user/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/difftest/requestDiff").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
                 .anyRequest().permitAll();
         http.cors();
