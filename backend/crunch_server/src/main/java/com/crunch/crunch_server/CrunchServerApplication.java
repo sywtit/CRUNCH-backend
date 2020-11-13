@@ -1,5 +1,8 @@
 package com.crunch.crunch_server;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.Mapper;
 import org.springframework.boot.SpringApplication;
@@ -13,7 +16,6 @@ public class CrunchServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CrunchServerApplication.class, args);
 
-		
 	}
 
 }

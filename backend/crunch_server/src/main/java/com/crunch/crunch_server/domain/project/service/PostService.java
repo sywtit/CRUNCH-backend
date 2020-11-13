@@ -1,6 +1,6 @@
 package com.crunch.crunch_server.domain.project.service;
 
-import com.crunch.crunch_server.domain.project.entity.Post;
+import com.crunch.crunch_server.domain.project.entity.Posts;
 import com.crunch.crunch_server.domain.project.repository.PostRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +14,9 @@ public class PostService {
 
 
     //post
-    public Integer getPostID(int projectId,  int indexId)
+    public Integer getPostID(Integer projectId,  Integer indexId)
     {
-       Post post = repository.findByProjectIdAndIndexId( projectId,  indexId);
+       Posts post = repository.findByProjectIdAndIndexId( projectId,  indexId);
        int postId = post.getId();
     
        return postId;

@@ -2,7 +2,7 @@ package com.crunch.crunch_server.domain.commit.service;
 
 import com.crunch.crunch_server.domain.commit.dto.BlobDTO;
 import com.crunch.crunch_server.domain.commit.dto.RecentCommitDTO;
-import com.crunch.crunch_server.domain.commit.entity.Commit;
+import com.crunch.crunch_server.domain.commit.entity.Commits;
 import com.crunch.crunch_server.domain.commit.mapper.BlobMapper;
 import com.crunch.crunch_server.domain.commit.mapper.CommitMapper;
 import com.crunch.crunch_server.domain.commit.repository.BlobRepository;
@@ -26,7 +26,7 @@ public class BlobService {
 
     public RecentCommitDTO getRecentCommitInfo(int postId)
     {
-        List<Commit> commits = repository.findByPostId(postId);
+        List<Commits> commits = repository.findByPostId(postId);
         int last  = commits.size() -1;
 
         RecentCommitDTO commitDTO = CommitMapper.Instance.toRecentDTO(commits.get(last));

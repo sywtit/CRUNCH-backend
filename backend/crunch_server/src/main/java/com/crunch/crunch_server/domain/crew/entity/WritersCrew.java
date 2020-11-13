@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="writercrew")
-public class WriterCrew {
+@Table(name="writerscrew")
+public class WritersCrew {
     
     @EmbeddedId
     private WriterCrewIdentity writerCrewIdentity;

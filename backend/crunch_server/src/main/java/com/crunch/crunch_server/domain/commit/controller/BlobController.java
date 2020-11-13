@@ -2,7 +2,6 @@ package com.crunch.crunch_server.domain.commit.controller;
 
 import com.crunch.crunch_server.domain.commit.dto.BlobDTO;
 import com.crunch.crunch_server.domain.commit.dto.RecentCommitDTO;
-import com.crunch.crunch_server.domain.commit.entity.Commit;
 import com.crunch.crunch_server.domain.commit.service.BlobService;
 import com.crunch.crunch_server.domain.crew.service.WriterCrewService;
 import com.crunch.crunch_server.domain.project.service.PostService;
