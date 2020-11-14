@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="commit")
-public class Commit {
+@Table(name="commits")
+public class Commits {
     
     @Id
     @GeneratedValue

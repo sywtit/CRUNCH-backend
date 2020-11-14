@@ -30,7 +30,9 @@ public interface UserMapper {
     //User : id,picture,point,salt exception
     //with password encrypting
     @Mapping(target = "point", constant = "0")
-    User toEntity(UserDTO userDTO);
+    @Mapping(target="salt", source = "salt")
+    @Mapping(target="password", source="password")
+    User toEntity(UserDTO userDTO, String salt, String password);
 
 
 }
