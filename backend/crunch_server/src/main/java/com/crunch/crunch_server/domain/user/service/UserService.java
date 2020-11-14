@@ -12,10 +12,12 @@ import javax.annotation.Resource;
 
 import com.crunch.crunch_server.domain.user.dto.UserDTO;
 import com.crunch.crunch_server.domain.user.dto.UserInfoDTO;
+import com.crunch.crunch_server.domain.user.dto.UserPointDTO;
 import com.crunch.crunch_server.domain.user.dto.SessionRequestDTO;
 import com.crunch.crunch_server.domain.user.entity.User;
 import com.crunch.crunch_server.domain.user.mapper.UserInfoMapper;
 import com.crunch.crunch_server.domain.user.mapper.UserMapper;
+import com.crunch.crunch_server.domain.user.mapper.UserPointMapper;
 import com.crunch.crunch_server.domain.user.respository.UserRepository;
 import com.crunch.crunch_server.util.EncryptionUtil;
 import com.crunch.crunch_server.util.JwtUtil;
@@ -25,7 +27,8 @@ public class UserService {
 
     @Autowired
     private UserRepository repository;
-    private UserMapper userMapper;
+    // private UserMapper userMapper;
+
 
     @Autowired
     private JwtUtil jwtUtil; 
@@ -119,4 +122,11 @@ public class UserService {
         return repository.save(existingUser);
     }
     
+    //get point by Id
+    public UserPointDTO getUserById(String id)
+    {
+        User user = repository.findById(id);
+        return UserPointMapper.Instance.toUserPointDTO(user);
+
+    }
 }
