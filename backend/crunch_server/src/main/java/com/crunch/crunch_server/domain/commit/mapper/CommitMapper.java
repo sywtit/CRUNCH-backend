@@ -6,8 +6,8 @@ import com.crunch.crunch_server.domain.commit.entity.Commits;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
-public interface CommitMapper {
+@Mapper(componentModel = "spring")
+public interface CommitMapper  {
 
     CommitMapper Instance = Mappers.getMapper(CommitMapper.class);
 

@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import org.springframework.data.annotation.Id;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,9 +16,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RecentCommitDTO {
     
-     
-    @Id
-    @GeneratedValue
     private int id;
     private int postId;
     private int userId;

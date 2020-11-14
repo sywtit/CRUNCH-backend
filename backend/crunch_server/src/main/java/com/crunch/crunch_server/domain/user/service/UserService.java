@@ -33,7 +33,10 @@ public class UserService {
     //post
     public User saveUser(UserDTO userDTO)
     {
-        User user = UserMapper.Instance.toEntity(userDTO);
+        String salt = EncryptionUtil.generateSalt();
+        String password = EncryptionUtil.getEncrypt(userDTO.getPassword(), salt.getBytes());
+
+        User user = UserMapper.Instance.toEntity(userDTO, salt, password);
         return repository.save(user);
     }
 
