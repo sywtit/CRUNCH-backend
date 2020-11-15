@@ -26,12 +26,17 @@ public class BlobService {
     private UserService service;
     private User user;
     
+    private String post_now;
 
     public BlobDTO getProjectBlob(RecentCommitDTO recentCommitDTO)
     {
         user = service.getUserById(recentCommitDTO.getUserId());
 
         BlobDTO blobDTO = BlobMapper.Instance.toDTO(recentCommitDTO,user);
+        
+        post_now = null;
+        post_now = blobDTO.getPost();
+
         return blobDTO;
     }
 
@@ -45,5 +50,19 @@ public class BlobService {
         
     }
 
-    
+  
+    /**
+     * @return String return the post_now
+     */
+    public String getPost_now() {
+        return post_now;
+    }
+
+    /**
+     * @param post_now the post_now to set
+     */
+    public void setPost_now(String post_now) {
+        this.post_now = post_now;
+    }
+
 }

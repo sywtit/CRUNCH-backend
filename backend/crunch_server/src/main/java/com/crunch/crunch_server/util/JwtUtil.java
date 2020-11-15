@@ -27,7 +27,7 @@ public class JwtUtil {
     public JwtUtil(String secret)
     {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
-        this.validityInMilliseconds = 60;
+        this.validityInMilliseconds = 3600000;
 
     }
 
@@ -63,9 +63,9 @@ public class JwtUtil {
     }
 
     //get user Identity from the token
-    public String getUserId(String token)
+    public int getUserId(String token)
     {
-        return (String) Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().get("id");
+        return (int) Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().get("id");
     }
 
     //get token value from the request header
