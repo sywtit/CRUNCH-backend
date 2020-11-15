@@ -1,7 +1,9 @@
 package com.crunch.crunch_server.domain.commit.entity;
 
+//#region import
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,6 +12,8 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+//#endregion import
 
 @Data
 @AllArgsConstructor
@@ -20,7 +24,9 @@ public class Commits {
     
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private int id;
+    
     private int postId;
     private int userId;
     private String commit_comment;
@@ -29,7 +35,6 @@ public class Commits {
     private String post;
 
     
-
 
     /**
      * @return int return the id
