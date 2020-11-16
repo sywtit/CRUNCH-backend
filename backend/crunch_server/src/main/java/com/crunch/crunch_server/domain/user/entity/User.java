@@ -170,4 +170,8 @@ public class User {
         this.salt = salt;
     }
 
+	public User orElse(Object object) {
+		return null;
+	}
+
 }
