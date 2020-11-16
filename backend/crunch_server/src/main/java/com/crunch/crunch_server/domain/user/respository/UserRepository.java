@@ -7,12 +7,14 @@ import org.springframework.stereotype.Repository;
 
 //entity, primary key
 @Repository
-public interface UserRepository extends JpaRepository<User,Integer>{
+public interface UserRepository extends JpaRepository<User, Integer> {
 
 	User findByName(String name);
 
 	User findByIdentity(String identity);
-	
-	User findById(String id);
+
+	User findById(int id);
+
+	User findPointById(int id);
 
 }

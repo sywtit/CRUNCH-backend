@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserPointDTO {
-    private String identity;
+    // private String identity;
     private int point;
-    
-    public void setPoint(int point)
-    {
+    private String token;
+
+    public void setPoint(int point) {
         this.point = point;
     }
 }
