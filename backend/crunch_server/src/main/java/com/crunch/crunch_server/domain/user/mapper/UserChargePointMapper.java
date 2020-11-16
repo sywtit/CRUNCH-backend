@@ -21,7 +21,7 @@ public interface UserChargePointMapper {
 
     ChargePointDTO toUserChargePointDTO(User user);
 
-    void toEntity(ChargePointDTO chargePointDTO);
+   // void toEntityWithPoint(ChargePointDTO chargePointDTO);
 
 }
 

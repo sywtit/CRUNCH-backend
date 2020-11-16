@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Getter
 @Table(name="posts")
 public class Posts {
     
@@ -33,7 +32,63 @@ public class Posts {
     @Column(name="projectId", insertable=false, updatable=false)
     private Integer project_id;
 
-
     private String complete_post;
     
+
+    /**
+     * @return int return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return Integer return the index_id
+     */
+    public Integer getIndex_id() {
+        return index_id;
+    }
+
+    /**
+     * @param index_id the index_id to set
+     */
+    public void setIndex_id(Integer index_id) {
+        this.index_id = index_id;
+    }
+
+    /**
+     * @return Integer return the project_id
+     */
+    public Integer getProject_id() {
+        return project_id;
+    }
+
+    /**
+     * @param project_id the project_id to set
+     */
+    public void setProject_id(Integer project_id) {
+        this.project_id = project_id;
+    }
+
+    /**
+     * @return String return the complete_post
+     */
+    public String getComplete_post() {
+        return complete_post;
+    }
+
+    /**
+     * @param complete_post the complete_post to set
+     */
+    public void setComplete_post(String complete_post) {
+        this.complete_post = complete_post;
+    }
+
 }
