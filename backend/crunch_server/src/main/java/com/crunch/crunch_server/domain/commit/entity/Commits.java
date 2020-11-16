@@ -6,6 +6,7 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -23,9 +24,9 @@ import lombok.NoArgsConstructor;
 public class Commits {
     
     @Id
-    @GeneratedValue
     @Column(name = "id")
-    private int id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)    
+    private int commitId;
     
     private int postId;
     private int userId;
@@ -35,19 +36,18 @@ public class Commits {
     private String post;
 
     
-
     /**
-     * @return int return the id
+     * @return int return the commitId
      */
-    public int getId() {
-        return id;
+    public int getCommitId() {
+        return commitId;
     }
 
     /**
-     * @param id the id to set
+     * @param commitId the commitId to set
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setCommitId(int commitId) {
+        this.commitId = commitId;
     }
 
     /**
