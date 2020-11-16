@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -22,7 +23,7 @@ public class PostModification {
     
     @Id
     @GeneratedValue
-    @Column(name = "postmodificationId")
+    @Column(name = "id")
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)

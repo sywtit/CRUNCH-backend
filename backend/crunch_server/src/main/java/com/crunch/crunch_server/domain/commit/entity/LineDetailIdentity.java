@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 public class LineDetailIdentity implements Serializable
 {
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="postmodificationId")
+    @JoinColumn(name="id")
     PostModification postModification;
 
     private int lineNumber;

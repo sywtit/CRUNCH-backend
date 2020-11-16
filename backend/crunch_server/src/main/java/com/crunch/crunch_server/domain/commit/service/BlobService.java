@@ -50,6 +50,13 @@ public class BlobService {
         
     }
 
+    public int getSizeOfCommitList(int postId)
+    {
+        List<Commits> commits = repository.findByPostId(postId);
+        return commits.size();
+    }
+
+    
   
     /**
      * @return String return the post_now

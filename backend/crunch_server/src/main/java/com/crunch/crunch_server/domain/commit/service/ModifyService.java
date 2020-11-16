@@ -36,7 +36,6 @@ public class ModifyService {
         //next get postId from the projectId and indexId
         int postId = postService.getPostID(projectId, indexId);
 
-
         //save new commit using userId and postID
         //1. get before post from blobservice's private data
         //2. set after post to blobservice's private data
@@ -46,16 +45,16 @@ public class ModifyService {
         String before = blobService.getPost_now();
         blobService.setPost_now(modifyDTO.getAfter());
         String diffResult = DiffProvider.getDiffStr(before, modifyDTO.getAfter(), "Diff");
+
         Commits commit = CommitMapper.Instance.toModifiedCommitsEntity(postId, userId, modifyDTO);
         
         //5. first set postmodification first
         //before that parse the diffResult to get the before text length
         //and after text length
-        System.out.println(diffResult);
         String[] lengthShowLine = diffResult.split("\n");
         String[] lengthResult = lengthShowLine[2].split(",| |@@");
 
-        int beforePostLength =Integer.parseInt(lengthResult[2]);
+        int beforePostLength =Integer.parseInt(lengthResult[3]);
         int afterPostLength = Integer.parseInt(lengthResult[5]);
 
         PostModification postModification = CommitPostModificationMapper.Instance.toModifiedPMEntity(diffResult, beforePostLength, afterPostLength);

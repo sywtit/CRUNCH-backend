@@ -31,9 +31,20 @@ public class BlobController {
     @GetMapping("/{projectId}/blob/basicTool/{indexId}")
     public BlobDTO showRecentPost(@PathVariable int projectId, @PathVariable int indexId)
     {
-        int postId = postService.getPostID(projectId, indexId);
-        recentCommitDTO = service.getRecentCommitInfo(postId);
-        return service.getProjectBlob(recentCommitDTO);
+            int postId = postService.getPostID(projectId, indexId);
+            boolean checkNewPost  = (service.getSizeOfCommitList(postId) == 0);
+
+            if(checkNewPost)
+            {
+                service.setPost_now(null);
+                return null;
+            }
+            else
+            {
+                recentCommitDTO = service.getRecentCommitInfo(postId);
+                return service.getProjectBlob(recentCommitDTO);
+            }
+        
     }
     
     //delete: the indexId project
