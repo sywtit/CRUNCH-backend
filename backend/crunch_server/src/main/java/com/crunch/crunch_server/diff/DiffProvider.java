@@ -13,7 +13,8 @@ public class DiffProvider {
     
     public static String getDiffStr(String left, String right, String label) throws Exception {
 
-        if(left == null) left = "new post!";
+        if(left == null) left = "new post!";        
+
         var originalLines = Arrays.stream(left.split("\n")).collect(toList());
         var patch = DiffUtils.diff(left, right, null);
         var diffStrList = UnifiedDiffUtils.generateUnifiedDiff(label, label, originalLines, patch, 10);

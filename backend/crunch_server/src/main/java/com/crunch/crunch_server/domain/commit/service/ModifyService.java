@@ -43,6 +43,8 @@ public class ModifyService {
         //4. get commit entity to save
 
         String before = blobService.getPost_now();
+        modifyDTO.setAfter(modifyDTO.getAfter().replace("</p>", "</p>\n"));
+
         blobService.setPost_now(modifyDTO.getAfter());
         String diffResult = DiffProvider.getDiffStr(before, modifyDTO.getAfter(), "Diff");
 
