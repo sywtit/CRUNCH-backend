@@ -49,7 +49,7 @@ public class ModifyService {
         String diffResult = DiffProvider.getDiffStr(before, modifyDTO.getAfter(), "Diff");
 
         Commits commit = CommitMapper.Instance.toModifiedCommitsEntity(postId, userId, modifyDTO);
-        
+
         //5. first set postmodification first
         //before that parse the diffResult to get the before text length
         //and after text length
