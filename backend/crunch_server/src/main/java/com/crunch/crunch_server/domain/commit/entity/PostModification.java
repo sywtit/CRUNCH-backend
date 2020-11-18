@@ -38,7 +38,6 @@ public class PostModification {
     private String diffResult;
 
 
-
     /**
      * @return int return the id
      */
