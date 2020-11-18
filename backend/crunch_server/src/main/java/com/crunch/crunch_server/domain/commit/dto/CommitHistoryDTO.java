@@ -14,41 +14,42 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ModifyDTO {
+public class CommitHistoryDTO {
     
-    private String after;
+    private int commitId;
+    private String writerName;
+    private String commit_comment;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime time;
-    
-    private String commit_comment;
+
 
     /**
-     * @return String return the after
+     * @return int return the commitId
      */
-    public String getAfter() {
-        return after;
+    public int getCommitId() {
+        return commitId;
     }
 
     /**
-     * @param after the after to set
+     * @param commitId the commitId to set
      */
-    public void setAfter(String after) {
-        this.after = after;
+    public void setCommitId(int commitId) {
+        this.commitId = commitId;
     }
 
     /**
-     * @return Date return the time
+     * @return String return the writerName
      */
-    public LocalDateTime getTime() {
-        return time;
+    public String getWriterName() {
+        return writerName;
     }
 
     /**
-     * @param time the time to set
+     * @param writerName the writerName to set
      */
-    public void setTime(LocalDateTime time) {
-        this.time = time;
+    public void setWriterName(String writerName) {
+        this.writerName = writerName;
     }
 
     /**
@@ -63,6 +64,20 @@ public class ModifyDTO {
      */
     public void setCommit_comment(String commit_comment) {
         this.commit_comment = commit_comment;
+    }
+
+    /**
+     * @return Date return the time
+     */
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    /**
+     * @param time the time to set
+     */
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
 }

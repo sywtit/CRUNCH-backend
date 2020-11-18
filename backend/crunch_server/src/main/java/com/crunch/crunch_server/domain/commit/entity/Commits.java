@@ -2,6 +2,7 @@ package com.crunch.crunch_server.domain.commit.entity;
 
 //#region import
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +36,9 @@ public class Commits {
     private int postId;
     private int userId;
     private String commit_comment;
-    private Date time;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime time;
     private String s3key;
     private String post;
 
@@ -95,14 +102,14 @@ public class Commits {
     /**
      * @return Date return the time
      */
-    public Date getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
     /**
      * @param time the time to set
      */
-    public void setTime(Date time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
