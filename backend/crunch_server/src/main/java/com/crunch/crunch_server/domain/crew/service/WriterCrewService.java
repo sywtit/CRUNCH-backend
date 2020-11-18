@@ -18,7 +18,10 @@ public class WriterCrewService {
     private WriterCrewRepository writerRepository;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
+
+    private User user;
+    
     
     public Boolean isWriter(int userId)
     {
@@ -35,7 +38,9 @@ public class WriterCrewService {
 
     public String getWriterName(int userId)
     {
-        User user = userService.getUserById(userId);
+        System.out.println(userRepository);
+        
+        user = userRepository.findById(userId);
         return user.getNickname();
     }
 }

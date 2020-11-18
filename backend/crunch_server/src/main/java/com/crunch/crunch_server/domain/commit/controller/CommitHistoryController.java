@@ -48,7 +48,11 @@ public class CommitHistoryController {
 
     // //commit history detail
     // @CrossOrigin(origins = "*")
-    // @GetMapping("/{projectID}/commit/basicTool/{CommitId}")
+    // @GetMapping("/{projectId}/commit/basicTool/{commitId}")
+    // public String returnDiffResult(@PathVariable int projectId, @PathVariable int commitId)
+    // {
+        
+    // }
     
 
 }

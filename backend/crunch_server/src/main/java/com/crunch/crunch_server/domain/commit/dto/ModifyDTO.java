@@ -1,6 +1,11 @@
 package com.crunch.crunch_server.domain.commit.dto;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +17,10 @@ import lombok.NoArgsConstructor;
 public class ModifyDTO {
     
     private String after;
-    private Date time;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime time;
+    
     private String commit_comment;
 
     /**
@@ -32,14 +40,14 @@ public class ModifyDTO {
     /**
      * @return Date return the time
      */
-    public Date getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
     /**
      * @param time the time to set
      */
-    public void setTime(Date time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
