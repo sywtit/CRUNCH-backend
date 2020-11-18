@@ -29,7 +29,7 @@ public class CommitHistoryController {
     
     //index's whole commit history
     @CrossOrigin(origins="*")
-    @GetMapping("/{projectId}/commit/basicTool/{IndexId}")
+    @GetMapping("/{projectId}/commit/basicTool/{indexId}")
     public List<CommitHistoryDTO> showCommitList(@PathVariable int projectId, @PathVariable int indexId)
     {
         int postId = postService.getPostID(projectId, indexId);
@@ -45,5 +45,10 @@ public class CommitHistoryController {
         }
 
     }
+
+    // //commit history detail
+    // @CrossOrigin(origins = "*")
+    // @GetMapping("/{projectID}/commit/basicTool/{CommitId}")
+    
 
 }
