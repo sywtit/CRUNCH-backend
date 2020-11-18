@@ -3,8 +3,10 @@ package com.crunch.crunch_server.domain.commit.controller;
 import java.util.List;
 
 import com.crunch.crunch_server.domain.commit.dto.CommitHistoryDTO;
+import com.crunch.crunch_server.domain.commit.dto.CommitHistoryRevertDTO;
 import com.crunch.crunch_server.domain.commit.service.BlobService;
 import com.crunch.crunch_server.domain.commit.service.HistoryService;
+import com.crunch.crunch_server.domain.commit.service.ModifyService;
 import com.crunch.crunch_server.domain.project.service.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class CommitHistoryController {
     private PostService postService;
     @Autowired
     private HistoryService service;
+    @Autowired
+    private ModifyService modifyService;
     
     //index's whole commit history
     @CrossOrigin(origins="*")
@@ -65,9 +69,9 @@ public class CommitHistoryController {
     void saveRevertDiffResult(
         @RequestHeader(value="token") String token,
         @PathVariable int projectId, @PathVariable int commitId,
-        String commit_comment) throws Exception
+        CommitHistoryRevertDTO chrDTO) throws Exception
     {
-        
+        modifyService.saveNewCommitWithHistory(token, projectId, commitId, chrDTO);
     }
     
 
