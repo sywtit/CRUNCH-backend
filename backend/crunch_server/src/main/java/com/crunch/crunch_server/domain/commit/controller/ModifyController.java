@@ -47,6 +47,7 @@ public class ModifyController {
         @PathVariable int projectId, @PathVariable int indexId,
         @RequestBody ModifyDTO modifyDTO) throws Exception
     {
+        System.out.println(modifyDTO.getTime());
         modifyService.saveNewCommit(token, projectId, indexId, modifyDTO);
     }
 
