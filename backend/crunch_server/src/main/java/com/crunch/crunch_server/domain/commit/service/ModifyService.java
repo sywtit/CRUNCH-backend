@@ -72,6 +72,7 @@ public class ModifyService {
         blobService.setPost_now(after);
 
         int postId = commit.getPostId();
+
         Commits commitRevertVersion = CommitMapper.Instance.toHistoryCommitsEntity(postId, userId, after, chrDTO);
 
         PostModification postModification = getPostModificationEntity(after, before, commitRevertVersion);
