@@ -126,4 +126,14 @@ public class UserService {
         User newUser = repository.save(user);
         return newUser;
     }
+
+    // minus point
+    public User minusPoint(int userId, int fee) {
+        User user = repository.findById(userId);
+        int chargeAfter = user.getPoint() - fee;
+        user.setPoint(chargeAfter);
+
+        User newUser = repository.save(user);
+        return newUser;
+    }
 }

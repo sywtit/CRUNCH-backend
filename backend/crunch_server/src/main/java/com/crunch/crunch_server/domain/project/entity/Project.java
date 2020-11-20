@@ -1,10 +1,10 @@
 package com.crunch.crunch_server.domain.project.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,12 +15,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="project")
+@Table(name = "project")
 public class Project {
-    
+
     @Id
     @GeneratedValue
+
     private int id;
+
     private String title;
     private String introduction;
     private int process;
@@ -32,8 +34,6 @@ public class Project {
     private String complete_time;
     private int target_funding_money;
     private String target_d_day;
-    
-
 
     /**
      * @return int return the id
@@ -203,4 +203,8 @@ public class Project {
         this.target_d_day = target_d_day;
     }
 
+    public Project orElse(Object object) {
+        return null;
+    }
+    //
 }
