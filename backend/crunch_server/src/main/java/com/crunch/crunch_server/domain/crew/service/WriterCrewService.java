@@ -1,6 +1,7 @@
 package com.crunch.crunch_server.domain.crew.service;
 
 import com.crunch.crunch_server.domain.crew.dto.WriterCrewCheckDTO;
+import com.crunch.crunch_server.domain.crew.entity.TmpWriterCrew;
 import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
 import com.crunch.crunch_server.domain.crew.mapper.CheckMapper;
 import com.crunch.crunch_server.domain.crew.repository.WriterCrewRepository;
@@ -37,7 +38,10 @@ public class WriterCrewService {
     }
 
     public void addWriterApply(int userId, String comment) {
-        WritersCrew writersCrew = new WritersCrew();
+        // WritersCrew writersCrew = new WritersCrew();
+        TmpWriterCrew tmpWriterCrew = new TmpWriterCrew();
+        tmpWriterCrew.setComment(comment);
+        tmpWriterCrew.setUserId(userId);
 
     }
 

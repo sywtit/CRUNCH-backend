@@ -51,11 +51,11 @@ public class BuyerCrewController {
         int fee = postService.getFee(postIndex, projectId);
         int userId = 6;
         System.out.println("--------==========----1------=============----");
-        userService.minusPoint(userId, fee);
+        int afterPoint = userService.minusPoint(userId, fee).getPoint();
         System.out.println("--------==========----2------=============----");
         // buyercrew에 insert
         buyerCrewService.addBuyerCrew(postIndex, projectId, userId);
 
-        return 100;
+        return afterPoint;
     }
 }
