@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WriterCrewService {
-    
+
     @Autowired
     private WriterCrewRepository writerRepository;
 
@@ -21,25 +21,29 @@ public class WriterCrewService {
     private UserRepository userRepository;
 
     private User user;
-    
-    
-    public Boolean isWriter(int userId)
-    {
+
+    public Boolean isWriter(int userId) {
         WritersCrew writercrew = writerRepository.findByWriterCrewIdentityUserId(userId);
         WriterCrewCheckDTO checkcrew = CheckMapper.Instance.toDTO(writercrew);
 
-        if(hasWriterStatus(checkcrew)) return true;
-        else return false;
+        if (hasWriterStatus(checkcrew))
+            return true;
+        else
+            return false;
     }
 
     private boolean hasWriterStatus(WriterCrewCheckDTO checkcrew) {
-        return checkcrew.getLimit_status()==0 && checkcrew.getState().equals("selected");
+        return checkcrew.getLimit_status() == 0 && checkcrew.getState().equals("selected");
     }
 
-    public String getWriterName(int userId)
-    {
+    public void addWriterApply(int userId, String comment) {
+        WritersCrew writersCrew = new WritersCrew();
+
+    }
+
+    public String getWriterName(int userId) {
         System.out.println(userRepository);
-        
+
         user = userRepository.findById(userId);
         return user.getNickname();
     }

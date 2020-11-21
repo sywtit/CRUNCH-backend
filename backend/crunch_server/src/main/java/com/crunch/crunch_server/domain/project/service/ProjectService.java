@@ -1,5 +1,7 @@
 package com.crunch.crunch_server.domain.project.service;
 
+import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
+
 // import javax.print.event.PrintJobAdapter;
 
 import com.crunch.crunch_server.domain.project.dto.ProjectTitleDdayDTO;
@@ -10,21 +12,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class ProjectService {
-    
+
     @Autowired
     private ProjectRepository repository;
 
     // first main page
-    public ProjectTitleDdayDTO getProjectTitleDday(int projectId)
-    {
+    public ProjectTitleDdayDTO getProjectTitleDday(int projectId) {
         Project project = repository.findById(projectId).orElse(null);
         // String projectTitle = project.getTitle();
         // String projectDday = project.getTarget_d_day();
 
         return ProjectTitleDdayMapper.Instance.toProjectTitleDdayDTO(project);
     }
-  
+
+    public int addProject(ProjectStartDTO projectStartDTO) {
+
+        Project project = new Project();
+        project.setTitle(projectStartDTO.getTitle());
+        project.setIntroduction(projectStartDTO.getIntroduction());
+        project.setMwn(projectStartDTO.getMwn());
+        project.setTarget_d_day(projectStartDTO.getTarget_d_day());
+        project.setTarget_funding_money(projectStartDTO.getTarget_funding_money());
+
+        repository.save(project);
+
+        System.out.println(project.getId());
+        return project.getId();
+    }
+
+    public ProjectStartDTO getRecruitingProjectInfo(int id) {
+        Project project = repository.findById(id);
+        ProjectStartDTO projectStartDTO = new ProjectStartDTO();
+
+        projectStartDTO.setTitle(project.getTitle());
+        projectStartDTO.setIntroduction(project.getIntroduction());
+        projectStartDTO.setMwn(project.getMwn());
+        projectStartDTO.setTarget_d_day(project.getTarget_d_day());
+        projectStartDTO.setTarget_funding_money(project.getTarget_funding_money());
+
+        return projectStartDTO;
+    }
+
 }
