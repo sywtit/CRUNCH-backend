@@ -1,5 +1,6 @@
 package com.crunch.crunch_server.domain.commit.mapper;
 
+import com.crunch.crunch_server.domain.commit.dto.CommitHistoryRevertDTO;
 import com.crunch.crunch_server.domain.commit.dto.ModifyDTO;
 import com.crunch.crunch_server.domain.commit.dto.RecentCommitDTO;
 import com.crunch.crunch_server.domain.commit.entity.Commits;
@@ -23,5 +24,10 @@ public interface CommitMapper  {
     @Mapping(source="modifyDTO.commit_comment", target="commit_comment")
     Commits toModifiedCommitsEntity(Integer postId, Integer userId, ModifyDTO modifyDTO);
 
-    
+    @Mapping(source="postId", target="postId")
+    @Mapping(source="userId", target="userId")
+    @Mapping(source="after", target = "post")
+    @Mapping(source="chrDTO.time", target="time")
+    @Mapping(source="chrDTO.commit_comment", target="commit_comment")
+    Commits toHistoryCommitsEntity(Integer postId, Integer userId, String after, CommitHistoryRevertDTO chrDTO);
 }

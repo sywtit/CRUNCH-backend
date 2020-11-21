@@ -1,6 +1,7 @@
 package com.crunch.crunch_server.domain.commit.service;
 
 import com.crunch.crunch_server.diff.DiffProvider;
+import com.crunch.crunch_server.domain.commit.dto.CommitHistoryRevertDTO;
 import com.crunch.crunch_server.domain.commit.dto.ModifyDTO;
 import com.crunch.crunch_server.domain.commit.entity.Commits;
 import com.crunch.crunch_server.domain.commit.entity.PostModification;
@@ -28,6 +29,7 @@ public class ModifyService {
     @Autowired
     private ModifyPostModificationRepository postModificationRepository;
 
+
     public void saveNewCommit(String token, int projectId, int indexId, ModifyDTO modifyDTO) throws Exception
     {
         //first get the user id from token
@@ -44,15 +46,44 @@ public class ModifyService {
 
         String before = blobService.getPost_now();
         modifyDTO.setAfter(modifyDTO.getAfter().replace("</p>", "</p>\n"));
-
         blobService.setPost_now(modifyDTO.getAfter());
-        String diffResult = DiffProvider.getDiffStr(before, modifyDTO.getAfter(), "Diff");
 
         Commits commit = CommitMapper.Instance.toModifiedCommitsEntity(postId, userId, modifyDTO);
-        
+
         //5. first set postmodification first
         //before that parse the diffResult to get the before text length
         //and after text length
+        PostModification postModification = getPostModificationEntity(modifyDTO.getAfter(), before, commit);
+
+        postModificationRepository.save(postModification);
+        
+        //line detail -> after s3 connection!
+
+    }
+
+    public void saveNewCommitWithHistory(String token, int projectId, int commitId, CommitHistoryRevertDTO chrDTO) throws Exception
+    {
+        int userId = jwtUtil.getUserId(token);
+
+        //get after string from commitId
+        Commits commit = commitRepoistory.findByCommitId(commitId);
+        String after = commit.getPost().replace("</p>", "</p>\n");
+        String before = blobService.getPost_now();
+        blobService.setPost_now(after);
+
+        int postId = commit.getPostId();
+        Commits commitRevertVersion = CommitMapper.Instance.toHistoryCommitsEntity(postId, userId, after, chrDTO);
+
+        PostModification postModification = getPostModificationEntity(after, before, commitRevertVersion);
+
+        postModificationRepository.save(postModification);
+
+
+    }
+
+    private PostModification getPostModificationEntity(String after, String before, Commits commitRevertVersion) throws Exception {
+        String diffResult = DiffProvider.getDiffStr(before, after, "Diff");
+
         String[] lengthShowLine = diffResult.split("\n");
         String[] lengthResult = lengthShowLine[2].split(",| |@@");
 
@@ -60,12 +91,8 @@ public class ModifyService {
         int afterPostLength = Integer.parseInt(lengthResult[5]);
 
         PostModification postModification = CommitPostModificationMapper.Instance.toModifiedPMEntity(diffResult, beforePostLength, afterPostLength);
-        postModification.setCommits(commit);
-
-        postModificationRepository.save(postModification);
-        
-        //line detail -> after s3 connection!
-
+        postModification.setCommits(commitRevertVersion);
+        return postModification;
     }
 
 

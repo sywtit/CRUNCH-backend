@@ -27,7 +27,7 @@ public class JwtUtil {
     public JwtUtil(String secret)
     {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
-        this.validityInMilliseconds = 3600000;
+        this.validityInMilliseconds = 7200000;
 
     }
 

@@ -22,12 +22,12 @@ import lombok.NoArgsConstructor;
 public class PostModification {
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY) 
     @Column(name = "id")
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="id")
+    @JoinColumn(name="commitId")
     private Commits commits;
     
     //private int commitId;
@@ -36,7 +36,6 @@ public class PostModification {
     private int afterPostLength;
 
     private String diffResult;
-
 
 
     /**
