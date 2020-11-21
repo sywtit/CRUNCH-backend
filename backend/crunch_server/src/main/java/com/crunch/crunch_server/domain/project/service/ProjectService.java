@@ -37,8 +37,22 @@ public class ProjectService {
         project.setTarget_funding_money(projectStartDTO.getTarget_funding_money());
 
         repository.save(project);
-        System.out.println("success");
-        return 100;
+
+        System.out.println(project.getId());
+        return project.getId();
+    }
+
+    public ProjectStartDTO getRecruitingProjectInfo(int id) {
+        Project project = repository.findById(id);
+        ProjectStartDTO projectStartDTO = new ProjectStartDTO();
+
+        projectStartDTO.setTitle(project.getTitle());
+        projectStartDTO.setIntroduction(project.getIntroduction());
+        projectStartDTO.setMwn(project.getMwn());
+        projectStartDTO.setTarget_d_day(project.getTarget_d_day());
+        projectStartDTO.setTarget_funding_money(project.getTarget_funding_money());
+
+        return projectStartDTO;
     }
 
 }
