@@ -10,20 +10,26 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WriterCrewService {
-    
+
     @Autowired
     private WriterCrewRepository repository;
-    
-    public Boolean isWriter(int userId)
-    {
+
+    public Boolean isWriter(int userId) {
         WritersCrew writercrew = repository.findByWriterCrewIdentityUserId(userId);
         WriterCrewCheckDTO checkcrew = CheckMapper.Instance.toDTO(writercrew);
 
-        if(hasWriterStatus(checkcrew)) return true;
-        else return false;
+        if (hasWriterStatus(checkcrew))
+            return true;
+        else
+            return false;
     }
 
     private boolean hasWriterStatus(WriterCrewCheckDTO checkcrew) {
-        return checkcrew.getLimit_status()==0 && checkcrew.getState().equals("selected");
+        return checkcrew.getLimit_status() == 0 && checkcrew.getState().equals("selected");
+    }
+
+    public void addWriterApply(int userId, String comment) {
+        WritersCrew writersCrew = new WritersCrew();
+        
     }
 }
