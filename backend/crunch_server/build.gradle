@@ -82,6 +82,9 @@ dependencies {
 	implementation "org.webjars.npm:diff2html:2.11.2"
 	
 
+	//s3
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.1.RELEASE'
+
 	compile('org.springframework.boot:spring-boot-starter-web')
     compile 'org.springframework.boot:spring-boot-starter-jdbc'
 
