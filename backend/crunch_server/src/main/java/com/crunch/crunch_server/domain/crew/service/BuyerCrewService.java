@@ -40,7 +40,9 @@ public class BuyerCrewService {
                 tmpBuyerCrew.setPostindexId(postIndex);
                 tmpBuyerCrew.setProjectId(projectId);
                 tmpBuyerCrew.setUserId(userId);
+                System.out.println("----------------3---------------");
                 buyerCrewRepository.save(tmpBuyerCrew);
+                System.out.println("----------------4---------------");
                 // BuyerCrew buyerCrew = new BuyerCrew();
 
                 // System.out.println("----------------3---------------");

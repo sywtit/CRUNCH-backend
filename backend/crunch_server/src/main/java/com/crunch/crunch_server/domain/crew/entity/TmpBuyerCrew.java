@@ -23,6 +23,7 @@ import lombok.Setter;
 public class TmpBuyerCrew {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int tmpId;
     private int postindexId;
     private int projectId;
     private int userId;

@@ -32,11 +32,11 @@ public class BuyerCrewController {
     private UserService userService;
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/fee")
+    @PostMapping("/getfee")
     @ResponseStatus(value = HttpStatus.OK)
     public int getFee(@RequestHeader(value = "token") String token, @RequestBody PostIndexDTO postIndexDTO) {
         int userId = 6;
-
+        System.out.println(postIndexDTO.getId());
         return postService.getFee(postIndexDTO.getId(), postIndexDTO.getProjectId());
         // postindex 에 접근해서 postid, projectid, 가지고 fee 가져오기
 
@@ -45,13 +45,15 @@ public class BuyerCrewController {
     @CrossOrigin(origins = "*")
     @PostMapping("/minuspoint")
     @ResponseStatus(value = HttpStatus.OK)
-    public int minusPoint(@RequestHeader(value = "token") String token, @RequestBody PostIndexDTO postIndexDTO) {
-        int postIndex = postIndexDTO.getId();
-        int projectId = postIndexDTO.getProjectId();
+    public int minusPoint(@RequestHeader(value = "token") String token, @RequestBody PostFeeDTO postFeeDTO) {
+        System.out.println("sucess");
+        int postIndex = postFeeDTO.getId();
+        int projectId = postFeeDTO.getProjectId();
         int fee = postService.getFee(postIndex, projectId);
         int userId = 6;
         System.out.println("--------==========----1------=============----");
         int afterPoint = userService.minusPoint(userId, fee).getPoint();
+        System.out.println(afterPoint);
         System.out.println("--------==========----2------=============----");
         // buyercrew에 insert
         buyerCrewService.addBuyerCrew(postIndex, projectId, userId);
