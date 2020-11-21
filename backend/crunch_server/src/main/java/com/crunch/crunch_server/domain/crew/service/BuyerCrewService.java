@@ -1,5 +1,8 @@
 package com.crunch.crunch_server.domain.crew.service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import com.crunch.crunch_server.domain.crew.dto.BuyerCrewDTO;
 import com.crunch.crunch_server.domain.crew.entity.BuyerCrew;
 import com.crunch.crunch_server.domain.crew.entity.BuyerCrewEntity;
@@ -66,6 +69,7 @@ public class BuyerCrewService {
 
                 System.out.println("----------------9---------------");
                 buyerCrewRepository.save(buyerCrew);
+                // EntityManager.persist(buyerCrew);
                 System.out.println("----------------10---------------");
 
         }
