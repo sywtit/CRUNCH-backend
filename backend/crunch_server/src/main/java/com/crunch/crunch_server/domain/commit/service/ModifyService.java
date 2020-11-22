@@ -9,6 +9,8 @@ import com.crunch.crunch_server.domain.commit.mapper.CommitMapper;
 import com.crunch.crunch_server.domain.commit.mapper.CommitPostModificationMapper;
 import com.crunch.crunch_server.domain.commit.repository.ModifyCommitRepoistory;
 import com.crunch.crunch_server.domain.commit.repository.ModifyPostModificationRepository;
+import com.crunch.crunch_server.domain.project.entity.Posts;
+import com.crunch.crunch_server.domain.project.repository.PostRepository;
 import com.crunch.crunch_server.domain.project.service.PostService;
 import com.crunch.crunch_server.util.JwtUtil;
 
@@ -29,6 +31,8 @@ public class ModifyService {
     @Autowired
     private ModifyPostModificationRepository postModificationRepository;
 
+    @Autowired
+    private PostRepository postRespository;
 
     public void saveNewCommit(String token, int projectId, int indexId, ModifyDTO modifyDTO) throws Exception
     {
@@ -82,6 +86,47 @@ public class ModifyService {
 
     }
 
+    public String checkModifying( String token, int postId)
+    {
+        Posts post = postRespository.findByIds(postId);
+        int userId = jwtUtil.getUserId(token);
+
+        Boolean someoneTakenModifying = (post.getModifying() != 0);
+        if(someoneTakenModifying)
+        {
+            return "failed";
+        }
+        else
+        {
+            post.setModifying(1);
+            post.setModifyingUserId(userId);
+
+            postRespository.save(post);
+            
+            return "success";
+        }
+        
+    }
+
+    public Boolean checkModifyingWhenReturnBlob(int postId)
+    {
+        Posts post = postRespository.findByIds(postId);
+        Boolean someoneTakenModifying = (post.getModifying() != 0);
+
+        return someoneTakenModifying;
+    }
+
+    public void setModifiedComplete(int postId)
+    {
+        Posts post = postRespository.findByIds(postId);
+
+        post.setModifying(0);
+        post.setModifyingUserId(-1);
+
+        postRespository.save(post);
+
+    }
+
     private PostModification getPostModificationEntity(String after, String before, Commits commitRevertVersion) throws Exception {
         String diffResult = DiffProvider.getDiffStr(before, after, "Diff");
 
@@ -95,6 +140,7 @@ public class ModifyService {
         postModification.setCommits(commitRevertVersion);
         return postModification;
     }
+
 
 
 }

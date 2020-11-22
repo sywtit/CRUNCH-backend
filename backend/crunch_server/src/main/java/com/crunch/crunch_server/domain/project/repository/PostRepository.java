@@ -25,4 +25,7 @@ public interface PostRepository extends JpaRepository<Posts, Integer> {
      @Transactional
      void savePost(@Param("projectId") Integer projectId, @Param("indexId") Integer indexId);
 
+     @Query(value = "SELECT * FROM posts p WHERE p.id = :postId", nativeQuery = true)
+	Posts findByIds(@Param("postId") Integer postId);
+
 }

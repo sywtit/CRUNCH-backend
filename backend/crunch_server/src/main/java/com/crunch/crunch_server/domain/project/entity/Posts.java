@@ -33,7 +33,12 @@ public class Posts {
     private Integer project_id;
 
     private String complete_post;
+
+    private Integer modifying;
+
+    private Integer modifyingUserId;
     
+
 
     /**
      * @return int return the id
@@ -89,6 +94,34 @@ public class Posts {
      */
     public void setComplete_post(String complete_post) {
         this.complete_post = complete_post;
+    }
+
+    /**
+     * @return Integer return the modifying
+     */
+    public Integer getModifying() {
+        return modifying;
+    }
+
+    /**
+     * @param modifying the modifying to set
+     */
+    public void setModifying(Integer modifying) {
+        this.modifying = modifying;
+    }
+
+    /**
+     * @return Integer return the modifyingUserId
+     */
+    public Integer getModifyingUserId() {
+        return modifyingUserId;
+    }
+
+    /**
+     * @param modifyingUserId the modifyingUserId to set
+     */
+    public void setModifyingUserId(Integer modifyingUserId) {
+        this.modifyingUserId = modifyingUserId;
     }
 
 }

@@ -23,6 +23,10 @@ public class BlobDTO {
     private LocalDateTime time;
     private String s3key;
     private String post;
+    
+    private Boolean modifying;
+    private String hisNickname;
+    private String hisS3key;
 
 
     /**
@@ -54,7 +58,7 @@ public class BlobDTO {
     }
 
     /**
-     * @return Date return the time
+     * @return LocalDateTime return the time
      */
     public LocalDateTime getTime() {
         return time;
@@ -93,6 +97,48 @@ public class BlobDTO {
      */
     public void setPost(String post) {
         this.post = post;
+    }
+
+    /**
+     * @return Boolean return the modifying
+     */
+    public Boolean isModifying() {
+        return modifying;
+    }
+
+    /**
+     * @param modifying the modifying to set
+     */
+    public void setModifying(Boolean modifying) {
+        this.modifying = modifying;
+    }
+
+    /**
+     * @return String return the hisNickname
+     */
+    public String getHisNickname() {
+        return hisNickname;
+    }
+
+    /**
+     * @param hisNickname the hisNickname to set
+     */
+    public void setHisNickname(String hisNickname) {
+        this.hisNickname = hisNickname;
+    }
+
+    /**
+     * @return String return the hisS3key
+     */
+    public String getHisS3key() {
+        return hisS3key;
+    }
+
+    /**
+     * @param hisS3key the hisS3key to set
+     */
+    public void setHisS3key(String hisS3key) {
+        this.hisS3key = hisS3key;
     }
 
 }

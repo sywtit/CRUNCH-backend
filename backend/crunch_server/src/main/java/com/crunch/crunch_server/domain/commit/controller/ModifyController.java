@@ -4,6 +4,7 @@ import com.crunch.crunch_server.diff.DiffProvider;
 import com.crunch.crunch_server.domain.commit.dto.DiffDTO;
 import com.crunch.crunch_server.domain.commit.dto.ModifyDTO;
 import com.crunch.crunch_server.domain.commit.service.ModifyService;
+import com.crunch.crunch_server.domain.project.service.PostService;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,14 +31,8 @@ public class ModifyController {
     @Autowired
     private ModifyService modifyService;
 
-    // @CrossOrigin(origins="*")
-    // @PostMapping("/api/difftest/requestDiff")
-    // @ResponseStatus(value=HttpStatus.OK)
-    // public String showRecentPost(@RequestBody DiffDTO diffDTO) throws Exception 
-    // {
-    //     System.out.println(DiffProvider.getDiffStr(diffDTO.getBefore(), diffDTO.getAfter(),"Diff"));
-    //     return DiffProvider.getDiffStr(diffDTO.getBefore(), diffDTO.getAfter(), "Diff");
-    // }
+    @Autowired
+    private PostService postService;
 
     @CrossOrigin(origins="*")
     @PostMapping("/{projectId}/modify/basicTool/{indexId}")
@@ -48,6 +43,24 @@ public class ModifyController {
         @RequestBody ModifyDTO modifyDTO) throws Exception
     {
         modifyService.saveNewCommit(token, projectId, indexId, modifyDTO);
+
+        int postId = postService.getPostID(projectId, indexId);
+        modifyService.setModifiedComplete(postId);
+
+    }
+
+    @CrossOrigin(origins="*")
+    @PostMapping("/{projectId}/pressModifyButton/{indexId}")
+    @ResponseStatus(value=HttpStatus.OK)
+    public String checkAccessBefore(
+        @RequestHeader(value="token") String token ,
+        @PathVariable int projectId, @PathVariable int indexId
+    )
+    {
+        int postId = postService.getPostID(projectId, indexId);
+
+        return modifyService.checkModifying(token, postId);
+
     }
 
 }

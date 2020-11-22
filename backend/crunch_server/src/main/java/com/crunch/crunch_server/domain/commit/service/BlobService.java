@@ -6,6 +6,8 @@ import com.crunch.crunch_server.domain.commit.entity.Commits;
 import com.crunch.crunch_server.domain.commit.mapper.BlobMapper;
 import com.crunch.crunch_server.domain.commit.mapper.CommitMapper;
 import com.crunch.crunch_server.domain.commit.repository.BlobRepository;
+import com.crunch.crunch_server.domain.project.entity.Posts;
+import com.crunch.crunch_server.domain.project.repository.PostRepository;
 import com.crunch.crunch_server.domain.user.entity.User;
 import com.crunch.crunch_server.domain.user.service.UserService;
 
@@ -25,6 +27,9 @@ public class BlobService {
     @Autowired
     private UserService service;
     private User user;
+
+    @Autowired
+    private PostRepository postRepository;
     
     private String post_now;
 
@@ -37,6 +42,27 @@ public class BlobService {
         post_now = null;
         post_now = blobDTO.getPost();
 
+        return blobDTO;
+    }
+
+    public BlobDTO getProjectBlobWhenNewPostAndModifyingNow(int postId)
+    {
+        Posts post = postRepository.findByIds(postId);
+        User otherUser = service.getUserById(post.getModifyingUserId());
+
+        BlobDTO blobDTO = BlobMapper.Instance.toAddUserDTO(otherUser);
+
+        return blobDTO;
+    }
+
+    public BlobDTO getProjectBlobWhenNotNewPostAndModifyingNow(RecentCommitDTO recentCommitDTO, int postId)
+    {
+        Posts post = postRepository.findByIds(postId);
+        User otherUser = service.getUserById(post.getModifyingUserId());
+
+        user = service.getUserById(recentCommitDTO.getUserId());
+        BlobDTO blobDTO = BlobMapper.Instance.toAddModifyingUserDTO(recentCommitDTO,user,otherUser);
+       
         return blobDTO;
     }
 
