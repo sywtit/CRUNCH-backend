@@ -9,7 +9,9 @@ import com.crunch.crunch_server.domain.crew.service.WriterCrewService;
 import com.crunch.crunch_server.domain.project.dto.PostFeeDTO;
 import com.crunch.crunch_server.domain.project.dto.PostIndexDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectIdDTO;
+import com.crunch.crunch_server.domain.project.repository.ProjectRepository;
 import com.crunch.crunch_server.domain.project.service.PostService;
+import com.crunch.crunch_server.domain.project.service.ProjectService;
 import com.crunch.crunch_server.domain.user.service.UserService;
 import com.crunch.crunch_server.util.JwtUtil;
 
@@ -35,6 +37,9 @@ public class WriterCrewController {
 
     @Autowired
     private WriterCrewService service;
+
+    @Autowired
+    private ProjectRepository projectRepository;
 
     @CrossOrigin(origins = "*")
     @PostMapping("/writerapply")
@@ -70,5 +75,12 @@ public class WriterCrewController {
         System.out.println(userId);
         System.out.println(projectIdDTO.getId());
         return service.getApplyingWriters(projectIdDTO.getId());
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/{projectId}/choosewritertitle")
+    // @ResponseStatus(value = HttpStatus.OK)
+    public String getTitle(@PathVariable int projectId) {
+        return projectRepository.findById(projectId).getTitle();
     }
 }
