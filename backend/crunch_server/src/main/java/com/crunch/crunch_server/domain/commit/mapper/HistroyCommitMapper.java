@@ -31,7 +31,7 @@ public interface HistroyCommitMapper {
             historyDTO.setCommitId(commit.getCommitId());
             historyDTO.setCommit_comment(commit.getCommit_comment());
             historyDTO.setTime(commit.getTime());
-            historyDTO.setWriterName(userRepository.findById(commit.getUserId()).getNickname());
+            historyDTO.setWriterName(userRepository.findByIdNumber(commit.getUserId()).getNickname());
             return historyDTO;
 
         } catch (IOException e) {
