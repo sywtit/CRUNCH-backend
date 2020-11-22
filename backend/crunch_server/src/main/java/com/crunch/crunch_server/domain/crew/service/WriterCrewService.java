@@ -1,7 +1,9 @@
 package com.crunch.crunch_server.domain.crew.service;
 
+import com.crunch.crunch_server.domain.crew.dto.ApplyingWriterDTO;
 import com.crunch.crunch_server.domain.crew.dto.WriterCrewCheckDTO;
 import com.crunch.crunch_server.domain.crew.entity.TmpWriterCrew;
+import com.crunch.crunch_server.domain.crew.entity.WriterCrewIdentity;
 import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
 import com.crunch.crunch_server.domain.crew.mapper.CheckMapper;
 import com.crunch.crunch_server.domain.crew.repository.WriterCrewRepository;
@@ -37,11 +39,19 @@ public class WriterCrewService {
         return checkcrew.getLimit_status() == 0 && checkcrew.getState().equals("selected");
     }
 
-    public void addWriterApply(int userId, String comment) {
-        // WritersCrew writersCrew = new WritersCrew();
-        TmpWriterCrew tmpWriterCrew = new TmpWriterCrew();
-        tmpWriterCrew.setComment(comment);
-        tmpWriterCrew.setUserId(userId);
+    public void addWriterApply(int userId, ApplyingWriterDTO applyingWriterDTO) {
+        WritersCrew writersCrew = new WritersCrew();
+        writersCrew.setComment(applyingWriterDTO.getComment());
+
+        WriterCrewIdentity writerCrewIdentity = new WriterCrewIdentity();
+        writerCrewIdentity.setProjectId(applyingWriterDTO.getProjectId());
+        writerCrewIdentity.setUserId(userId);
+        writersCrew.setWriterCrewIdentity(writerCrewIdentity);
+
+        writerRepository.save(writersCrew);
+        // TmpWriterCrew tmpWriterCrew = new TmpWriterCrew();
+        // tmpWriterCrew.setComment(comment);
+        // tmpWriterCrew.setUserId(userId);
 
     }
 

@@ -39,7 +39,7 @@ public class WriterCrewController {
 
         //
         int userId = jwtUtil.getUserId(token);
-        service.addWriterApply(userId, applyingWriterDTO.getComment());
+        service.addWriterApply(userId, applyingWriterDTO);
 
     }
 

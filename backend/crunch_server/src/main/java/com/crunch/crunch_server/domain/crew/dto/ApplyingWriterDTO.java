@@ -11,4 +11,6 @@ import lombok.Setter;
 @Setter
 public class ApplyingWriterDTO {
     private String comment;
+    private int projectId;
+
 }
