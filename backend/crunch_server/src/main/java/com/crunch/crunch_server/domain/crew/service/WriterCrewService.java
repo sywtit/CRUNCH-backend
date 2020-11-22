@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.crunch.crunch_server.domain.crew.dto.ApplyingWriterDTO;
 import com.crunch.crunch_server.domain.crew.dto.WriterCrewCheckDTO;
+import com.crunch.crunch_server.domain.crew.entity.State;
 import com.crunch.crunch_server.domain.crew.entity.TmpWriterCrew;
 import com.crunch.crunch_server.domain.crew.entity.WriterCrewIdentity;
 import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
@@ -102,6 +103,20 @@ public class WriterCrewService {
         System.out.println(applyingWriterDTOs.size());
 
         return applyingWriterDTOs;
+    }
+
+    public void adoptSelectedWriters(List<Integer> userIdList) {
+        // List<User> userList = new ArrayList<User>();
+        // System.out.println(userIdList.getClass());
+        for (int i = 0; i < userIdList.size(); i++) {
+            System.out.println(userIdList.get(i));
+
+            // User user = userRepository.findById(userIdList.get(i).intValue());
+            // System.out.println(user.getIdentity());
+            WritersCrew writersCrew = writerRepository.findByWriterCrewIdentityUserId(userIdList.get(i).intValue());
+            writersCrew.setState(State.selected);
+            
+        }
     }
 
 }

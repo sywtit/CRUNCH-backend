@@ -83,4 +83,17 @@ public class WriterCrewController {
     public String getTitle(@PathVariable int projectId) {
         return projectRepository.findById(projectId).getTitle();
     }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/{projectId}/submitStartFunding")
+    @ResponseStatus(value = HttpStatus.OK)
+    public int SubmitAndStartFunding(@RequestHeader(value = "token") String token,
+            @RequestBody List<Integer> userIdList) {
+        System.out.println(userIdList);
+
+        service.adoptSelectedWriters(userIdList);
+
+        return 100;
+    }
+
 }
