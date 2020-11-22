@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api")
@@ -55,5 +56,12 @@ public class WriterCrewController {
         System.out.println(mainornot);
         return mainornot;
 
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/{projectId}/choosewriter")
+    public void getApplyingWritersList(@RequestHeader(value = "token") String token, @PathVariable int projectId) {
+        int userId = jwtUtil.getUserId(token);
+        System.out.println(userId);
     }
 }

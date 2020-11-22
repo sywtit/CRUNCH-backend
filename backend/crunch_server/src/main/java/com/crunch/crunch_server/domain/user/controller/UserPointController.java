@@ -3,6 +3,8 @@ package com.crunch.crunch_server.domain.user.controller;
 import com.crunch.crunch_server.domain.user.entity.User;
 import com.crunch.crunch_server.domain.user.respository.UserRepository;
 import com.crunch.crunch_server.domain.user.service.UserService;
+import com.crunch.crunch_server.util.JwtUtil;
+
 import org.springframework.context.annotation.Conditional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,9 @@ public class UserPointController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @CrossOrigin(origins = "*")
     @GetMapping("/point")
     @ResponseStatus(value = HttpStatus.OK)
@@ -50,9 +55,9 @@ public class UserPointController {
 
         // ChargePointDTO chargePointDTO = new ChargePointDTO();
         // int id = chargePointDTO.getId();
-
-        int id = 6;
-        User user = userService.addChargePoint(id, chargePointDTO.getChargePoint());
+        int userId = jwtUtil.getUserId(token);
+        // int id = 6;
+        User user = userService.addChargePoint(userId, chargePointDTO.getChargePoint());
         System.out.println(user.getPoint());
 
         // return();

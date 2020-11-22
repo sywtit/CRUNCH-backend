@@ -5,6 +5,7 @@ import com.crunch.crunch_server.domain.project.dto.PostFeeDTO;
 import com.crunch.crunch_server.domain.project.dto.PostIndexDTO;
 import com.crunch.crunch_server.domain.project.service.PostService;
 import com.crunch.crunch_server.domain.user.service.UserService;
+import com.crunch.crunch_server.util.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,11 +32,14 @@ public class BuyerCrewController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @CrossOrigin(origins = "*")
     @PostMapping("/getfee")
     @ResponseStatus(value = HttpStatus.OK)
     public int getFee(@RequestHeader(value = "token") String token, @RequestBody PostIndexDTO postIndexDTO) {
-        int userId = 6;
+        int userId = jwtUtil.getUserId(token);
         System.out.println(postIndexDTO.getId());
         return postService.getFee(postIndexDTO.getId(), postIndexDTO.getProjectId());
         // postindex 에 접근해서 postid, projectid, 가지고 fee 가져오기
