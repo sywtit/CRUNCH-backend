@@ -10,5 +10,7 @@ import lombok.Setter;
 // @AllArgsConstructor
 @Setter
 public class TmpBuyerCrewDTO {
-    
+    private int postindexId;
+    private int projectId;
+    private int userId;
 }
