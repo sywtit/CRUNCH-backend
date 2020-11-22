@@ -13,10 +13,22 @@ public interface BlobMapper {
     
     BlobMapper Instance = Mappers.getMapper(BlobMapper.class);
 
-    @Mapping(source = "user.name", target = "writerName")
+    @Mapping(source = "user.nickname", target = "writerName")
     @Mapping(source = "recentCommitDTO.s3key", target = "s3key")
+    @Mapping(target="modifying", constant = "false")
     BlobDTO toDTO(RecentCommitDTO recentCommitDTO, User user);
 
+    @Mapping(target="modifying", constant = "true")
+    @Mapping(target="hisNickname", source = "otherUser.nickname")
+    @Mapping(target="hisS3key", source = "otherUser.s3key")
+    BlobDTO toAddUserDTO(User otherUser);
+
+    @Mapping(source = "user.nickname", target = "writerName")
+    @Mapping(source = "recentCommitDTO.s3key", target = "s3key")
+    @Mapping(target="modifying", constant = "true")
+    @Mapping(target="hisNickname", source = "otherUser.nickname")
+    @Mapping(target="hisS3key", source = "otherUser.s3key")
+    BlobDTO toAddModifyingUserDTO(RecentCommitDTO recentCommitDTO, User user, User otherUser);
 
     
 }

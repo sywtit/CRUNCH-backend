@@ -3,6 +3,7 @@ package com.crunch.crunch_server.domain.commit.controller;
 import com.crunch.crunch_server.domain.commit.dto.BlobDTO;
 import com.crunch.crunch_server.domain.commit.dto.RecentCommitDTO;
 import com.crunch.crunch_server.domain.commit.service.BlobService;
+import com.crunch.crunch_server.domain.commit.service.ModifyService;
 import com.crunch.crunch_server.domain.crew.service.WriterCrewService;
 import com.crunch.crunch_server.domain.project.service.PostService;
 
@@ -25,6 +26,9 @@ public class BlobController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private ModifyService modifyService;
+
     ///project/{projectId}/blob/basicTool/{indexId}
     //get: for the blob text
     @CrossOrigin(origins="*")
@@ -32,17 +36,28 @@ public class BlobController {
     public BlobDTO showRecentPost(@PathVariable int projectId, @PathVariable int indexId)
     {
             int postId = postService.getPostID(projectId, indexId);
+            Boolean checkModifying = modifyService.checkModifyingWhenReturnBlob(postId);
+            
             boolean checkNewPost  = (service.getSizeOfCommitList(postId) == 0);
 
-            if(checkNewPost)
+            if(checkNewPost && !checkModifying)
             {
                 service.setPost_now(null);
                 return null;
             }
-            else
+            else if(!checkNewPost && !checkModifying)
             {
                 recentCommitDTO = service.getRecentCommitInfo(postId);
                 return service.getProjectBlob(recentCommitDTO);
+            }
+            else if(checkNewPost && checkModifying)
+            {
+                return service.getProjectBlobWhenNewPostAndModifyingNow(postId);
+            }
+            else
+            {
+                recentCommitDTO = service.getRecentCommitInfo(postId);
+                return service.getProjectBlobWhenNotNewPostAndModifyingNow(recentCommitDTO, postId);
             }
         
     }
