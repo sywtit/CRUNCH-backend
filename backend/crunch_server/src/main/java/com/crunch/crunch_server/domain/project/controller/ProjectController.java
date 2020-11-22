@@ -1,10 +1,13 @@
 // package com.crunch.crunch_server.domain.project.controller;
 package com.crunch.crunch_server.domain.project.controller;
 
+import com.crunch.crunch_server.domain.crew.service.WriterCrewService;
 import com.crunch.crunch_server.domain.project.dto.*;
 
 import com.crunch.crunch_server.domain.project.entity.*;
 import com.crunch.crunch_server.domain.project.service.*;
+import com.crunch.crunch_server.util.JwtUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +25,12 @@ public class ProjectController {
     @Autowired
     private ProjectService service;
 
+    @Autowired
+    private WriterCrewService writerCrewservice;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @CrossOrigin(origins = "*")
     @PostMapping("/project/startup")
     @ResponseStatus(value = HttpStatus.OK)
@@ -29,8 +38,12 @@ public class ProjectController {
         // System.out.println(projectStartDTO.getTitle());
         // 프로젝트를 save
         System.out.println("heeloo");
+        // writerscrew에 메인작가로 등록
+        int userId = jwtUtil.getUserId(token);
 
-        return service.addProject(projectStartDTO);
+        int projectId = service.addProject(projectStartDTO);
+        writerCrewservice.addMainWriter(userId, projectId);
+        return projectId;
     }
 
     @CrossOrigin(origins = "*")

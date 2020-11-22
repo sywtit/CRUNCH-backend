@@ -5,6 +5,7 @@ import com.crunch.crunch_server.domain.crew.service.BuyerCrewService;
 import com.crunch.crunch_server.domain.crew.service.WriterCrewService;
 import com.crunch.crunch_server.domain.project.dto.PostFeeDTO;
 import com.crunch.crunch_server.domain.project.dto.PostIndexDTO;
+import com.crunch.crunch_server.domain.project.dto.ProjectIdDTO;
 import com.crunch.crunch_server.domain.project.service.PostService;
 import com.crunch.crunch_server.domain.user.service.UserService;
 import com.crunch.crunch_server.util.JwtUtil;
@@ -43,4 +44,16 @@ public class WriterCrewController {
 
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping("/mainorapply")
+    @ResponseStatus(value = HttpStatus.OK)
+    public int MainorApply(@RequestHeader(value = "token") String token, @RequestBody ProjectIdDTO projectIdDTO) {
+
+        //
+        int userId = jwtUtil.getUserId(token);
+        int mainornot = service.getMainorApply(userId, projectIdDTO.getId());
+        System.out.println(mainornot);
+        return mainornot;
+
+    }
 }

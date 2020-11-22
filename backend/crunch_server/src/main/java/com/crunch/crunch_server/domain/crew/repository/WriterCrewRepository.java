@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WriterCrewRepository extends JpaRepository<WritersCrew,WriterCrewIdentity>{
+public interface WriterCrewRepository extends JpaRepository<WritersCrew, WriterCrewIdentity> {
 
 	WritersCrew findByWriterCrewIdentityUserId(int userId);
-    
+
+	WritersCrew findByWriterCrewIdentityUserIdAndWriterCrewIdentityProjectId(int userId, int id);
+
 }

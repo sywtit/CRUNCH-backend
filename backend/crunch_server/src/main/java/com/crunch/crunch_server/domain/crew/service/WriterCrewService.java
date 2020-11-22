@@ -61,4 +61,22 @@ public class WriterCrewService {
         user = userRepository.findById(userId);
         return user.getNickname();
     }
+
+    public int getMainorApply(int userId, int id) {
+
+        return writerRepository.findByWriterCrewIdentityUserIdAndWriterCrewIdentityProjectId(userId, id).getMainornot();
+    }
+
+    public void addMainWriter(int userId, int projectId) {
+        WritersCrew writersCrew = new WritersCrew();
+        writersCrew.setComment(null);
+        writersCrew.setMainornot(1);
+        WriterCrewIdentity writerCrewIdentity = new WriterCrewIdentity();
+        writerCrewIdentity.setProjectId(projectId);
+        writerCrewIdentity.setUserId(userId);
+        writersCrew.setWriterCrewIdentity(writerCrewIdentity);
+
+        writerRepository.save(writersCrew);
+
+    }
 }
