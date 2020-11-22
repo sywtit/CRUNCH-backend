@@ -53,6 +53,9 @@ public class BlobService {
 
         BlobDTO blobDTO = BlobMapper.Instance.toAddUserDTO(otherUser);
 
+        post_now = null;
+        post_now = blobDTO.getPost();
+
         return blobDTO;
     }
 
@@ -66,6 +69,9 @@ public class BlobService {
 
         BlobDTO blobDTO = BlobMapper.Instance.toAddModifyingUserDTO(recentCommitDTO,user,otherUser);
        
+        post_now = null;
+        post_now = blobDTO.getPost();
+
         return blobDTO;
     }
 

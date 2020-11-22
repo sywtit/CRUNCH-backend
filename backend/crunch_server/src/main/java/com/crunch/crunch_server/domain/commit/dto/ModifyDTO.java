@@ -2,10 +2,13 @@ package com.crunch.crunch_server.domain.commit.dto;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +27,10 @@ public class ModifyDTO {
     
     private String commit_comment;
 
+    //private List<MultipartFile> files;
+
+   // private MultipartFile[] files;
+
     /**
      * @return String return the after
      */
@@ -39,7 +46,7 @@ public class ModifyDTO {
     }
 
     /**
-     * @return Date return the time
+     * @return LocalDateTime return the time
      */
     public LocalDateTime getTime() {
         return time;
@@ -65,5 +72,6 @@ public class ModifyDTO {
     public void setCommit_comment(String commit_comment) {
         this.commit_comment = commit_comment;
     }
+
 
 }
