@@ -6,13 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+// @NoArgsConstructor
+// @AllArgsConstructor
 @Setter
-public class ApplyingWriterDTO {
-    private String comment;
+public class TmpBuyerCrewDTO {
+    private int postindexId;
     private int projectId;
     private int userId;
-    private String nickname;
-
 }

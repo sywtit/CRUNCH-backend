@@ -122,7 +122,7 @@ public class UserService {
         User user = repository.findById(id);
         int chargeAfter = user.getPoint() + chargePoint;
         user.setPoint(chargeAfter);
-
+        
         User newUser = repository.save(user);
         return newUser;
     }

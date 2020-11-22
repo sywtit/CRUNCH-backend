@@ -6,13 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+// @NoArgsConstructor
+// @AllArgsConstructor
 @Setter
-public class ApplyingWriterDTO {
-    private String comment;
-    private int projectId;
-    private int userId;
-    private String nickname;
+public class TmpWriterCrewDTO {
 
 }

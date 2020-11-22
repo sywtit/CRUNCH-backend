@@ -1,11 +1,17 @@
 package com.crunch.crunch_server.domain.crew.controller;
 
+import java.util.List;
+
 import com.crunch.crunch_server.domain.crew.dto.ApplyingWriterDTO;
+import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
 import com.crunch.crunch_server.domain.crew.service.BuyerCrewService;
 import com.crunch.crunch_server.domain.crew.service.WriterCrewService;
 import com.crunch.crunch_server.domain.project.dto.PostFeeDTO;
 import com.crunch.crunch_server.domain.project.dto.PostIndexDTO;
+import com.crunch.crunch_server.domain.project.dto.ProjectIdDTO;
+import com.crunch.crunch_server.domain.project.repository.ProjectRepository;
 import com.crunch.crunch_server.domain.project.service.PostService;
+import com.crunch.crunch_server.domain.project.service.ProjectService;
 import com.crunch.crunch_server.domain.user.service.UserService;
 import com.crunch.crunch_server.util.JwtUtil;
 
@@ -21,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api")
@@ -31,6 +38,9 @@ public class WriterCrewController {
     @Autowired
     private WriterCrewService service;
 
+    @Autowired
+    private ProjectRepository projectRepository;
+
     @CrossOrigin(origins = "*")
     @PostMapping("/writerapply")
     @ResponseStatus(value = HttpStatus.OK)
@@ -39,8 +49,51 @@ public class WriterCrewController {
 
         //
         int userId = jwtUtil.getUserId(token);
-        service.addWriterApply(userId, applyingWriterDTO.getComment());
+        service.addWriterApply(userId, applyingWriterDTO);
 
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/mainorapply")
+    @ResponseStatus(value = HttpStatus.OK)
+    public int MainorApply(@RequestHeader(value = "token") String token, @RequestBody ProjectIdDTO projectIdDTO) {
+
+        //
+        int userId = jwtUtil.getUserId(token);
+        int mainornot = service.getMainorApply(userId, projectIdDTO.getId());
+        System.out.println(mainornot);
+        return mainornot;
+
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/{projectId}/choosewriter")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<ApplyingWriterDTO> getApplyingWritersList(@RequestHeader(value = "token") String token,
+            @RequestBody ProjectIdDTO projectIdDTO) {
+        int userId = jwtUtil.getUserId(token);
+        System.out.println(userId);
+        System.out.println(projectIdDTO.getId());
+        return service.getApplyingWriters(projectIdDTO.getId());
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/{projectId}/choosewritertitle")
+    // @ResponseStatus(value = HttpStatus.OK)
+    public String getTitle(@PathVariable int projectId) {
+        return projectRepository.findById(projectId).getTitle();
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/{projectId}/submitStartFunding")
+    @ResponseStatus(value = HttpStatus.OK)
+    public int SubmitAndStartFunding(@RequestHeader(value = "token") String token,
+            @RequestBody List<Integer> userIdList) {
+        System.out.println(userIdList);
+
+        service.adoptSelectedWriters(userIdList);
+
+        return 100;
     }
 
 }
