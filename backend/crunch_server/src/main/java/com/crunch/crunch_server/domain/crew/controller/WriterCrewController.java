@@ -64,7 +64,7 @@ public class WriterCrewController {
     @CrossOrigin(origins = "*")
     @PostMapping("/{projectId}/choosewriter")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<WritersCrew> getApplyingWritersList(@RequestHeader(value = "token") String token,
+    public List<ApplyingWriterDTO> getApplyingWritersList(@RequestHeader(value = "token") String token,
             @RequestBody ProjectIdDTO projectIdDTO) {
         int userId = jwtUtil.getUserId(token);
         System.out.println(userId);

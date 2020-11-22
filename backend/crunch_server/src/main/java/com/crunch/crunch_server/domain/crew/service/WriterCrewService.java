@@ -1,5 +1,6 @@
 package com.crunch.crunch_server.domain.crew.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.crunch.crunch_server.domain.crew.dto.ApplyingWriterDTO;
@@ -82,12 +83,25 @@ public class WriterCrewService {
 
     }
 
-    public List<WritersCrew> getApplyingWriters(int project_id) {
+    public List<ApplyingWriterDTO> getApplyingWriters(int project_id) {
         System.out.println("adfsdf");
         System.out.println(project_id);
         List<WritersCrew> applyingWriterList = writerRepository.findByWriterCrewIdentityProjectId(project_id);
 
-        return applyingWriterList;
+        List<ApplyingWriterDTO> applyingWriterDTOs = new ArrayList<ApplyingWriterDTO>();
+        for (int i = 0; i < applyingWriterList.size(); i++) {
+            ApplyingWriterDTO apply = new ApplyingWriterDTO();
+            apply.setComment(applyingWriterList.get(i).getComment());
+            apply.setUserId(applyingWriterList.get(i).getWriterCrewIdentity().getUserId());
+            User user = userRepository.findById(apply.getUserId());
+            apply.setNickname(user.getNickname());
+            apply.setProjectId(applyingWriterList.get(i).getWriterCrewIdentity().getProjectId());
+            applyingWriterDTOs.add(i, apply);
+            System.out.println("heeeeeeellllo");
+        }
+        System.out.println(applyingWriterDTOs.size());
+
+        return applyingWriterDTOs;
     }
 
 }
