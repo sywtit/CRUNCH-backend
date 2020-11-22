@@ -56,8 +56,10 @@ public class UserPointController {
         // ChargePointDTO chargePointDTO = new ChargePointDTO();
         // int id = chargePointDTO.getId();
         int userId = jwtUtil.getUserId(token);
+        System.out.println("--------------------------------------------");
+        System.out.println(userId);
         // int id = 6;
-        User user = userService.addChargePoint(userId, chargePointDTO.getChargePoint());
+        User user = userService.addChargePoint(userId,chargePointDTO.getChargePoint());
         System.out.println(user.getPoint());
 
         // return();
