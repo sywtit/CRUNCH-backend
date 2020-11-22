@@ -108,6 +108,17 @@ public class ModifyService {
         
     }
 
+    public void cancelModifying( String token, int postId)
+    {
+        Posts post = postRespository.findByIds(postId);
+
+        post.setModifying(0);
+        post.setModifyingUserId(-1);
+
+        postRespository.save(post);
+
+    }
+
     public Boolean checkModifyingWhenReturnBlob(int postId)
     {
         Posts post = postRespository.findByIds(postId);

@@ -9,6 +9,7 @@ import com.crunch.crunch_server.domain.commit.repository.BlobRepository;
 import com.crunch.crunch_server.domain.project.entity.Posts;
 import com.crunch.crunch_server.domain.project.repository.PostRepository;
 import com.crunch.crunch_server.domain.user.entity.User;
+import com.crunch.crunch_server.domain.user.respository.UserRepository;
 import com.crunch.crunch_server.domain.user.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +18,17 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BlobService {
-    
+
     @Autowired
     private BlobRepository repository;
 
     @Autowired
-    private UserService service;
-    private User user;
-
+    private UserRepository userRepository;
+    
     @Autowired
     private PostRepository postRepository;
     
@@ -35,7 +36,7 @@ public class BlobService {
 
     public BlobDTO getProjectBlob(RecentCommitDTO recentCommitDTO)
     {
-        user = service.getUserById(recentCommitDTO.getUserId());
+        User user = userRepository.findByIdNumber(recentCommitDTO.getUserId());
 
         BlobDTO blobDTO = BlobMapper.Instance.toDTO(recentCommitDTO,user);
         
@@ -48,7 +49,7 @@ public class BlobService {
     public BlobDTO getProjectBlobWhenNewPostAndModifyingNow(int postId)
     {
         Posts post = postRepository.findByIds(postId);
-        User otherUser = service.getUserById(post.getModifyingUserId());
+        User otherUser = userRepository.findByIdNumber(post.getModifyingUserId());
 
         BlobDTO blobDTO = BlobMapper.Instance.toAddUserDTO(otherUser);
 
@@ -58,9 +59,11 @@ public class BlobService {
     public BlobDTO getProjectBlobWhenNotNewPostAndModifyingNow(RecentCommitDTO recentCommitDTO, int postId)
     {
         Posts post = postRepository.findByIds(postId);
-        User otherUser = service.getUserById(post.getModifyingUserId());
+        
+        User user = userRepository.findByIdNumber(recentCommitDTO.getUserId());
+        
+        User otherUser = userRepository.findByIdNumber(post.getModifyingUserId());
 
-        user = service.getUserById(recentCommitDTO.getUserId());
         BlobDTO blobDTO = BlobMapper.Instance.toAddModifyingUserDTO(recentCommitDTO,user,otherUser);
        
         return blobDTO;

@@ -8,8 +8,10 @@ import com.crunch.crunch_server.domain.project.service.PostService;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JsonParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -53,14 +55,29 @@ public class ModifyController {
     @PostMapping("/{projectId}/pressModifyButton/{indexId}")
     @ResponseStatus(value=HttpStatus.OK)
     public String checkAccessBefore(
-        @RequestHeader(value="token") String token ,
-        @PathVariable int projectId, @PathVariable int indexId
-    )
+        @RequestHeader(value="token") String token,
+        @PathVariable int projectId, @PathVariable int indexId,
+        @RequestBody Map<String, Object> requestString) throws JsonParseException
     {
         int postId = postService.getPostID(projectId, indexId);
 
         return modifyService.checkModifying(token, postId);
 
     }
+
+    @CrossOrigin(origins="*")
+    @PostMapping("/{projectId}/pressModifyCancelButton/{indexId}")
+    @ResponseStatus(value=HttpStatus.OK)
+    public void checkAccessCancel(
+        @RequestHeader(value="token") String token,
+        @PathVariable int projectId, @PathVariable int indexId,
+        @RequestBody Map<String, Object> requestString) throws JsonParseException
+    {
+        int postId = postService.getPostID(projectId, indexId);
+
+        modifyService.cancelModifying(token, postId);
+
+    }
+
 
 }
