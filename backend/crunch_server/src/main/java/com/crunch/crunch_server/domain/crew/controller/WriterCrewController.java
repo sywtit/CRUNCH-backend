@@ -1,6 +1,9 @@
 package com.crunch.crunch_server.domain.crew.controller;
 
+import java.util.List;
+
 import com.crunch.crunch_server.domain.crew.dto.ApplyingWriterDTO;
+import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
 import com.crunch.crunch_server.domain.crew.service.BuyerCrewService;
 import com.crunch.crunch_server.domain.crew.service.WriterCrewService;
 import com.crunch.crunch_server.domain.project.dto.PostFeeDTO;
@@ -59,9 +62,13 @@ public class WriterCrewController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/{projectId}/choosewriter")
-    public void getApplyingWritersList(@RequestHeader(value = "token") String token, @PathVariable int projectId) {
+    @PostMapping("/{projectId}/choosewriter")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<WritersCrew> getApplyingWritersList(@RequestHeader(value = "token") String token,
+            @RequestBody ProjectIdDTO projectIdDTO) {
         int userId = jwtUtil.getUserId(token);
         System.out.println(userId);
+        System.out.println(projectIdDTO.getId());
+        return service.getApplyingWriters(projectIdDTO.getId());
     }
 }

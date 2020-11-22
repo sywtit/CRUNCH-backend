@@ -1,5 +1,7 @@
 package com.crunch.crunch_server.domain.crew.service;
 
+import java.util.List;
+
 import com.crunch.crunch_server.domain.crew.dto.ApplyingWriterDTO;
 import com.crunch.crunch_server.domain.crew.dto.WriterCrewCheckDTO;
 import com.crunch.crunch_server.domain.crew.entity.TmpWriterCrew;
@@ -79,4 +81,13 @@ public class WriterCrewService {
         writerRepository.save(writersCrew);
 
     }
+
+    public List<WritersCrew> getApplyingWriters(int project_id) {
+        System.out.println("adfsdf");
+        System.out.println(project_id);
+        List<WritersCrew> applyingWriterList = writerRepository.findByWriterCrewIdentityProjectId(project_id);
+
+        return applyingWriterList;
+    }
+
 }
