@@ -51,10 +51,7 @@ public class BlobService {
         User user = userRepository.findByIdNumber(recentCommitDTO.getUserId());
 
         //find post detail list
-        int commitId = recentCommitDTO.getId();
-        PostModification postModification = PMrepository.findByCommitId(commitId);
-        List<PostLineDetail> postLineDetailList = postDetailRepository.findAllByIdOrderedByLineNum(recentCommitDTO.getPostId(),postModification.getAfterPostLength());
-        List<PostLineDetailDTO> lineDTO = PostDetailMapper.Instance.toPostDetailListDTO(postLineDetailList);
+        List<PostLineDetailDTO> lineDTO = getPostDetailList(recentCommitDTO);
         
         BlobDTO blobDTO = BlobMapper.Instance.toDTO(recentCommitDTO,user,lineDTO);
         
@@ -63,6 +60,7 @@ public class BlobService {
 
         return blobDTO;
     }
+
 
     public BlobDTO getProjectBlobWhenNewPostAndModifyingNow(int postId)
     {
@@ -86,10 +84,7 @@ public class BlobService {
         User otherUser = userRepository.findByIdNumber(post.getModifyingUserId());
 
         //find post detail list
-        int commitId = recentCommitDTO.getId();
-        PostModification postModification = PMrepository.findByCommitId(commitId);
-        List<PostLineDetail> postLineDetailList = postDetailRepository.findAllByIdOrderedByLineNum(recentCommitDTO.getPostId(),postModification.getAfterPostLength());
-        List<PostLineDetailDTO> lineDTO = PostDetailMapper.Instance.toPostDetailListDTO(postLineDetailList);
+        List<PostLineDetailDTO> lineDTO = getPostDetailList(recentCommitDTO);
         
         BlobDTO blobDTO = BlobMapper.Instance.toAddModifyingUserDTO(recentCommitDTO,user,otherUser,lineDTO);
        
@@ -115,6 +110,13 @@ public class BlobService {
         return commits.size();
     }
 
+    private List<PostLineDetailDTO> getPostDetailList(RecentCommitDTO recentCommitDTO) {
+        int commitId = recentCommitDTO.getId();
+        PostModification postModification = PMrepository.findByCommitId(commitId);
+        List<PostLineDetail> postLineDetailList = postDetailRepository.findAllByIdOrderedByLineNum(recentCommitDTO.getPostId(),postModification.getAfterPostLength());
+        List<PostLineDetailDTO> lineDTO = PostDetailMapper.Instance.toPostDetailListDTO(postLineDetailList);
+        return lineDTO;
+    }
     
   
     /**
