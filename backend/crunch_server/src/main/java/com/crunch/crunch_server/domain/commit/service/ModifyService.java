@@ -179,17 +179,17 @@ public class ModifyService {
 
         for(int i =3; i<lengthShowLine.length; i++)
         {
-            String[] detailResult = lengthShowLine[i].split("+|-");
 
             if(lengthShowLine[i].startsWith("+<"))
             {
-                PostLineDetail postDetail = PostDetailMapper.Instance.postDetailToEntity(postId, detailResult[1],userRepository.findByIdNumber(userId).getNickname(),realLineCount );
+                String detailResult = lengthShowLine[i].replace("+","");
+                PostLineDetail postDetail = PostDetailMapper.Instance.postDetailToEntity(postId, detailResult,userRepository.findByIdNumber(userId).getNickname(),realLineCount );
                 commitDetailRepository.save(postDetail);
                 realLineCount++;
 
             }
 
-            else if(lengthShowLine[i].startsWith("-<"))
+            else if(lengthShowLine[i].startsWith("-<") || lengthShowLine[i].startsWith("-new post!"))
             {
                // realLineCount--;
                // do nothing db have this
@@ -198,7 +198,7 @@ public class ModifyService {
 
             else
             {
-                PostLineDetail postDetail = PostDetailMapper.Instance.postDetailToEntity(postId, detailResult[1],userRepository.findByIdNumber(userId).getNickname(),realLineCount );
+                PostLineDetail postDetail = PostDetailMapper.Instance.postDetailToEntity(postId,lengthShowLine[i],userRepository.findByIdNumber(userId).getNickname(),realLineCount );
                 commitDetailRepository.save(postDetail);
                 realLineCount++;
             }
