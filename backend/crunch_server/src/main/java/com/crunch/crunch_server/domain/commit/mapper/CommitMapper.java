@@ -14,6 +14,7 @@ public interface CommitMapper  {
 
     CommitMapper Instance = Mappers.getMapper(CommitMapper.class);
 
+    @Mapping(source = "commit.commitId", target = "id")
     RecentCommitDTO toRecentDTO(Commits commit);
 
 

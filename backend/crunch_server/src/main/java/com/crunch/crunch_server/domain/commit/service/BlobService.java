@@ -112,7 +112,9 @@ public class BlobService {
 
     private List<PostLineDetailDTO> getPostDetailList(RecentCommitDTO recentCommitDTO) {
         int commitId = recentCommitDTO.getId();
+        System.out.println(commitId);
         PostModification postModification = PMrepository.findByCommitId(commitId);
+        System.out.println(recentCommitDTO.getPostId());
         List<PostLineDetail> postLineDetailList = postDetailRepository.findAllByIdOrderedByLineNum(recentCommitDTO.getPostId(),postModification.getAfterPostLength());
         List<PostLineDetailDTO> lineDTO = PostDetailMapper.Instance.toPostDetailListDTO(postLineDetailList);
         return lineDTO;
