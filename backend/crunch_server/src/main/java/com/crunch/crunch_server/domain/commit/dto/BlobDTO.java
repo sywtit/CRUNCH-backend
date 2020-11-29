@@ -2,6 +2,7 @@ package com.crunch.crunch_server.domain.commit.dto;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -23,6 +24,7 @@ public class BlobDTO {
     private LocalDateTime time;
     private String s3key;
     private String post;
+    private List<PostLineDetailDTO> postDetailList;
     
     private Boolean modifying;
     private String hisNickname;
@@ -97,6 +99,20 @@ public class BlobDTO {
      */
     public void setPost(String post) {
         this.post = post;
+    }
+
+    /**
+     * @return List<PostLineDetail> return the postDetailList
+     */
+    public List<PostLineDetailDTO> getPostDetailList() {
+        return postDetailList;
+    }
+
+    /**
+     * @param postDetailList the postDetailList to set
+     */
+    public void setPostDetailList(List<PostLineDetailDTO> postDetailList) {
+        this.postDetailList = postDetailList;
     }
 
     /**

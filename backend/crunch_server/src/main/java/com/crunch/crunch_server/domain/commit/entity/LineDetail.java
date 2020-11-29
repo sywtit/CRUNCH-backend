@@ -24,7 +24,6 @@ public class LineDetail {
     private String type;
     private int isEmpty;
     private String s3key;
- 
 
 
     /**
