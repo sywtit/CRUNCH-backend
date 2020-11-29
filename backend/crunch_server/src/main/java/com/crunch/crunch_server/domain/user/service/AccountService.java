@@ -60,4 +60,15 @@ public class AccountService {
         }
         return accountDTOs;
     }
+
+    public void addnewAccount(AccountDTO accountDTO, int userId) {
+        Account account = new Account();
+        account.setUserId(userId);
+        account.setAccountHolder(accountDTO.getAccountHolder());
+        account.setAccount_num(accountDTO.getAccount_num());
+        account.setBank(accountDTO.getBank());
+        repository.save(account);
+        
+
+	}
 }

@@ -65,4 +65,15 @@ public class AccountController {
 
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping("/submitaccount")
+    @ResponseStatus(value = HttpStatus.OK)
+    public int addAccount(@RequestHeader(value = "token") String token, @RequestBody AccountDTO accountDTO) {
+        System.out.println("heooollll");
+        int userId = jwtUtil.getUserId(token);
+        accountService.addnewAccount(accountDTO, userId);
+
+        return 100;
+    }
+
 }
