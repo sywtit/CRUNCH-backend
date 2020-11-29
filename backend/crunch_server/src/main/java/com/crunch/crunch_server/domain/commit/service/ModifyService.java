@@ -19,15 +19,19 @@ import com.crunch.crunch_server.diff.DiffProvider;
 import com.crunch.crunch_server.domain.commit.dto.CommitHistoryRevertDTO;
 import com.crunch.crunch_server.domain.commit.dto.ModifyDTO;
 import com.crunch.crunch_server.domain.commit.entity.Commits;
+import com.crunch.crunch_server.domain.commit.entity.PostLineDetail;
 import com.crunch.crunch_server.domain.commit.entity.PostModification;
 import com.crunch.crunch_server.domain.commit.mapper.CommitMapper;
 import com.crunch.crunch_server.domain.commit.mapper.CommitPostModificationMapper;
+import com.crunch.crunch_server.domain.commit.mapper.PostDetailMapper;
 import com.crunch.crunch_server.domain.commit.repository.BlobRepository;
+import com.crunch.crunch_server.domain.commit.repository.CommitDetailRepository;
 import com.crunch.crunch_server.domain.commit.repository.ModifyCommitRepoistory;
 import com.crunch.crunch_server.domain.commit.repository.ModifyPostModificationRepository;
 import com.crunch.crunch_server.domain.project.entity.Posts;
 import com.crunch.crunch_server.domain.project.repository.PostRepository;
 import com.crunch.crunch_server.domain.project.service.PostService;
+import com.crunch.crunch_server.domain.user.respository.UserRepository;
 import com.crunch.crunch_server.s3.S3Uploader;
 import com.crunch.crunch_server.s3.S3Service;
 import com.crunch.crunch_server.util.JwtUtil;
@@ -62,6 +66,10 @@ public class ModifyService {
     private PostRepository postRespository;
     @Autowired
     private BlobRepository blobRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private CommitDetailRepository commitDetailRepository;
 
     private MultipartFile[] wholeFiles;
 
@@ -81,9 +89,17 @@ public class ModifyService {
 
         String before = blobService.getPost_now();
 
-
         String after = modifyDTO.getAfter().replace("</p>", "</p>\n");
-
+        after = after.replace("</h1>", "</h1>\n");
+        after = after.replace("</h2>", "</h2>\n");
+        after = after.replace("</h3>", "</h3>\n");
+        after = after.replace("</code>", "</code>\n");
+        after = after.replace("</li>", "</li>\n");
+        after = after.replace("</blockquote>", "</blockquote>\n");
+        after = after.replace("</hr>", "</hr>\n");
+//nothing changes
+//-
+//+
 
 
     //     String reg = "<img(?:.*?)>";
@@ -155,7 +171,40 @@ public class ModifyService {
         PostModification postModification = getPostModificationEntity(modifyDTO.getAfter(), before, commit);
 
         postModificationRepository.save(postModification);
-        
+
+        //post line detail
+        String diffResult = postModification.getDiffResult();
+        String[] lengthShowLine = diffResult.split("\n");
+        int realLineCount = 0;
+
+        for(int i =3; i<lengthShowLine.length; i++)
+        {
+            String[] detailResult = lengthShowLine[i].split("+|-");
+
+            if(lengthShowLine[i].startsWith("+<"))
+            {
+                PostLineDetail postDetail = PostDetailMapper.Instance.postDetailToEntity(postId, detailResult[1],userRepository.findByIdNumber(userId).getNickname(),realLineCount );
+                commitDetailRepository.save(postDetail);
+                realLineCount++;
+
+            }
+
+            else if(lengthShowLine[i].startsWith("-<"))
+            {
+               // realLineCount--;
+               // do nothing db have this
+
+            }
+
+            else
+            {
+                PostLineDetail postDetail = PostDetailMapper.Instance.postDetailToEntity(postId, detailResult[1],userRepository.findByIdNumber(userId).getNickname(),realLineCount );
+                commitDetailRepository.save(postDetail);
+                realLineCount++;
+            }
+
+        }
+
         //line detail -> after s3 connection!
 
     }
@@ -167,6 +216,14 @@ public class ModifyService {
         //get after string from commitId
         Commits commit = commitRepoistory.findByCommitId(commitId);
         String after = commit.getPost().replace("</p>", "</p>\n");
+        after = after.replace("</h1>", "</h1>\n");
+        after = after.replace("</h2>", "</h2>\n");
+        after = after.replace("</h3>", "</h3>\n");
+        after = after.replace("</code>", "</code>\n");
+        after = after.replace("</li>", "</li>\n");
+        after = after.replace("</blockquote>", "</blockquote>\n");
+        after = after.replace("</hr>", "</hr>\n");
+        
         String before = blobService.getPost_now();
         blobService.setPost_now(after);
 

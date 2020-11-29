@@ -13,12 +13,9 @@ public class LineDetailIdentity implements Serializable
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id")
     PostModification postModification;
-
     private int lineNumber;
 
   
-
-
     /**
      * @return int return the lineNumber
      */
