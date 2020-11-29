@@ -15,6 +15,7 @@ import com.crunch.crunch_server.domain.user.dto.UserInfoDTO;
 import com.crunch.crunch_server.domain.user.dto.UserPointDTO;
 import com.crunch.crunch_server.domain.user.dto.ChargePointDTO;
 import com.crunch.crunch_server.domain.user.dto.SessionRequestDTO;
+import com.crunch.crunch_server.domain.user.entity.Account;
 import com.crunch.crunch_server.domain.user.entity.User;
 import com.crunch.crunch_server.domain.user.mapper.UserChargePointMapper;
 import com.crunch.crunch_server.domain.user.mapper.UserInfoMapper;
@@ -136,4 +137,6 @@ public class UserService {
         User newUser = repository.save(user);
         return newUser;
     }
+
+    
 }

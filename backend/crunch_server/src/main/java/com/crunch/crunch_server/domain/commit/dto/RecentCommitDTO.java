@@ -1,17 +1,10 @@
 package com.crunch.crunch_server.domain.commit.dto;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
-import javax.persistence.GeneratedValue;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,18 +12,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecentCommitDTO {
-    
+
     private int id;
     private int postId;
     private int userId;
     private String commit_comment;
-    
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime time;
     private String s3key;
     private String post;
 
-    
     /**
      * @return int return the id
      */
