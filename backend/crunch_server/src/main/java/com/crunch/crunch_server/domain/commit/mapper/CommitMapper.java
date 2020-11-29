@@ -30,4 +30,5 @@ public interface CommitMapper  {
     @Mapping(source="chrDTO.time", target="time")
     @Mapping(source="chrDTO.commit_comment", target="commit_comment")
     Commits toHistoryCommitsEntity(Integer postId, Integer userId, String after, CommitHistoryRevertDTO chrDTO);
+
 }

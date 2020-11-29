@@ -1,11 +1,17 @@
 package com.crunch.crunch_server.domain.commit.service;
 
 import com.crunch.crunch_server.domain.commit.dto.BlobDTO;
+import com.crunch.crunch_server.domain.commit.dto.PostLineDetailDTO;
 import com.crunch.crunch_server.domain.commit.dto.RecentCommitDTO;
 import com.crunch.crunch_server.domain.commit.entity.Commits;
+import com.crunch.crunch_server.domain.commit.entity.PostLineDetail;
+import com.crunch.crunch_server.domain.commit.entity.PostModification;
 import com.crunch.crunch_server.domain.commit.mapper.BlobMapper;
 import com.crunch.crunch_server.domain.commit.mapper.CommitMapper;
+import com.crunch.crunch_server.domain.commit.mapper.PostDetailMapper;
 import com.crunch.crunch_server.domain.commit.repository.BlobRepository;
+import com.crunch.crunch_server.domain.commit.repository.CommitDetailRepository;
+import com.crunch.crunch_server.domain.commit.repository.ModifyPostModificationRepository;
 import com.crunch.crunch_server.domain.project.entity.Posts;
 import com.crunch.crunch_server.domain.project.repository.PostRepository;
 import com.crunch.crunch_server.domain.user.entity.User;
@@ -31,20 +37,30 @@ public class BlobService {
     
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private CommitDetailRepository postDetailRepository;
     
+    @Autowired
+    private ModifyPostModificationRepository PMrepository;
+
     private String post_now;
 
     public BlobDTO getProjectBlob(RecentCommitDTO recentCommitDTO)
     {
         User user = userRepository.findByIdNumber(recentCommitDTO.getUserId());
 
-        BlobDTO blobDTO = BlobMapper.Instance.toDTO(recentCommitDTO,user);
+        //find post detail list
+        List<PostLineDetailDTO> lineDTO = getPostDetailList(recentCommitDTO);
+        
+        BlobDTO blobDTO = BlobMapper.Instance.toDTO(recentCommitDTO,user,lineDTO);
         
         post_now = null;
         post_now = blobDTO.getPost();
 
         return blobDTO;
     }
+
 
     public BlobDTO getProjectBlobWhenNewPostAndModifyingNow(int postId)
     {
@@ -67,7 +83,10 @@ public class BlobService {
         
         User otherUser = userRepository.findByIdNumber(post.getModifyingUserId());
 
-        BlobDTO blobDTO = BlobMapper.Instance.toAddModifyingUserDTO(recentCommitDTO,user,otherUser);
+        //find post detail list
+        List<PostLineDetailDTO> lineDTO = getPostDetailList(recentCommitDTO);
+        
+        BlobDTO blobDTO = BlobMapper.Instance.toAddModifyingUserDTO(recentCommitDTO,user,otherUser,lineDTO);
        
         post_now = null;
         post_now = blobDTO.getPost();
@@ -91,6 +110,13 @@ public class BlobService {
         return commits.size();
     }
 
+    private List<PostLineDetailDTO> getPostDetailList(RecentCommitDTO recentCommitDTO) {
+        int commitId = recentCommitDTO.getId();
+        PostModification postModification = PMrepository.findByCommitId(commitId);
+        List<PostLineDetail> postLineDetailList = postDetailRepository.findAllByIdOrderedByLineNum(recentCommitDTO.getPostId(),postModification.getAfterPostLength());
+        List<PostLineDetailDTO> lineDTO = PostDetailMapper.Instance.toPostDetailListDTO(postLineDetailList);
+        return lineDTO;
+    }
     
   
     /**
