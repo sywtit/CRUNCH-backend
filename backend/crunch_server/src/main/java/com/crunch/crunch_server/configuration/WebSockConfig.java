@@ -14,15 +14,15 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer{
     //sub: receive
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/sub");
-        config.setApplicationDestinationPrefixes("/pub");
+        config.enableSimpleBroker("/send");
+        //config.setApplicationDestinationPrefixes("/pub");
     }
 
     //stomp websocket connection endpoint
     //://localhost:3000/ws-stomp
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws-stomp").setAllowedOrigins("*")
+        registry.addEndpoint("/").setAllowedOrigins("*")
                 .withSockJS();
     }
 }
