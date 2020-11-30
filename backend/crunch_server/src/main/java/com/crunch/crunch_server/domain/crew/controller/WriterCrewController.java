@@ -2,6 +2,7 @@ package com.crunch.crunch_server.domain.crew.controller;
 
 import java.util.List;
 
+import com.amazonaws.services.codebuild.model.Project;
 import com.crunch.crunch_server.domain.crew.dto.ApplyingWriterDTO;
 import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
 import com.crunch.crunch_server.domain.crew.service.BuyerCrewService;
@@ -40,6 +41,9 @@ public class WriterCrewController {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private ProjectService projectService;
 
     @CrossOrigin(origins = "*")
     @PostMapping("/writerapply")
@@ -92,6 +96,20 @@ public class WriterCrewController {
         System.out.println(userIdList);
 
         service.adoptSelectedWriters(userIdList);
+
+        return 100;
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/endFunding")
+    @ResponseStatus(value = HttpStatus.OK)
+    public int endFunding(@RequestHeader(value = "token") String token, @RequestBody ProjectIdDTO projectIdDTO) {
+
+        // userid 와 projectid 를 받아오고
+        int userId = jwtUtil.getUserId(token);
+
+        // project state를 writing으로 변경
+        projectService.changeProjectStateWriting(projectIdDTO.getId());
 
         return 100;
     }

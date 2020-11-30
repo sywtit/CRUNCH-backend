@@ -14,6 +14,9 @@ import javax.annotation.Resource;
 import com.crunch.crunch_server.domain.user.dto.UserDTO;
 import com.crunch.crunch_server.domain.user.dto.UserInfoDTO;
 import com.crunch.crunch_server.domain.user.dto.UserPointDTO;
+import com.crunch.crunch_server.domain.project.entity.PostIndex;
+import com.crunch.crunch_server.domain.project.entity.Project;
+import com.crunch.crunch_server.domain.project.repository.ProjectRepository;
 import com.crunch.crunch_server.domain.user.dto.AccountDTO;
 import com.crunch.crunch_server.domain.user.dto.ChargePointDTO;
 import com.crunch.crunch_server.domain.user.dto.SessionRequestDTO;
@@ -36,6 +39,12 @@ public class AccountService {
 
     @Autowired
     private AccountRepository repository;
+
+    @Autowired
+    private ProjectRepository projectRepository;
+
+    @Autowired
+    private ProjectRepository postIndexRepository;
 
     public List<AccountDTO> getAllAccountsById(int userId) {
         System.out.println(userId);
@@ -68,7 +77,17 @@ public class AccountService {
         account.setAccount_num(accountDTO.getAccount_num());
         account.setBank(accountDTO.getBank());
         repository.save(account);
-        
 
-	}
+    }
+
+    public void getAllProfit(int userId) {
+        List<Project> projectList = projectRepository.findByUserId(userId);
+        List<Integer> projectIdList = new ArrayList<Integer>();
+        for (int i = 0; i < projectList.size(); i++) {
+            projectIdList.add(i, projectList.get(i).getId());
+        }
+
+        List<PostIndex> postIndexs = postIndexRepository.findById(id);
+
+    }
 }
