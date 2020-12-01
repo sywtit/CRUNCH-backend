@@ -2,10 +2,7 @@ package com.crunch.crunch_server.configuration;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.crunch.crunch_server.util.JwtInterceptor;
 import com.crunch.crunch_server.util.JwtUtil;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

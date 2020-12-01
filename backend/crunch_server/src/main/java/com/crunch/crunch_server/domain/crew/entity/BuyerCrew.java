@@ -1,6 +1,7 @@
 package com.crunch.crunch_server.domain.crew.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,48 +43,9 @@ import lombok.Setter;
 @IdClass(BuyerCrew.class)
 public class BuyerCrew implements Serializable {
 
-    @Id
-    @ManyToOne
-    @JoinColumns({ @JoinColumn(name = "postindex_projectId", referencedColumnName = "projectId"),
-            @JoinColumn(name = "postindex_id", referencedColumnName = "id") })
-    private PostIndex postIndex;
-    // @ManyToOne
-    // @JoinColumn(name = "postindex_projectId", referencedColumnName = "projectId")
-    // private PostIndex postIndexProjectId;
+    @EmbeddedId
+    private BuyerCrewIdentity buyerCrewIdentity;
 
-    // @OneToOne
-    // @JoinColumn(name = "postindex_id", referencedColumnName = "id")
-    // private PostIndex postIndex;
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
-    // @EmbeddedId
-    // private BuyerCrewIdentity buyerCrewIdentity;
-
-    // @Id
-    // @GeneratedValue
-    // private int postindexId;
-    // private int projectId;
-    // private int userId;
-
-    // // @Column(name = "projectId", insertable = false, updatable = false)
-    // // @ManyToOne(cascade = CascadeType.ALL)
-    // @ManyToOne(fetch = FetchType.EAGER)
-    // @JoinColumn(name = "id", insertable = false, updatable = false)
-    // private Project project;
-
-    // // @Column(name = "userId", insertable = false, updatable = false)
-    // // @ManyToOne(cascade = CascadeType.ALL)
-    // @ManyToOne(fetch = FetchType.EAGER)
-    // @JoinColumn(name = "id", insertable = false, updatable = false)
-    // private User user;
-
-    // // @Column(name = "postindexId", insertable = false, updatable = false)
-    // // @OneToOne(cascade = CascadeType.ALL)
-    // @OneToOne(fetch = FetchType.EAGER)
-    // @JoinColumn(name = "id", insertable = false, updatable = false)
-    // private PostIndex postIndex;
+    private Date purchaseDate;
 
 }

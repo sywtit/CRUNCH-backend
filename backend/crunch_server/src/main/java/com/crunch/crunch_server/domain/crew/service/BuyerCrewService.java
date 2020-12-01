@@ -1,12 +1,7 @@
 package com.crunch.crunch_server.domain.crew.service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-
-import com.crunch.crunch_server.domain.crew.dto.BuyerCrewDTO;
 import com.crunch.crunch_server.domain.crew.entity.BuyerCrew;
-import com.crunch.crunch_server.domain.crew.entity.BuyerCrewEntity;
-import com.crunch.crunch_server.domain.crew.entity.TmpBuyerCrew;
+import com.crunch.crunch_server.domain.crew.entity.BuyerCrewIdentity;
 // import com.crunch.crunch_server.domain.crew.entity.BuyerCrewIdentity;
 import com.crunch.crunch_server.domain.crew.repository.BuyerCrewRepository;
 import com.crunch.crunch_server.domain.project.entity.PostIndex;
@@ -36,38 +31,20 @@ public class BuyerCrewService {
 
         public void addBuyerCrew(int postIndex, int projectId, int userId) {
 
-                TmpBuyerCrew tmpBuyerCrew = new TmpBuyerCrew();
-                tmpBuyerCrew.setPostindexId(postIndex);
-                tmpBuyerCrew.setProjectId(projectId);
-                tmpBuyerCrew.setUserId(userId);
-                System.out.println("----------------3---------------");
-                buyerCrewRepository.save(tmpBuyerCrew);
-                System.out.println("----------------4---------------");
-                // BuyerCrew buyerCrew = new BuyerCrew();
-
+                // TmpBuyerCrew tmpBuyerCrew = new TmpBuyerCrew();
+                // tmpBuyerCrew.setPostindexId(postIndex);
+                // tmpBuyerCrew.setProjectId(projectId);
+                // tmpBuyerCrew.setUserId(userId);
                 // System.out.println("----------------3---------------");
-                // User user = userRepository.findById(userId);
-
+                // buyerCrewRepository.save(tmpBuyerCrew);
                 // System.out.println("----------------4---------------");
-                // Project project;
-
-                // System.out.println("----------------5---------------");
-                // project = projectRepository.findById(projectId);
-
-                // System.out.println("----------------6---------------");
-                // PostIndex postIndexEntity =
-                // postIndexRepository.findByIdAndProjectId(postIndex, project.getId());
-                // System.out.println("----------------7---------------");
-                // buyerCrew.setPostIndex(postIndexEntity);
-                // System.out.println("----------------8---------------");
-
-                // buyerCrew.setUser(user);
-                // System.out.println(buyerCrew.getUser().getId());
-
-                // System.out.println("----------------9---------------");
-                // buyerCrewRepository.save(buyerCrew);
-                // // EntityManager.persist(buyerCrew);
-                // System.out.println("----------------10---------------");
+                BuyerCrew buyerCrew = new BuyerCrew();
+                BuyerCrewIdentity buyerCrewIdentity = new BuyerCrewIdentity();
+                buyerCrewIdentity.setPostindexId(postIndex);
+                buyerCrewIdentity.setProjectId(projectId);
+                buyerCrewIdentity.setUserId(userId);
+                buyerCrew.setBuyerCrewIdentity(buyerCrewIdentity);
+                buyerCrewRepository.save(buyerCrew);
 
         }
 

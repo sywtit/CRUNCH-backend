@@ -55,4 +55,12 @@ public class ProjectService {
         return projectStartDTO;
     }
 
+    public void changeProjectStateWriting(int projectId) {
+        Project project = repository.findById(projectId);
+        project.setState("writing");
+
+        repository.save(project);
+
+    }
+
 }

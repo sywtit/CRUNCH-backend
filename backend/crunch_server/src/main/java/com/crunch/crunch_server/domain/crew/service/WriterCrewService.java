@@ -29,15 +29,16 @@ public class WriterCrewService {
 
     private User user;
 
-    public Boolean isWriter(int userId) {
-        WritersCrew writercrew = writerRepository.findByWriterCrewIdentityUserId(userId);
-        WriterCrewCheckDTO checkcrew = CheckMapper.Instance.toDTO(writercrew);
+    // public Boolean isWriter(int userId) {
+    // WritersCrew writercrew =
+    // writerRepository.findByWriterCrewIdentityUserId(userId);
+    // WriterCrewCheckDTO checkcrew = CheckMapper.Instance.toDTO(writercrew);
 
-        if (hasWriterStatus(checkcrew))
-            return true;
-        else
-            return false;
-    }
+    // if (hasWriterStatus(checkcrew))
+    // return true;
+    // else
+    // return false;
+    // }
 
     private boolean hasWriterStatus(WriterCrewCheckDTO checkcrew) {
         return checkcrew.getLimit_status() == 0 && checkcrew.getState().equals("selected");
@@ -105,7 +106,7 @@ public class WriterCrewService {
         return applyingWriterDTOs;
     }
 
-    public void adoptSelectedWriters(List<Integer> userIdList) {
+    public void adoptSelectedWriters(List<Integer> userIdList, int projectId) {
         // List<User> userList = new ArrayList<User>();
         // System.out.println(userIdList.getClass());
         for (int i = 0; i < userIdList.size(); i++) {
@@ -113,9 +114,12 @@ public class WriterCrewService {
 
             // User user = userRepository.findById(userIdList.get(i).intValue());
             // System.out.println(user.getIdentity());
-            WritersCrew writersCrew = writerRepository.findByWriterCrewIdentityUserId(userIdList.get(i).intValue());
+            // WritersCrew writersCrew =
+            // writerRepository.findByWriterCrewIdentityUserId(userIdList.get(i).intValue());
+            WritersCrew writersCrew = writerRepository
+                    .findByWriterCrewIdentityUserIdAndWriterCrewIdentityProjectId(userIdList.get(i), projectId);
             writersCrew.setState(State.selected);
-            
+
         }
     }
 

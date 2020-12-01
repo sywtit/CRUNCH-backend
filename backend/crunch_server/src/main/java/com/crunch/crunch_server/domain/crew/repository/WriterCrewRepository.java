@@ -11,10 +11,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WriterCrewRepository extends JpaRepository<WritersCrew, WriterCrewIdentity> {
 
-	WritersCrew findByWriterCrewIdentityUserId(int userId);
+	// WritersCrew findByWriterCrewIdentityUserId(int userId);
 
 	WritersCrew findByWriterCrewIdentityUserIdAndWriterCrewIdentityProjectId(int userId, int id);
 
 	List<WritersCrew> findByWriterCrewIdentityProjectId(int project_id);
+
+	List<WritersCrew> findByWriterCrewIdentityUserId(int userId);
 
 }
