@@ -21,11 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.crunch.crunch_server.domain.crew.service.BuyerCrewService;
 import com.crunch.crunch_server.domain.project.dto.ProjectIdDTO;
 import com.crunch.crunch_server.domain.user.dto.AccountDTO;
 import com.crunch.crunch_server.domain.user.dto.ChargePointDTO;
+import com.crunch.crunch_server.domain.user.dto.EachIndexProfitDTO;
+import com.crunch.crunch_server.domain.user.dto.EachMonthProfitDTO;
 import com.crunch.crunch_server.domain.user.dto.UserIdDTO;
 import com.crunch.crunch_server.domain.user.dto.UserPointDTO;
 import com.crunch.crunch_server.domain.user.entity.User;
@@ -42,6 +46,9 @@ public class AccountController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BuyerCrewService buyerCrewService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -78,18 +85,42 @@ public class AccountController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/getAllProfit")
+    @PostMapping("/getEachMonthOfMyProfit")
     @ResponseStatus(value = HttpStatus.OK)
-    public int getAllProfitTableData(@RequestHeader(value = "token") String token, @RequestBody UserIdDTO userIdDTO) {
+    public List<List<EachMonthProfitDTO>> getEachMonthOfMyProfit(@RequestHeader(value = "token") String token,
+            @RequestBody UserIdDTO userIdDTO) {
         int userId = jwtUtil.getUserId(token);
         // userId로 프로젝트 목록 가져오고
         // 가져온 프로젝트 별로 목차, 내 정산 비율 가져오고
         // 목차별로 가격가져오고
         // 목차별로 buyercrew 날짜, 가져오기
+        List<Integer> projectIdList = accountService.getProjectIdListOfUser(userId);
+        List<List<EachMonthProfitDTO>> eList = new ArrayList<List<EachMonthProfitDTO>>();
+        for (Integer projectId : projectIdList) {
+            eList.add(accountService.getEachMonthOfProfitForUser(userId, projectId));
+        }
+        // accountService.getAllPostIndexLists(userId);
+        // accountService.getMoneyPercentForEachProject(userId);
+        // accountService.getWritersCrewListOfUser(userId);
 
-        accountService.getAllProfit(userId);
+        return eList;
+    }
 
-        return 100;
+    @CrossOrigin(origins = "*")
+    @PostMapping("/getAllProjectProfitForEachIndex")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<List<EachIndexProfitDTO>> getAllProjectProfitForEachIndex(@RequestHeader(value = "token") String token,
+            @RequestBody UserIdDTO userIdDTO) {
+        int userId = jwtUtil.getUserId(token);
+        List<Integer> projectIdList = accountService.getProjectIdListOfUser(userId);
+        List<List<EachIndexProfitDTO>> eList = new ArrayList<List<EachIndexProfitDTO>>();
+        for (Integer projectId : projectIdList) {
+            // eList.add();
+            eList.add(accountService.getEachIndexTitleBuyerNumAllProfitMyProfit(userId, projectId));
+
+        }
+
+        return eList;
     }
 
 }

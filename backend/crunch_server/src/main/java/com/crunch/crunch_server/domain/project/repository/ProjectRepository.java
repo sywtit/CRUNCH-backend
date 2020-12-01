@@ -14,7 +14,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
     Project findById(int id);
 
-	List<Project> findByUserId(int userId);
+	// List<Project> findByUserId(int userId);
 
 
 

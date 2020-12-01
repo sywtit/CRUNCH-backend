@@ -92,10 +92,10 @@ public class WriterCrewController {
     @PostMapping("/{projectId}/submitStartFunding")
     @ResponseStatus(value = HttpStatus.OK)
     public int SubmitAndStartFunding(@RequestHeader(value = "token") String token,
-            @RequestBody List<Integer> userIdList) {
+            @RequestBody List<Integer> userIdList, @PathVariable int projectId) {
         System.out.println(userIdList);
 
-        service.adoptSelectedWriters(userIdList);
+        service.adoptSelectedWriters(userIdList, projectId);
 
         return 100;
     }
