@@ -133,7 +133,10 @@ public class BlobService {
         List<WriterCrewDetailDTO> writerCrewDetailDTOs = new ArrayList<WriterCrewDetailDTO>();
         for(int i = 0; i<writersCrews.size(); i++)
         {
-            writerCrewDetailDTOs.get(i).setWriterName(userRepository.findByIdNumber(writersCrews.get(i).getWriterCrewIdentity().getUserId()).getNickname());
+            WriterCrewDetailDTO writerCrewDetailDTO = new WriterCrewDetailDTO();
+            writerCrewDetailDTO.setWriterName(userRepository.findByIdNumber(writersCrews.get(i).getWriterCrewIdentity().getUserId()).getNickname());
+
+            writerCrewDetailDTOs.add(writerCrewDetailDTO);
         }
 		return writerCrewDetailDTOs;
 	}
