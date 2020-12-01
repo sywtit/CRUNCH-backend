@@ -36,10 +36,8 @@ public class Community {
     private int projectId;
     private int userId;
 
-    private String text;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime time;
-   
+
+
 
     /**
      * @return int return the id
@@ -95,34 +93,6 @@ public class Community {
      */
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    /**
-     * @return String return the text
-     */
-    public String getText() {
-        return text;
-    }
-
-    /**
-     * @param text the text to set
-     */
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    /**
-     * @return LocalDateTime return the time
-     */
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    /**
-     * @param time the time to set
-     */
-    public void setTime(LocalDateTime time) {
-        this.time = time;
     }
 
 }

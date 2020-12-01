@@ -8,6 +8,7 @@ import com.crunch.crunch_server.domain.commit.entity.PostModification;
 import com.crunch.crunch_server.domain.commit.mapper.HistroyCommitMapper;
 import com.crunch.crunch_server.domain.commit.repository.BlobRepository;
 import com.crunch.crunch_server.domain.commit.repository.HistoryCommitDetailRepository;
+import com.crunch.crunch_server.domain.user.respository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,13 @@ public class HistoryService {
     @Autowired
     private HistoryCommitDetailRepository detailRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public List<CommitHistoryDTO> getHistoryList(int postId)
     {
         List<Commits> commitList = blobRepository.findByPostId(postId);
-        return HistroyCommitMapper.Instance.toHistoryListDTO(commitList);
+        return HistroyCommitMapper.Instance.toHistoryListDTO(commitList, userRepository);
     }
 
     public String getDiffDetail(int commitId)

@@ -1,9 +1,12 @@
 package com.crunch.crunch_server.domain.commit.controller;
 
+import java.util.List;
+
 import com.crunch.crunch_server.domain.commit.dto.BlobDTO;
 import com.crunch.crunch_server.domain.commit.dto.RecentCommitDTO;
 import com.crunch.crunch_server.domain.commit.service.BlobService;
 import com.crunch.crunch_server.domain.commit.service.ModifyService;
+import com.crunch.crunch_server.domain.crew.dto.WriterCrewDetailDTO;
 import com.crunch.crunch_server.domain.crew.service.WriterCrewService;
 import com.crunch.crunch_server.domain.project.service.PostService;
 
@@ -60,6 +63,14 @@ public class BlobController {
                 return service.getProjectBlobWhenNotNewPostAndModifyingNow(recentCommitDTO, postId);
             }
         
+    }
+
+    //give writer crew
+    @CrossOrigin(origins="*")
+    @GetMapping("/{projectId}/writercrew")
+    public List<WriterCrewDetailDTO> showWriterCrew(@PathVariable int projectId)
+    {
+        return service.getWriterCrewNameList(projectId);
     }
     
     //delete: the indexId project

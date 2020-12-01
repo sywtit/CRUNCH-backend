@@ -11,5 +11,5 @@ public interface CheckMapper {
     
     CheckMapper Instance = Mappers.getMapper(CheckMapper.class);
 
-    WriterCrewCheckDTO toDTO(WritersCrew writerCrew);
+    WriterCrewCheckDTO toWriterCrewCheckDTO(WritersCrew writerCrew);
 }

@@ -12,6 +12,9 @@ import com.crunch.crunch_server.domain.commit.mapper.PostDetailMapper;
 import com.crunch.crunch_server.domain.commit.repository.BlobRepository;
 import com.crunch.crunch_server.domain.commit.repository.CommitDetailRepository;
 import com.crunch.crunch_server.domain.commit.repository.ModifyPostModificationRepository;
+import com.crunch.crunch_server.domain.crew.dto.WriterCrewDetailDTO;
+import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
+import com.crunch.crunch_server.domain.crew.repository.WriterCrewRepository;
 import com.crunch.crunch_server.domain.project.entity.Posts;
 import com.crunch.crunch_server.domain.project.repository.PostRepository;
 import com.crunch.crunch_server.domain.user.entity.User;
@@ -23,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +47,9 @@ public class BlobService {
     
     @Autowired
     private ModifyPostModificationRepository PMrepository;
+
+    @Autowired
+    private WriterCrewRepository writerCrewRepository;
 
     private String post_now;
 
@@ -120,6 +127,17 @@ public class BlobService {
         return lineDTO;
     }
     
+    public List<WriterCrewDetailDTO> getWriterCrewNameList(int projectId) {
+
+        List<WritersCrew> writersCrews = writerCrewRepository.findByWriterCrewIdentityProjectId(projectId);
+        List<WriterCrewDetailDTO> writerCrewDetailDTOs = new ArrayList<WriterCrewDetailDTO>();
+        for(int i = 0; i<writersCrews.size(); i++)
+        {
+            writerCrewDetailDTOs.get(i).setWriterName(userRepository.findByIdNumber(writersCrews.get(i).getWriterCrewIdentity().getUserId()).getNickname());
+        }
+		return writerCrewDetailDTOs;
+	}
+
   
     /**
      * @return String return the post_now
@@ -134,5 +152,7 @@ public class BlobService {
     public void setPost_now(String post_now) {
         this.post_now = post_now;
     }
+
+
 
 }

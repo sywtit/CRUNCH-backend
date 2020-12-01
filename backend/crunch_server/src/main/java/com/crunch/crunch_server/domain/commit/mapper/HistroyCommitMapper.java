@@ -35,6 +35,6 @@ public interface HistroyCommitMapper {
         }
     }
 
-    List<CommitHistoryDTO> toHistoryListDTO(List<Commits> commit);
+    List<CommitHistoryDTO> toHistoryListDTO(List<Commits> commit, @Context UserRepository userRepository);
 
 }

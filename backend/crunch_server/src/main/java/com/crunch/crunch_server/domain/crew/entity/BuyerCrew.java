@@ -40,7 +40,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "buyercrew")
-@IdClass(BuyerCrew.class)
 public class BuyerCrew implements Serializable {
 
     @EmbeddedId

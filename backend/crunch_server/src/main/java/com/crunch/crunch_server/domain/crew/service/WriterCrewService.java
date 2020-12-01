@@ -6,7 +6,6 @@ import java.util.List;
 import com.crunch.crunch_server.domain.crew.dto.ApplyingWriterDTO;
 import com.crunch.crunch_server.domain.crew.dto.WriterCrewCheckDTO;
 import com.crunch.crunch_server.domain.crew.entity.State;
-import com.crunch.crunch_server.domain.crew.entity.TmpWriterCrew;
 import com.crunch.crunch_server.domain.crew.entity.WriterCrewIdentity;
 import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
 import com.crunch.crunch_server.domain.crew.mapper.CheckMapper;
