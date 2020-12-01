@@ -14,7 +14,7 @@ public class SocketDTO {
     private String userName;
     private String content;
   //  private List<String> tagName;
-
+  // private time
 
     /**
      * @return String return the userName
