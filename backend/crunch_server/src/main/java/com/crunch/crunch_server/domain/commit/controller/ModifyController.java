@@ -37,7 +37,7 @@ public class ModifyController {
     @ResponseStatus(value = HttpStatus.OK)
     void saveDiffResult(@RequestHeader(value = "token") String token, @PathVariable int projectId,
             @PathVariable int indexId, @RequestBody ModifyDTO modifyDTO) throws Exception {
-
+                
         modifyService.saveNewCommit(token, projectId, indexId, modifyDTO);
 
         int postId = postService.getPostID(projectId, indexId);
