@@ -13,5 +13,8 @@ public interface ModifyCommitRepoistory extends JpaRepository<Commits,Integer>
 
     @Query(value = "SELECT * FROM commits c WHERE c.id = :commitId", nativeQuery = true)
 	Commits findByCommitId(@Param("commitId") int commitId);
+
+    @Query(value = "SELECT * FROM commits WHERE postId = :postId ORDER BY id desc limit 1", nativeQuery = true)
+    Commits findByPostIdAndGetNew(@Param("postId") int postId);
     
 }

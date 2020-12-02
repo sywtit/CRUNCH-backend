@@ -97,6 +97,7 @@ public class ModifyService {
         after = after.replace("</li>", "</li>\n");
         after = after.replace("</blockquote>", "</blockquote>\n");
         after = after.replace("</hr>", "</hr>\n");
+
 //nothing changes
 //-
 //+
@@ -173,41 +174,12 @@ public class ModifyService {
         postModificationRepository.save(postModification);
 
         //post line detail
-        String diffResult = postModification.getDiffResult();
-        String[] lengthShowLine = diffResult.split("\n");
-        int realLineCount = 0;
-
-        for(int i =3; i<lengthShowLine.length; i++)
-        {
-
-            if(lengthShowLine[i].startsWith("+<"))
-            {
-                String detailResult = lengthShowLine[i].replace("+","");
-                PostLineDetail postDetail = PostDetailMapper.Instance.postDetailToEntity(postId, detailResult,userRepository.findByIdNumber(userId).getNickname(),realLineCount );
-                commitDetailRepository.save(postDetail);
-                realLineCount++;
-
-            }
-
-            else if(lengthShowLine[i].startsWith("-<") || lengthShowLine[i].startsWith("-new post!"))
-            {
-               // realLineCount--;
-               // do nothing db have this
-
-            }
-
-            else
-            {
-                PostLineDetail postDetail = PostDetailMapper.Instance.postDetailToEntity(postId,lengthShowLine[i],userRepository.findByIdNumber(userId).getNickname(),realLineCount );
-                commitDetailRepository.save(postDetail);
-                realLineCount++;
-            }
-
-        }
+        savePostLineDetail(userId, postId, postModification);
 
         //line detail -> after s3 connection!
 
     }
+
 
     public void saveNewCommitWithHistory(String token, int projectId, int commitId, CommitHistoryRevertDTO chrDTO) throws Exception
     {
@@ -234,7 +206,9 @@ public class ModifyService {
         PostModification postModification = getPostModificationEntity(after, before, commitRevertVersion);
 
         postModificationRepository.save(postModification);
-
+        
+        //post line detail
+        savePostLineDetail(userId, postId, postModification);
 
     }
 
@@ -303,6 +277,38 @@ public class ModifyService {
         postModification.setCommits(commitRevertVersion);
         return postModification;
     }
+
+    private void savePostLineDetail(int userId, int postId, PostModification postModification) {
+        String diffResult = postModification.getDiffResult();
+        String[] lengthShowLine = diffResult.split("\n");
+        int realLineCount = 0;
+
+        for(int i =3; i<lengthShowLine.length; i++)
+        {
+
+            if(lengthShowLine[i].startsWith("+<"))
+            {
+                String detailResult = lengthShowLine[i].replace("+","");
+                PostLineDetail postDetail = PostDetailMapper.Instance.postDetailToEntity(postId, detailResult,userRepository.findByIdNumber(userId).getNickname(),realLineCount );
+                commitDetailRepository.save(postDetail);
+                realLineCount++;
+
+            }
+
+            else if(lengthShowLine[i].startsWith("-<") || lengthShowLine[i].startsWith("-new post!"))
+            {
+               // do nothing db have this
+
+            }
+
+            else
+            {
+                realLineCount++;
+            }
+
+        }
+    }
+
 
     /**
      * @return ModifyCommitRepoistory return the commitRepoistory
