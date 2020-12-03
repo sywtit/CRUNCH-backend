@@ -20,6 +20,9 @@ public class PostService {
     @Autowired
     private PostRepository repository;
 
+    // @Autowired
+    // private
+
     @Autowired
     private PostIndexRepository postIndexRepository;
 
@@ -61,11 +64,24 @@ public class PostService {
 
     public void addLastPostIndex(IndexEditDTO indexEditDTO) {
         PostIndex postIndex = new PostIndex();
+        System.out.println(indexEditDTO.getIndexId());
         postIndex.setId(indexEditDTO.getIndexId());
         postIndex.setProjectId(indexEditDTO.getProjectId());
         postIndex.setTitle(indexEditDTO.getTitle());
-
+        System.out.println("before postindex");
         postIndexRepository.save(postIndex);
+        System.out.println("after postindex");
+        Posts post = new Posts();
+        System.out.println("aaa");
+        post.setIndex_id(indexEditDTO.getIndexId());
+        System.out.println("bbb");
+        post.setProject_id(indexEditDTO.getProjectId());
+        System.out.println("ccc");
+
+        // post.setModifying(0);
+        // post.setModifyingUserId(-1);
+        System.out.println("before post");
+        repository.save(post);
 
     }
 

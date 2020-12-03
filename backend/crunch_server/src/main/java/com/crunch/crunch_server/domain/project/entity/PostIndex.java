@@ -22,7 +22,7 @@ import lombok.Setter;
 @Table(name = "postindex")
 public class PostIndex {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     // @Column(name = "id", insertable = false, updatable = false)
     private int id;
 

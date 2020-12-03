@@ -19,17 +19,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="posts")
+@Table(name = "posts")
 public class Posts {
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column( name = "indexId", insertable=false, updatable=false)
+    @Column(name = "indexId", updatable = false)
     private Integer index_id;
 
-    @Column(name="projectId", insertable=false, updatable=false)
+    @Column(name = "projectId", updatable = false)
     private Integer project_id;
 
     private String complete_post;
@@ -37,8 +37,6 @@ public class Posts {
     private Integer modifying;
 
     private Integer modifyingUserId;
-    
-
 
     /**
      * @return int return the id
