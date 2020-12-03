@@ -16,11 +16,29 @@ public class ChatService {
 
 	public void saveChat(String roomId, SocketDTO chatMessage) {
 
-        for(int i = 0; i<chatMessage.getTagName().size(); i++)
+        if(chatMessage.getTagName().size() == 0)
         {
-            Chat chat = ChatMapper.Instance.toChatEntity(roomId, chatMessage.getTagName().get(i), chatMessage);
-
+            Chat chat = new Chat();
+            chat.setCommunityId(Integer.parseInt(roomId));
+            chat.setTagNickname(null);
+            chat.setText(chatMessage.getContent());
+            chat.setTime(chatMessage.getTime());
+            chat.setUserNickname(chatMessage.getUserName());
+        
+            chatRepository.save(chat);
         }
+
+        else
+        {
+            for(int i = 0; i<chatMessage.getTagName().size(); i++)
+            {
+                Chat chat = ChatMapper.Instance.toChatEntity(roomId, chatMessage.getTagName().get(i), chatMessage);
+                chatRepository.save(chat);
+
+            }
+        }
+
+
 	}
     
 }
