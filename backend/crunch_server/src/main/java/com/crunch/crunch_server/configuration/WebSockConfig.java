@@ -10,19 +10,18 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSockConfig implements WebSocketMessageBrokerConfigurer{
 
-    //pub: send
-    //sub: receive
+
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/send");
-        //config.setApplicationDestinationPrefixes("/pub");
+        config.enableSimpleBroker("/channel");
+        config.setApplicationDestinationPrefixes("/app");
     }
 
     //stomp websocket connection endpoint
     //://localhost:3000/ws-stomp
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/").setAllowedOrigins("*")
+        registry.addEndpoint("/ws").setAllowedOrigins("*")
                 .withSockJS();
     }
 }
