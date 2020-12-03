@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ChatRoomRepository extends JpaRepository<Community,Integer>{
 
+	Community findByProjectIdAndPostindexId(int projectId, int indexId);
+
     
 }

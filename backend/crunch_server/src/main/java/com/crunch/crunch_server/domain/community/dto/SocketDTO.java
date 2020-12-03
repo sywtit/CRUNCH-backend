@@ -1,6 +1,9 @@
 package com.crunch.crunch_server.domain.community.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,9 +16,11 @@ public class SocketDTO {
     
     private String userName;
     private String content;
-  //  private List<String> tagName;
-  // private time
+    private List<String> tagName;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime time;
 
+    
     /**
      * @return String return the userName
      */
@@ -44,18 +49,32 @@ public class SocketDTO {
         this.content = content;
     }
 
-    // /**
-    //  * @return List<String> return the tagName
-    //  */
-    // public List<String> getTagName() {
-    //     return tagName;
-    // }
+    /**
+     * @return List<String> return the tagName
+     */
+    public List<String> getTagName() {
+        return tagName;
+    }
 
-    // /**
-    //  * @param tagName the tagName to set
-    //  */
-    // public void setTagName(List<String> tagName) {
-    //     this.tagName = tagName;
-    // }
+    /**
+     * @param tagName the tagName to set
+     */
+    public void setTagName(List<String> tagName) {
+        this.tagName = tagName;
+    }
+
+    /**
+     * @return LocalDateTime return the time
+     */
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    /**
+     * @param time the time to set
+     */
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
 
 }
