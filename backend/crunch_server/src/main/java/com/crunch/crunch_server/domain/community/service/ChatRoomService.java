@@ -31,7 +31,7 @@ public class ChatRoomService {
 
 
 	public int getRoomIdNumberPre(int projectId, int indexId) {
-        Community community = chatRoomRepository.findByProjectIdIndexId(projectId, indexId);
+        Community community = chatRoomRepository.findByProjectIdAndPostindexId(projectId, indexId);
 		return community.getId();
 	}
 }

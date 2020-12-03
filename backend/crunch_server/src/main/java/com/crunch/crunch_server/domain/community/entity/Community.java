@@ -32,8 +32,8 @@ public class Community {
     @GeneratedValue(strategy=GenerationType.IDENTITY)    
     private int id;
     
-    private int postindexId;
     private int projectId;
+    private int postindexId;
 
 
     /**
