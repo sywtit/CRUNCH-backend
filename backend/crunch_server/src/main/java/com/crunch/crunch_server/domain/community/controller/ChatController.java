@@ -1,5 +1,6 @@
 package com.crunch.crunch_server.domain.community.controller;
 
+import com.crunch.crunch_server.domain.community.dto.ChatMessageDTO;
 import com.crunch.crunch_server.domain.community.dto.SocketDTO;
 import com.crunch.crunch_server.domain.community.service.ChatService;
 
@@ -41,9 +42,10 @@ public class ChatController {
     }
   
     @MessageMapping("/chat/{roomId}/addUser")
-    public void addUser(@DestinationVariable String roomId, @Payload SocketDTO chatMessage,
+    public void addUser(@DestinationVariable String roomId, @Payload ChatMessageDTO chatMessage,
         SimpMessageHeaderAccessor headerAccessor) {
       String currentRoomId = (String) headerAccessor.getSessionAttributes().put("room_id", roomId);
+      
     //we don't leave
     //   if (currentRoomId != null) {
     //     ChatMessage leaveMessage = new ChatMessage();
@@ -51,8 +53,8 @@ public class ChatController {
     //     leaveMessage.setSender(chatMessage.getSender());
     //     messagingTemplate.convertAndSend(format("/channel/%s", currentRoomId), leaveMessage);
     //   }
-      headerAccessor.getSessionAttributes().put("username", chatMessage.getUserName());
-      messagingTemplate.convertAndSend("/channel/"+ roomId, chatMessage);
+      headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+    //  messagingTemplate.convertAndSend("/channel/"+ roomId, chatMessage);
     }
 
     
