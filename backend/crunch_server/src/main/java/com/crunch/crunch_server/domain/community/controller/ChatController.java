@@ -35,6 +35,9 @@ public class ChatController {
 
       //have to save all
       chatService.saveChat(roomId, chatMessage);
+
+      //have to check tag name and save in notice
+      
     }
   
     @MessageMapping("/chat/{roomId}/addUser")
