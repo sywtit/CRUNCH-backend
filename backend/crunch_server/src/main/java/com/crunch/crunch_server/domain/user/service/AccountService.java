@@ -91,7 +91,8 @@ public class AccountService {
 
         List<List<PostIndex>> pList = new ArrayList<List<PostIndex>>();
         for (int i = 0; i < projectIdList.size(); i++) {
-            List<PostIndex> postIndexs = postIndexRepository.findByProjectId(projectIdList.get(i).intValue());
+            List<PostIndex> postIndexs = postIndexRepository
+                    .findByPostIndexIdentityProjectId(projectIdList.get(i).intValue());
             pList.add(postIndexs);
 
         }
@@ -123,7 +124,8 @@ public class AccountService {
     }
 
     public int getFeeOfProjectIdAndPostIndexId(int projectId, int postindexId) {
-        PostIndex postindex = postIndexRepository.findByIdAndProjectId(postindexId, projectId);
+        PostIndex postindex = postIndexRepository.findByPostIndexIdentityIdAndPostIndexIdentityProjectId(postindexId,
+                projectId);
         return postindex.getFee();
     }
 
@@ -151,11 +153,11 @@ public class AccountService {
 
     public List<EachIndexProfitDTO> getEachIndexTitleBuyerNumAllProfitMyProfit(int userId, Integer projectId) {
         List<EachIndexProfitDTO> eDtos = new ArrayList<EachIndexProfitDTO>();
-        List<PostIndex> postIndexs = postIndexRepository.findByProjectId(projectId);
+        List<PostIndex> postIndexs = postIndexRepository.findByPostIndexIdentityProjectId(projectId);
         for (PostIndex pIndex : postIndexs) {
             EachIndexProfitDTO eDto = new EachIndexProfitDTO();
             eDto.setProjectId(projectId);
-            int postidx = pIndex.getId();
+            int postidx = pIndex.getPostIndexIdentity().getId();
             eDto.setPostIndexId(postidx);
             eDto.setPostIndexTitle(pIndex.getTitle());
 

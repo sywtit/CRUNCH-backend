@@ -53,6 +53,9 @@ public class IndexController {
         int userId = jwtUtil.getUserId(token);
         // postService.setPostIndexEdit(indexEditDTOs);
         System.out.println("before addlast");
+        System.out.println(indexEditDTO.getIndexId());
+        System.out.println(indexEditDTO.getTitle());
+        System.out.println("--------*------------*-------------");
         postService.addLastPostIndex(indexEditDTO);
 
         return 100;

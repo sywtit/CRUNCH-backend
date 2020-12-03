@@ -1,6 +1,7 @@
 package com.crunch.crunch_server.domain.project.entity;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,12 +22,11 @@ import lombok.Setter;
 @Setter
 @Table(name = "postindex")
 public class PostIndex {
-    @Id
+    // @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
     // @Column(name = "id", insertable = false, updatable = false)
-    private int id;
-
-    private int projectId;
+    @EmbeddedId
+    private PostIndexIdentity postIndexIdentity;
 
     private String title;
 
