@@ -23,6 +23,9 @@ import lombok.Setter;
 @Setter
 @Table(name = "rating")
 public class Rating {
+    @Id
+    @GeneratedValue
+    private int id;
     private int postId;
     private int userId;
     private int rate;

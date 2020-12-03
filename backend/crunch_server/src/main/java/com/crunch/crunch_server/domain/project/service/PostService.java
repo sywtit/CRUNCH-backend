@@ -22,6 +22,8 @@ public class PostService {
     @Autowired
     private PostIndexRepository postIndexRepository;
 
+    // @Autowired
+    // private IndexEditDTO indexEditDTO;
     // post
     public Integer getPostID(Integer projectId, Integer indexId) {
 
