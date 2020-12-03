@@ -66,7 +66,6 @@ public class CommunityService {
 
         //last set writercrew
         communityBlobDTO.setWriterCrew(service.getWriterCrewNameList(projectId));
-
         return communityBlobDTO;
 		
 	}
