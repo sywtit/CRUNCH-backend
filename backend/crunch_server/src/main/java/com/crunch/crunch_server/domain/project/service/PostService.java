@@ -1,5 +1,9 @@
 package com.crunch.crunch_server.domain.project.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.crunch.crunch_server.domain.project.dto.IndexEditDTO;
 import com.crunch.crunch_server.domain.project.entity.PostIndex;
 import com.crunch.crunch_server.domain.project.entity.Posts;
 import com.crunch.crunch_server.domain.project.mapper.PostMapper;
@@ -41,11 +45,27 @@ public class PostService {
         return postIndex.getFee();
     }
 
-    // public void saveNewPost(Integer projectId, Integer indexId)
-    // {
-    // Posts post = PostMapper.Instance.toPostEntity(projectId, indexId);
-    // repository.savePost(projectId, indexId);
+    public void setPostIndexEdit(List<IndexEditDTO> indexEditDTOs) {
 
-    // }
+        List<PostIndex> postIndexs = new ArrayList<PostIndex>();
+        for (IndexEditDTO iDto : indexEditDTOs) {
+            PostIndex pIndex = new PostIndex();
+            pIndex.setId(iDto.getIndexId());
+            pIndex.setProjectId(iDto.getProjectId());
+            pIndex.setTitle(iDto.getTitle());
+            postIndexs.add(pIndex);
+        }
+
+    }
+
+    public void addLastPostIndex(IndexEditDTO indexEditDTO) {
+        PostIndex postIndex = new PostIndex();
+        postIndex.setId(indexEditDTO.getIndexId());
+        postIndex.setProjectId(indexEditDTO.getProjectId());
+        postIndex.setTitle(indexEditDTO.getTitle());
+
+        postIndexRepository.save(postIndex);
+
+    }
 
 }
