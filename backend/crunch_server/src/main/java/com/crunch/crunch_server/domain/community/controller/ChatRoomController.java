@@ -25,13 +25,13 @@ public class ChatRoomController {
         chatRoomService.makeSaveCommunity(projectId, indexId);
     }
 
-    //when get in the chatroom
-    //give room id
-    @CrossOrigin(origins="*")
-    @GetMapping("/{projectId}/index/{indexId}/roomId")
-    public int getRoomId(@PathVariable int projectId, @PathVariable int indexId)
-    {
-        return chatRoomService.getRoomIdNumberPre(projectId, indexId);
-    }
+    // //when get in the chatroom
+    // //give room id
+    // @CrossOrigin(origins="*")
+    // @GetMapping("/{projectId}/index/{indexId}/roomId")
+    // public int getRoomId(@PathVariable int projectId, @PathVariable int indexId)
+    // {
+    //     return chatRoomService.getRoomIdNumberPre(projectId, indexId);
+    // }
 
 }

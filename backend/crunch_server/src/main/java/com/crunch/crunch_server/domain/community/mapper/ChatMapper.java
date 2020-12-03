@@ -1,5 +1,6 @@
 package com.crunch.crunch_server.domain.community.mapper;
 
+import com.crunch.crunch_server.domain.community.dto.BlobChatDTO;
 import com.crunch.crunch_server.domain.community.dto.SocketDTO;
 import com.crunch.crunch_server.domain.community.entity.Chat;
 
@@ -17,4 +18,6 @@ public interface ChatMapper {
     @Mapping(target="time", source="message.time")
     Chat toChatEntity(String communityId, String tagNickname, SocketDTO message);
 
+    BlobChatDTO toBlobChatDTO(Chat chat);
+    
 }
