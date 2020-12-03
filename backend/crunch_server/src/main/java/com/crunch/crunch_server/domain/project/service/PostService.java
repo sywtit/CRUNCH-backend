@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.crunch.crunch_server.domain.project.dto.IndexEditDTO;
+import com.crunch.crunch_server.domain.project.dto.IndexTitleDTO;
 import com.crunch.crunch_server.domain.project.entity.PostIndex;
 import com.crunch.crunch_server.domain.project.entity.Posts;
 import com.crunch.crunch_server.domain.project.mapper.PostMapper;
@@ -66,6 +67,23 @@ public class PostService {
 
         postIndexRepository.save(postIndex);
 
+    }
+
+    public List<IndexTitleDTO> getIndexsOfProjectId(int id) {
+        System.out.println("hihihihi");
+        List<PostIndex> postIndexs = postIndexRepository.findByProjectId(id);
+        List<IndexTitleDTO> iDtos = new ArrayList<IndexTitleDTO>();
+        for (PostIndex pIndex : postIndexs) {
+            IndexTitleDTO iDto = new IndexTitleDTO();
+            iDto.setId(pIndex.getId());
+            iDto.setTitle(pIndex.getTitle());
+            iDtos.add(iDto);
+            System.out.println("-----------------------");
+            System.out.println(iDto.getTitle());
+            // postI
+
+        }
+        return iDtos;
     }
 
 }

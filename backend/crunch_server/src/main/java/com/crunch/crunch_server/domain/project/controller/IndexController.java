@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.crunch.crunch_server.domain.project.dto.CommentDTO;
 import com.crunch.crunch_server.domain.project.dto.IndexEditDTO;
+import com.crunch.crunch_server.domain.project.dto.IndexTitleDTO;
+import com.crunch.crunch_server.domain.project.dto.ProjectIdDTO;
+import com.crunch.crunch_server.domain.project.entity.PostIndex;
 import com.crunch.crunch_server.domain.project.repository.PostIndexRepository;
 import com.crunch.crunch_server.domain.project.service.PostService;
 import com.crunch.crunch_server.util.JwtUtil;
@@ -29,6 +32,18 @@ public class IndexController {
 
     @Autowired
     private PostService postService;
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/getindex")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<IndexTitleDTO> getIndex(@RequestHeader(value = "token") String token,
+            @RequestBody ProjectIdDTO projectIdDTO) {
+
+        int userId = jwtUtil.getUserId(token);
+        System.out.println(projectIdDTO.getId());
+        return postService.getIndexsOfProjectId(projectIdDTO.getId());
+
+    }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/project/indexedit")
