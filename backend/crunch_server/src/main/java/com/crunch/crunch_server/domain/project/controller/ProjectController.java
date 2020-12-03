@@ -51,6 +51,9 @@ public class ProjectController {
     @ResponseStatus(value = HttpStatus.OK)
     public ProjectStartDTO getRecruitingCollaboProj(@RequestHeader(value = "token") String token,
             @RequestBody ProjectIdDTO projectIdDTO) {
+
+        int userId = jwtUtil.getUserId(token);
+
         System.out.println(projectIdDTO.getId());
 
         // project id로 프로젝트 펀딩금액, 목표 작업기한, 모집 작가 수, 소개 가져오기

@@ -92,13 +92,16 @@ public class WriterCrewService {
         List<ApplyingWriterDTO> applyingWriterDTOs = new ArrayList<ApplyingWriterDTO>();
         for (int i = 0; i < applyingWriterList.size(); i++) {
             ApplyingWriterDTO apply = new ApplyingWriterDTO();
-            apply.setComment(applyingWriterList.get(i).getComment());
-            apply.setUserId(applyingWriterList.get(i).getWriterCrewIdentity().getUserId());
-            User user = userRepository.findById(apply.getUserId());
-            apply.setNickname(user.getNickname());
-            apply.setProjectId(applyingWriterList.get(i).getWriterCrewIdentity().getProjectId());
-            applyingWriterDTOs.add(i, apply);
-            System.out.println("heeeeeeellllo");
+            if (applyingWriterList.get(i).getMainornot() != 1) {
+                apply.setComment(applyingWriterList.get(i).getComment());
+                apply.setUserId(applyingWriterList.get(i).getWriterCrewIdentity().getUserId());
+                User user = userRepository.findById(apply.getUserId());
+                apply.setNickname(user.getNickname());
+                apply.setProjectId(applyingWriterList.get(i).getWriterCrewIdentity().getProjectId());
+                applyingWriterDTOs.add(i, apply);
+                // System.out.println("heeeeeeellllo");
+            }
+
         }
         System.out.println(applyingWriterDTOs.size());
 
