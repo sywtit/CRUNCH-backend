@@ -103,8 +103,8 @@ public class PostService {
 
         System.out.println("ccc");
 
-        // post.setModifying(0);
-        // post.setModifyingUserId(-1);
+        post.setModifying(0);
+        post.setModifyingUserId(-1);
         System.out.println("before post");
         repository.save(post);
 

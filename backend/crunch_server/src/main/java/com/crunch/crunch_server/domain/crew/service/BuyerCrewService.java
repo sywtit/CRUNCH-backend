@@ -1,5 +1,8 @@
 package com.crunch.crunch_server.domain.crew.service;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 import com.crunch.crunch_server.domain.crew.entity.BuyerCrew;
 import com.crunch.crunch_server.domain.crew.entity.BuyerCrewIdentity;
 // import com.crunch.crunch_server.domain.crew.entity.BuyerCrewIdentity;
@@ -13,7 +16,6 @@ import com.crunch.crunch_server.domain.user.respository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class BuyerCrewService {
@@ -30,7 +32,7 @@ public class BuyerCrewService {
         @Autowired
         private BuyerCrewRepository buyerCrewRepository;
 
-        public void addBuyerCrew(int postIndex, int projectId, int userId) {
+        public void addBuyerCrew(int postIndex, int projectId, int userId, Date currentDate) {
 
                 // TmpBuyerCrew tmpBuyerCrew = new TmpBuyerCrew();
                 // tmpBuyerCrew.setPostindexId(postIndex);
@@ -45,6 +47,8 @@ public class BuyerCrewService {
                 buyerCrewIdentity.setProjectId(projectId);
                 buyerCrewIdentity.setUserId(userId);
                 buyerCrew.setBuyerCrewIdentity(buyerCrewIdentity);
+                buyerCrew.setPurchaseDate(currentDate);
+
                 buyerCrewRepository.save(buyerCrew);
 
         }

@@ -1,5 +1,8 @@
 package com.crunch.crunch_server.domain.crew.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 import com.crunch.crunch_server.domain.crew.service.BuyerCrewService;
 import com.crunch.crunch_server.domain.project.dto.PostFeeDTO;
 import com.crunch.crunch_server.domain.project.dto.PostIndexDTO;
@@ -60,7 +63,10 @@ public class BuyerCrewController {
         System.out.println(afterPoint);
         System.out.println("--------==========----2------=============----");
         // buyercrew에 insert
-        buyerCrewService.addBuyerCrew(postIndex, projectId, userId);
+        // LocalDate currentDate = LocalDate.now();
+        // Date.valueOf(LocalDate.now());
+
+        buyerCrewService.addBuyerCrew(postIndex, projectId, userId, Date.valueOf(LocalDate.now()));
 
         return afterPoint;
     }
