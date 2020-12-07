@@ -95,14 +95,9 @@ public class PostService {
         post.setProject_id(indexEditDTO.getProjectId());
 
 
-<<<<<<< HEAD
         post.setModifying(0);
         post.setModifyingUserId(-1);
         System.out.println("before post");
-=======
-        // post.setModifying(0);
-        // post.setModifyingUserId(-1);
->>>>>>> 9c889ae4917c1dfbdf5bebb1223db539fc40f4b1
         repository.save(post);
 
     }

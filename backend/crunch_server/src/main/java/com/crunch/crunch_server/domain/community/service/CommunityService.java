@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.crunch.crunch_server.domain.commit.dto.BlobDTO;
+import com.crunch.crunch_server.domain.commit.dto.PostLineDetailDTO;
 import com.crunch.crunch_server.domain.commit.dto.RecentCommitDTO;
 import com.crunch.crunch_server.domain.commit.service.BlobService;
 import com.crunch.crunch_server.domain.commit.service.ModifyService;
