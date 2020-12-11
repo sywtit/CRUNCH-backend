@@ -79,21 +79,17 @@ public class PostService {
         postIndex.setPostIndexIdentity(pIdentity);
         postIndex.setTitle(indexEditDTO.getTitle());
 
-
         // postIndexRepository.savePostIndex(indexEditDTO.getProjectId(),
         // indexEditDTO.getIndexId(),
         // indexEditDTO.getTitle());
 
         postIndexRepository.save(postIndex);
 
-
         Posts post = new Posts();
-
 
         post.setIndex_id(indexEditDTO.getIndexId());
 
         post.setProject_id(indexEditDTO.getProjectId());
-
 
         post.setModifying(0);
         post.setModifyingUserId(-1);

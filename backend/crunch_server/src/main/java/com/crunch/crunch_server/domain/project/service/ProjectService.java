@@ -1,12 +1,17 @@
 package com.crunch.crunch_server.domain.project.service;
 
+import java.util.List;
+
 import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
 
 // import javax.print.event.PrintJobAdapter;
 
 import com.crunch.crunch_server.domain.project.dto.ProjectTitleDdayDTO;
 import com.crunch.crunch_server.domain.project.entity.Project;
+import com.crunch.crunch_server.domain.project.entity.Tag;
+import com.crunch.crunch_server.domain.project.entity.TagIdentity;
 import com.crunch.crunch_server.domain.project.repository.ProjectRepository;
+import com.crunch.crunch_server.domain.project.repository.TagRepository;
 import com.crunch.crunch_server.domain.project.mapper.ProjectTitleDdayMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,6 +22,9 @@ public class ProjectService {
 
     @Autowired
     private ProjectRepository repository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     // first main page
     public ProjectTitleDdayDTO getProjectTitleDday(int projectId) {
@@ -36,10 +44,21 @@ public class ProjectService {
         project.setTarget_d_day(projectStartDTO.getTarget_d_day());
         project.setTarget_funding_money(projectStartDTO.getTarget_funding_money());
 
-        repository.save(project);
+        int projectId = repository.save(project).getId();
+        System.out.println("----------------gettag------------------");
+        System.out.println(projectStartDTO.getTags());
+        // for (String dtoTag : projectStartDTO.getTags()) {
+        for (int i = 0; i < projectStartDTO.getTags().size(); i++) {
+            Tag tagEntity = new Tag();
+            TagIdentity tIdentity = new TagIdentity();
+            tIdentity.setProjectId(projectId);
+            tagEntity.setTagIdentity(tIdentity);
+            tagEntity.setText(projectStartDTO.getTags().get(i));
+            tagRepository.save(tagEntity);
 
-        System.out.println(project.getId());
-        return project.getId();
+        }
+
+        return projectId;
     }
 
     public ProjectStartDTO getRecruitingProjectInfo(int id) {
@@ -56,6 +75,8 @@ public class ProjectService {
     }
 
     public void changeProjectStateWriting(int projectId) {
+        System.out.println("------------");
+        System.out.println(projectId);
         Project project = repository.findById(projectId);
         project.setState("writing");
 

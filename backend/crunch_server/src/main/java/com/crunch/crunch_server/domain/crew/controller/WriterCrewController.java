@@ -107,7 +107,8 @@ public class WriterCrewController {
 
         // userid 와 projectid 를 받아오고
         int userId = jwtUtil.getUserId(token);
-
+        System.out.println("******************");
+        System.out.println(projectIdDTO.getId());
         // project state를 writing으로 변경
         projectService.changeProjectStateWriting(projectIdDTO.getId());
 
