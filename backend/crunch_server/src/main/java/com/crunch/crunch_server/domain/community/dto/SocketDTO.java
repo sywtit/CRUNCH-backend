@@ -16,10 +16,12 @@ public class SocketDTO {
     
     private String userName;
     private String content;
-    private List<String> tagName;
+    private List<TagNameDTO> tagName;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime time;
 
+    //state
+    //url
     
     /**
      * @return String return the userName
@@ -52,14 +54,14 @@ public class SocketDTO {
     /**
      * @return List<String> return the tagName
      */
-    public List<String> getTagName() {
+    public List<TagNameDTO> getTagName() {
         return tagName;
     }
 
     /**
      * @param tagName the tagName to set
      */
-    public void setTagName(List<String> tagName) {
+    public void setTagName(List<TagNameDTO> tagName) {
         this.tagName = tagName;
     }
 

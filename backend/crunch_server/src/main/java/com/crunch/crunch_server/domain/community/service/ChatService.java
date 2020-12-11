@@ -32,7 +32,7 @@ public class ChatService {
         {
             for(int i = 0; i<chatMessage.getTagName().size(); i++)
             {
-                Chat chat = ChatMapper.Instance.toChatEntity(roomId, chatMessage.getTagName().get(i), chatMessage);
+                Chat chat = ChatMapper.Instance.toChatEntity(roomId, chatMessage.getTagName().get(i).getName(), chatMessage);
                 chatRepository.save(chat);
 
             }
