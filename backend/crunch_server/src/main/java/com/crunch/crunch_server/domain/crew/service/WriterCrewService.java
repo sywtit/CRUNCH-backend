@@ -98,12 +98,12 @@ public class WriterCrewService {
                 User user = userRepository.findById(apply.getUserId());
                 apply.setNickname(user.getNickname());
                 apply.setProjectId(applyingWriterList.get(i).getWriterCrewIdentity().getProjectId());
-                applyingWriterDTOs.add(i, apply);
+                applyingWriterDTOs.add(apply);
                 // System.out.println("heeeeeeellllo");
             }
 
         }
-        System.out.println(applyingWriterDTOs.size());
+        // System.out.println(applyingWriterDTOs.size());
 
         return applyingWriterDTOs;
     }
@@ -112,6 +112,7 @@ public class WriterCrewService {
         // List<User> userList = new ArrayList<User>();
         // System.out.println(userIdList.getClass());
         for (int i = 0; i < userIdList.size(); i++) {
+            System.out.println("-----*------*----*");
             System.out.println(userIdList.get(i));
 
             // User user = userRepository.findById(userIdList.get(i).intValue());
@@ -121,6 +122,7 @@ public class WriterCrewService {
             WritersCrew writersCrew = writerRepository
                     .findByWriterCrewIdentityUserIdAndWriterCrewIdentityProjectId(userIdList.get(i), projectId);
             writersCrew.setState(State.selected);
+            writerRepository.save(writersCrew);
 
         }
     }
