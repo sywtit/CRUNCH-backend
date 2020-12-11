@@ -1,6 +1,12 @@
 package com.crunch.crunch_server.domain.commit.dto;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,9 +19,16 @@ public class BlobDTO {
     
     private String writerName;
     private String commit_comment;
-    private Date time;
+    
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime time;
     private String s3key;
     private String post;
+    private List<PostLineDetailDTO> postDetailList;
+    
+    private Boolean modifying;
+    private String hisNickname;
+    private String hisS3key;
 
 
     /**
@@ -47,16 +60,16 @@ public class BlobDTO {
     }
 
     /**
-     * @return Date return the time
+     * @return LocalDateTime return the time
      */
-    public Date getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
     /**
      * @param time the time to set
      */
-    public void setTime(Date time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
@@ -86,6 +99,62 @@ public class BlobDTO {
      */
     public void setPost(String post) {
         this.post = post;
+    }
+
+    /**
+     * @return List<PostLineDetail> return the postDetailList
+     */
+    public List<PostLineDetailDTO> getPostDetailList() {
+        return postDetailList;
+    }
+
+    /**
+     * @param postDetailList the postDetailList to set
+     */
+    public void setPostDetailList(List<PostLineDetailDTO> postDetailList) {
+        this.postDetailList = postDetailList;
+    }
+
+    /**
+     * @return Boolean return the modifying
+     */
+    public Boolean isModifying() {
+        return modifying;
+    }
+
+    /**
+     * @param modifying the modifying to set
+     */
+    public void setModifying(Boolean modifying) {
+        this.modifying = modifying;
+    }
+
+    /**
+     * @return String return the hisNickname
+     */
+    public String getHisNickname() {
+        return hisNickname;
+    }
+
+    /**
+     * @param hisNickname the hisNickname to set
+     */
+    public void setHisNickname(String hisNickname) {
+        this.hisNickname = hisNickname;
+    }
+
+    /**
+     * @return String return the hisS3key
+     */
+    public String getHisS3key() {
+        return hisS3key;
+    }
+
+    /**
+     * @param hisS3key the hisS3key to set
+     */
+    public void setHisS3key(String hisS3key) {
+        this.hisS3key = hisS3key;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.crunch.crunch_server.domain.user.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,11 +14,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
-    
+
     @Id
     @GeneratedValue
+    // @Column(name = "id", insertable = false, updatable = false)
     private int id;
     private String identity;
     private String password;
@@ -28,7 +30,6 @@ public class User {
     private String record;
     private int point;
     private String salt;
-
 
     /**
      * @return int return the id
@@ -168,6 +169,10 @@ public class User {
      */
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public User orElse(Object object) {
+        return null;
     }
 
 }

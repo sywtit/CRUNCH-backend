@@ -13,8 +13,11 @@ import javax.annotation.Resource;
 import com.crunch.crunch_server.domain.user.dto.UserDTO;
 import com.crunch.crunch_server.domain.user.dto.UserInfoDTO;
 import com.crunch.crunch_server.domain.user.dto.UserPointDTO;
+import com.crunch.crunch_server.domain.user.dto.ChargePointDTO;
 import com.crunch.crunch_server.domain.user.dto.SessionRequestDTO;
+import com.crunch.crunch_server.domain.user.entity.Account;
 import com.crunch.crunch_server.domain.user.entity.User;
+import com.crunch.crunch_server.domain.user.mapper.UserChargePointMapper;
 import com.crunch.crunch_server.domain.user.mapper.UserInfoMapper;
 import com.crunch.crunch_server.domain.user.mapper.UserMapper;
 import com.crunch.crunch_server.domain.user.mapper.UserPointMapper;
@@ -27,15 +30,13 @@ public class UserService {
 
     @Autowired
     private UserRepository repository;
-    // private UserMapper userMapper;
-
+    private UserMapper userMapper;
 
     @Autowired
-    private JwtUtil jwtUtil; 
+    private JwtUtil jwtUtil;
 
-    //post
-    public User saveUser(UserDTO userDTO)
-    {
+    // post
+    public User saveUser(UserDTO userDTO) {
         String salt = EncryptionUtil.generateSalt();
         String password = EncryptionUtil.getEncrypt(userDTO.getPassword(), salt.getBytes());
 
@@ -43,90 +44,99 @@ public class UserService {
         return repository.save(user);
     }
 
-    //login
-    public String createToken(SessionRequestDTO sessionRequestDTO) throws Exception
-    {
-        
+    // login
+    public String createToken(SessionRequestDTO sessionRequestDTO) throws Exception {
 
         User user = repository.findByIdentity(sessionRequestDTO.getIdentity());
-        if(user==null) throw new Exception ("user not existed");
+        if (user == null)
+            throw new Exception("user not existed");
 
         String salt = user.getSalt();
         String password = user.getPassword();
         int id = user.getId();
 
-        String getHashPassword = EncryptionUtil.getEncrypt(sessionRequestDTO.getPassword(),salt.getBytes());
-        if(!password.equals(getHashPassword))
-        {
+        String getHashPassword = EncryptionUtil.getEncrypt(sessionRequestDTO.getPassword(), salt.getBytes());
+        if (!password.equals(getHashPassword)) {
             throw new Exception("wrong password!");
-        }
-        else
-        {
+        } else {
             return jwtUtil.createToken(id, password);
         }
-        
-        
-        
+
     }
 
-    //user info with login
-    public UserInfoDTO getUserInfo(String identity)
-    {
+    // user info with login
+    public UserInfoDTO getUserInfo(String identity) {
         User user = repository.findByIdentity(identity);
         return UserInfoMapper.Instance.toUserInfoDTO(user);
     }
-    
+
     // //post user list
     // public List<User> saveUsers(List<User> users)
     // {
-    //     return repository.saveAll(users);
+    // return repository.saveAll(users);
     // }
 
-    //get all
-    public List<User> getUsers()
-    {
+    // get all
+    public List<User> getUsers() {
         return repository.findAll();
     }
 
-    //get filter by id
-    public User getUserById(int id)
-    {
+    // get filter by id
+    public User getUserById(int id) {
         return repository.findById(id).orElse(null);
     }
 
-    //get filter by name, don't need this but just for test
-    //findByName method will be created in UserRepository
-    public User getUserByName(String name)
-    {
+    // get filter by name, don't need this but just for test
+    // findByName method will be created in UserRepository
+    public User getUserByName(String name) {
         return repository.findByName(name);
     }
 
-    //get filter by Identity
-    public User getUserByIdentity(String identity)
-    {
+    // get filter by Identity
+    public User getUserByIdentity(String identity) {
         return repository.findByIdentity(identity);
     }
 
-    //delete user
-    public String deleteUser(int id)
-    {
+    // delete user
+    public String deleteUser(int id) {
         repository.deleteById(id);
-        return "user removed => " +id;
+        return "user removed => " + id;
     }
 
-    //update user name
-    public User updateUser(User user)
-    {
-        User existingUser=repository.findById(user.getId()).orElse(null);
+    // update user name
+    public User updateUser(User user) {
+        User existingUser = repository.findById(user.getId()).orElse(null);
         existingUser.setName(user.getName());
         return repository.save(existingUser);
     }
-    
-    //get point by Id
-    public UserPointDTO getUserById(String id)
-    {
+
+    // get point by Id
+    public UserPointDTO getUserPointById(int id) {
         User user = repository.findById(id);
         return UserPointMapper.Instance.toUserPointDTO(user);
 
     }
+
+    // add point
+    public User addChargePoint(int id, int chargePoint) {
+
+        User user = repository.findById(id);
+        int chargeAfter = user.getPoint() + chargePoint;
+        user.setPoint(chargeAfter);
+        
+        User newUser = repository.save(user);
+        return newUser;
+    }
+
+    // minus point
+    public User minusPoint(int userId, int fee) {
+        User user = repository.findById(userId);
+        int chargeAfter = user.getPoint() - fee;
+        user.setPoint(chargeAfter);
+
+        User newUser = repository.save(user);
+        return newUser;
+    }
+
+    
 }

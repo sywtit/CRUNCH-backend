@@ -1,15 +1,25 @@
 package com.crunch.crunch_server.domain.commit.entity;
 
+//#region import
 import java.sql.Date;
+import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+//#endregion import
 
 @Data
 @AllArgsConstructor
@@ -19,30 +29,32 @@ import lombok.NoArgsConstructor;
 public class Commits {
     
     @Id
-    @GeneratedValue
-    private int id;
+    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)    
+    private int commitId;
+    
     private int postId;
     private int userId;
     private String commit_comment;
-    private Date time;
+
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime time;
     private String s3key;
     private String post;
 
     
-
-
     /**
-     * @return int return the id
+     * @return int return the commitId
      */
-    public int getId() {
-        return id;
+    public int getCommitId() {
+        return commitId;
     }
 
     /**
-     * @param id the id to set
+     * @param commitId the commitId to set
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setCommitId(int commitId) {
+        this.commitId = commitId;
     }
 
     /**
@@ -90,14 +102,14 @@ public class Commits {
     /**
      * @return Date return the time
      */
-    public Date getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
     /**
      * @param time the time to set
      */
-    public void setTime(Date time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 

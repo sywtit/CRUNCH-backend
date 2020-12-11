@@ -25,8 +25,6 @@ public class UserInfoDTO implements Serializable{
     private int point;
 
 
-
-
     /**
      * @return int return the id
      */

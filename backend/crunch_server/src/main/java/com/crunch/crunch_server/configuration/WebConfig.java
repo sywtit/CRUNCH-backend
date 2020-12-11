@@ -3,7 +3,10 @@ package com.crunch.crunch_server.configuration;
 import com.crunch.crunch_server.util.JwtInterceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -28,4 +31,13 @@ public class WebConfig implements WebMvcConfigurer{
 						.addPathPatterns("/api/**")
 						.excludePathPatterns(EXCLUDE_PATHS);
     }
+
+    @Bean 
+    public MultipartResolver multipartResolver() 
+    { 
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(); 
+        multipartResolver.setMaxUploadSize(10485760); // 1024 * 1024 * 10 = 10 MB 
+        return multipartResolver; 
+    }
+
 }
