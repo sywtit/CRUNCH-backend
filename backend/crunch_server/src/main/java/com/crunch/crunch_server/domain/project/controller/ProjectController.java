@@ -10,6 +10,7 @@ import com.crunch.crunch_server.domain.project.dto.MyWritingDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectIdDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
 import com.crunch.crunch_server.domain.project.dto.RecruitingProjectListDTO;
+import com.crunch.crunch_server.domain.project.dto.TmpDTO;
 import com.crunch.crunch_server.domain.project.service.*;
 import com.crunch.crunch_server.util.JwtUtil;
 
@@ -97,14 +98,26 @@ public class ProjectController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/getrecruitingPost")
+    @PostMapping("/mypageWritingProjectList")
     @ResponseStatus(value = HttpStatus.OK)
     public List<MyWritingDTO> getMypageWritingList(@RequestHeader(value = "token") String token,
-            @RequestBody GenreDTO genreDTO) {
+            @RequestBody TmpDTO tmpDTO) {
 
         int userId = jwtUtil.getUserId(token);
         System.out.println("====================================");
         return service.getMyPageWritingProjectList(userId);
+
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/endRecruitingStartProject")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void endRecruitingStartProject(@RequestHeader(value = "token") String token,
+            @RequestBody ProjectIdDTO projectIdDTO) {
+
+        int userId = jwtUtil.getUserId(token);
+        System.out.println("====================================");
+        service.changeProjectStateToWriting(projectIdDTO.getId());
 
     }
 }

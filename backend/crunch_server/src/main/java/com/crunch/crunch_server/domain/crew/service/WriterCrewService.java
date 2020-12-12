@@ -72,6 +72,7 @@ public class WriterCrewService {
         WritersCrew writersCrew = new WritersCrew();
         writersCrew.setComment(null);
         writersCrew.setMainornot(1);
+        writersCrew.setState(State.selected);
         WriterCrewIdentity writerCrewIdentity = new WriterCrewIdentity();
         writerCrewIdentity.setProjectId(projectId);
         writerCrewIdentity.setUserId(userId);

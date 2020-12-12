@@ -224,8 +224,8 @@ public class ProjectService {
                 mDto.setTitle(project.getTitle());
                 mDto.setIntroduction(project.getIntroduction());
 
-                List<WritersCrew> writerList = writerCrewRepository.findByStateAndWriterCrewIdentityProjectId(State.ing,
-                        projectId);
+                List<WritersCrew> writerList = writerCrewRepository
+                        .findByStateAndWriterCrewIdentityProjectId(State.selected, projectId);
                 List<String> nickList = new ArrayList<String>();
                 for (WritersCrew writer : writerList) {
                     User writingWriter = userRepository.findById(writer.getWriterCrewIdentity().getUserId());
