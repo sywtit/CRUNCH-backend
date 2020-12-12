@@ -8,6 +8,7 @@ import com.crunch.crunch_server.domain.crew.entity.WriterCrewIdentity;
 import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
 import com.crunch.crunch_server.domain.crew.repository.WriterCrewRepository;
 import com.crunch.crunch_server.domain.project.dto.CompletedPostListDTO;
+import com.crunch.crunch_server.domain.project.dto.MyWritingDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
 
 // import javax.print.event.PrintJobAdapter;
@@ -138,7 +139,7 @@ public class ProjectService {
                 continue;
             System.out.println(project.getTitle());
             CompleteProject.setTitle(project.getTitle());
-
+            CompleteProject.setProjectId(projectId.intValue());
             // 작가목록
             // String a = "selected";
             // State state = new State();
@@ -193,7 +194,7 @@ public class ProjectService {
             User user = userRepository.findById(mainWriter.getWriterCrewIdentity().getUserId());
             rDto.setApplyingNum(wCrews.size());
             rDto.setMainWriter(user.getNickname());
-
+            rDto.setProjectId(projectId.intValue());
             rDto.setRecruitingNum(project.getMwn());
             rDto.setTargetDDay(project.getTarget_d_day());
             rDto.setTitle(project.getTitle());
@@ -202,6 +203,48 @@ public class ProjectService {
         }
 
         return rList;
+    }
+
+    public List<MyWritingDTO> getMyPageWritingProjectList(int userId) {
+
+        User user = userRepository.findById(userId);
+        List<Project> pList = new ArrayList<Project>();
+        List<WritersCrew> wCrews = writerCrewRepository.findByWriterCrewIdentityUserIdAndState(userId, State.selected);
+
+        List<Integer> projectIdList = new ArrayList<Integer>();
+
+        List<MyWritingDTO> mList = new ArrayList<MyWritingDTO>();
+        for (WritersCrew wCrew : wCrews) {
+            int projectId = wCrew.getWriterCrewIdentity().getProjectId();
+            Project project = repository.findById(projectId);
+
+            if (project.getState() == "writing") {
+                MyWritingDTO mDto = new MyWritingDTO();
+                mDto.setProjectId(projectId);
+                mDto.setTitle(project.getTitle());
+                mDto.setIntroduction(project.getIntroduction());
+
+                List<WritersCrew> writerList = writerCrewRepository.findByStateAndWriterCrewIdentityProjectId(State.ing,
+                        projectId);
+                List<String> nickList = new ArrayList<String>();
+                for (WritersCrew writer : writerList) {
+                    User writingWriter = userRepository.findById(writer.getWriterCrewIdentity().getUserId());
+                    nickList.add(writingWriter.getNickname());
+                }
+
+                mDto.setWriterNicknameList(nickList);
+                mList.add(mDto);
+            }
+
+        }
+        return mList;
+
+    }
+
+    public void changeProjectStateToWriting(int projectId) {
+        Project project = repository.findById(projectId);
+        project.setState("writing");
+        repository.save(project);
     }
 
 }

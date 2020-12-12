@@ -6,6 +6,7 @@ import java.util.List;
 import com.crunch.crunch_server.domain.crew.service.WriterCrewService;
 import com.crunch.crunch_server.domain.project.dto.CompletedPostListDTO;
 import com.crunch.crunch_server.domain.project.dto.GenreDTO;
+import com.crunch.crunch_server.domain.project.dto.MyWritingDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectIdDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
 import com.crunch.crunch_server.domain.project.dto.RecruitingProjectListDTO;
@@ -92,6 +93,18 @@ public class ProjectController {
         // int userId = jwtUtil.getUserId(token);
         System.out.println("====================================");
         return service.getRecruitingProjectListOfSelectedTag(genreDTO.getGenre());
+
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/getrecruitingPost")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<MyWritingDTO> getMypageWritingList(@RequestHeader(value = "token") String token,
+            @RequestBody GenreDTO genreDTO) {
+
+        int userId = jwtUtil.getUserId(token);
+        System.out.println("====================================");
+        return service.getMyPageWritingProjectList(userId);
 
     }
 }

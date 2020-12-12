@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RecruitingProjectListDTO {
     private String title;
+    private int projectId;
     private String mainWriter;
     private int recruitingNum;
     private int applyingNum;

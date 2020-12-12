@@ -11,10 +11,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompletedPostListDTO {
+public class MyWritingDTO {
     private String title;
+    private String introduction;
     private int projectId;
-    private List<String> writerList;
-    private int LikeNum;
+    private List<String> writerNicknameList;
 
 }
