@@ -44,7 +44,7 @@ public class ProjectController {
         // writerscrew에 메인작가로 등록
         int userId = jwtUtil.getUserId(token);
 
-        int projectId = service.addProject(projectStartDTO);
+        int projectId = service.addProject(projectStartDTO, userId);
         writerCrewservice.addMainWriter(userId, projectId);
         return projectId;
     }

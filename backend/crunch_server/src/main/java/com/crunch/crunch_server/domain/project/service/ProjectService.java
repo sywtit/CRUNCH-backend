@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.crunch.crunch_server.domain.crew.entity.State;
+import com.crunch.crunch_server.domain.crew.entity.WriterCrewIdentity;
 import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
 import com.crunch.crunch_server.domain.crew.repository.WriterCrewRepository;
 import com.crunch.crunch_server.domain.project.dto.CompletedPostListDTO;
@@ -50,7 +51,7 @@ public class ProjectService {
         return ProjectTitleDdayMapper.Instance.toProjectTitleDdayDTO(project);
     }
 
-    public int addProject(ProjectStartDTO projectStartDTO) {
+    public int addProject(ProjectStartDTO projectStartDTO, int userId) {
 
         Project project = new Project();
         project.setTitle(projectStartDTO.getTitle());
@@ -72,6 +73,17 @@ public class ProjectService {
             tagRepository.save(tagEntity);
 
         }
+
+        // 메인작가 selected로 바꿔주기
+        WritersCrew mainWriter = new WritersCrew();
+        WriterCrewIdentity writerIdentity = new WriterCrewIdentity();
+        mainWriter.setMainornot(1);
+        mainWriter.setState(State.selected);
+        writerIdentity.setProjectId(projectId);
+        writerIdentity.setUserId(userId);
+        mainWriter.setWriterCrewIdentity(writerIdentity);
+
+        writerCrewRepository.save(mainWriter);
 
         return projectId;
     }
