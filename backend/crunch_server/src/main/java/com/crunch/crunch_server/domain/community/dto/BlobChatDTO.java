@@ -1,6 +1,7 @@
 package com.crunch.crunch_server.domain.community.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -17,7 +18,9 @@ public class BlobChatDTO {
     private String text;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime time;
-    private String tagNickname;
+    private List<TagNameDTO> tagNickname;
+
+
 
     /**
      * @return String return the userNickname
@@ -62,16 +65,16 @@ public class BlobChatDTO {
     }
 
     /**
-     * @return String return the tagNickname
+     * @return List<TagNameDTO> return the tagNickname
      */
-    public String getTagNickname() {
+    public List<TagNameDTO> getTagNickname() {
         return tagNickname;
     }
 
     /**
      * @param tagNickname the tagNickname to set
      */
-    public void setTagNickname(String tagNickname) {
+    public void setTagNickname(List<TagNameDTO> tagNickname) {
         this.tagNickname = tagNickname;
     }
 

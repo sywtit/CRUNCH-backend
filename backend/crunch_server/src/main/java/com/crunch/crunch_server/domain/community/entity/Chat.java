@@ -35,6 +35,7 @@ public class Chat {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime time;
     private String tagNickname;
+    private Integer sameChat;
 
     /**
      * @return int return the chatId
@@ -118,6 +119,20 @@ public class Chat {
      */
     public void setTagNickname(String tagNickname) {
         this.tagNickname = tagNickname;
+    }
+
+    /**
+     * @return Integer return the sameChat
+     */
+    public Integer getSameChat() {
+        return sameChat;
+    }
+
+    /**
+     * @param sameChat the sameChat to set
+     */
+    public void setSameChat(Integer sameChat) {
+        this.sameChat = sameChat;
     }
 
 }
