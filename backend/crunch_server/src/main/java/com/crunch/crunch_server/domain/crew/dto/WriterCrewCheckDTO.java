@@ -12,16 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WriterCrewCheckDTO {
-    
+
     private int projectId;
     private int userId;
     private State state;
     private int mainornot;
     private int limit_status;
     private Date limit_status_date;
-    
-
-
 
     /**
      * @return int return the projectId

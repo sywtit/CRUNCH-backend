@@ -8,12 +8,9 @@ import com.crunch.crunch_server.domain.crew.dto.WriterCrewCheckDTO;
 import com.crunch.crunch_server.domain.crew.entity.State;
 import com.crunch.crunch_server.domain.crew.entity.WriterCrewIdentity;
 import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
-import com.crunch.crunch_server.domain.crew.mapper.CheckMapper;
 import com.crunch.crunch_server.domain.crew.repository.WriterCrewRepository;
 import com.crunch.crunch_server.domain.user.entity.User;
 import com.crunch.crunch_server.domain.user.respository.UserRepository;
-import com.crunch.crunch_server.domain.user.service.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

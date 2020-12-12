@@ -20,15 +20,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="writerscrew")
+@Table(name = "writerscrew")
 public class WritersCrew {
-    
+
     @EmbeddedId
     private WriterCrewIdentity writerCrewIdentity;
 
     private String comment;
 
-    @Column(name="state")
+    @Column(name = "state")
     @Enumerated(EnumType.STRING)
     private State state;
 
@@ -37,7 +37,6 @@ public class WritersCrew {
     private int limit_status;
     private Date limit_status_date;
 
-  
     /**
      * @return String return the comment
      */

@@ -1,7 +1,12 @@
 package com.crunch.crunch_server.domain.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.crunch.crunch_server.domain.crew.entity.State;
+import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
+import com.crunch.crunch_server.domain.crew.repository.WriterCrewRepository;
+import com.crunch.crunch_server.domain.project.dto.CompletedPostListDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
 
 // import javax.print.event.PrintJobAdapter;
@@ -12,6 +17,8 @@ import com.crunch.crunch_server.domain.project.entity.Tag;
 import com.crunch.crunch_server.domain.project.entity.TagIdentity;
 import com.crunch.crunch_server.domain.project.repository.ProjectRepository;
 import com.crunch.crunch_server.domain.project.repository.TagRepository;
+import com.crunch.crunch_server.domain.user.entity.User;
+import com.crunch.crunch_server.domain.user.respository.UserRepository;
 import com.crunch.crunch_server.domain.project.mapper.ProjectTitleDdayMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,6 +32,14 @@ public class ProjectService {
 
     @Autowired
     private TagRepository tagRepository;
+
+    @Autowired
+    private WriterCrewRepository writerCrewRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    // @s
 
     // first main page
     public ProjectTitleDdayDTO getProjectTitleDday(int projectId) {
@@ -82,6 +97,50 @@ public class ProjectService {
 
         repository.save(project);
 
+    }
+
+    // List<CompletedPostListDTO>
+    public List<CompletedPostListDTO> getProjectListOfSelectedTag(String tagText) {
+        System.out.println(tagText);
+        List<Integer> projectIdList = new ArrayList<Integer>();
+        List<Tag> tList = new ArrayList<Tag>();
+        tList = tagRepository.findByText(tagText);
+        System.out.println("=======*=======*=======*=======*=======");
+        for (Tag tagEntity : tList) {
+            System.out.println(tagEntity.getTagIdentity().getProjectId());
+            projectIdList.add(tagEntity.getTagIdentity().getProjectId());
+        }
+
+        // 완료된 프로젝트 리스트 반환하기
+        List<CompletedPostListDTO> cDtos = new ArrayList<CompletedPostListDTO>();
+        for (Integer projectId : projectIdList) {
+            CompletedPostListDTO CompleteProject = new CompletedPostListDTO();
+
+            // 제목
+            Project project = repository.findById(projectId.intValue());
+            System.out.println(project.getTitle());
+            CompleteProject.setTitle(project.getTitle());
+
+            // 작가목록
+            // String a = "selected";
+            // State state = new State();
+            // State writerState = new State();
+            List<WritersCrew> wCrews = writerCrewRepository
+                    .findByWriterCrewIdentityProjectIdAndState(projectId.intValue(), State.selected);
+            List<String> writersNameList = new ArrayList<String>();
+            for (WritersCrew wCrew : wCrews) {
+                User user = userRepository.findById(wCrew.getWriterCrewIdentity().getUserId());
+                System.out.println(user.getNickname());
+                writersNameList.add(user.getNickname());
+            }
+            CompleteProject.setWriterList(writersNameList);
+
+            // 좋아요
+            CompleteProject.setLikeNum(0);
+
+            cDtos.add(CompleteProject);
+        }
+        return cDtos;
     }
 
 }

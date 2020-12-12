@@ -1,10 +1,13 @@
 // package com.crunch.crunch_server.domain.project.controller;
 package com.crunch.crunch_server.domain.project.controller;
 
-import com.crunch.crunch_server.domain.crew.service.WriterCrewService;
-import com.crunch.crunch_server.domain.project.dto.*;
+import java.util.List;
 
-import com.crunch.crunch_server.domain.project.entity.*;
+import com.crunch.crunch_server.domain.crew.service.WriterCrewService;
+import com.crunch.crunch_server.domain.project.dto.CompletedPostListDTO;
+import com.crunch.crunch_server.domain.project.dto.GenreDTO;
+import com.crunch.crunch_server.domain.project.dto.ProjectIdDTO;
+import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
 import com.crunch.crunch_server.domain.project.service.*;
 import com.crunch.crunch_server.util.JwtUtil;
 
@@ -62,5 +65,20 @@ public class ProjectController {
 
         // return service.addProject(projectStartDTO);
         return service.getRecruitingProjectInfo(projectIdDTO.getId());
+    }
+
+    // List<CompletedPostListDTO>
+    @CrossOrigin(origins = "*")
+    @PostMapping("/getpostlist")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<CompletedPostListDTO> getPostListOfSelectedGenre(@RequestHeader(value = "token") String token,
+            @RequestBody GenreDTO genreDTO) {
+
+        // int userId = jwtUtil.getUserId(token);
+        System.out.println("====================================");
+        System.out.println(genreDTO.getGenre());
+        // tagDTO.getTagText()
+        return service.getProjectListOfSelectedTag("수학");
+
     }
 }

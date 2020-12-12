@@ -2,6 +2,7 @@ package com.crunch.crunch_server.domain.crew.repository;
 
 import java.util.List;
 
+import com.crunch.crunch_server.domain.crew.entity.State;
 import com.crunch.crunch_server.domain.crew.entity.WriterCrewIdentity;
 import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
 
@@ -18,5 +19,10 @@ public interface WriterCrewRepository extends JpaRepository<WritersCrew, WriterC
 	List<WritersCrew> findByWriterCrewIdentityProjectId(int project_id);
 
 	List<WritersCrew> findByWriterCrewIdentityUserId(int userId);
+
+	List<WritersCrew> findByWriterCrewIdentityProjectIdAndState(int intValue, State selected);
+
+	// List<WritersCrew> findByWriterCrewIdentityProjectIdAndState(int intValue,
+	// String string);
 
 }
