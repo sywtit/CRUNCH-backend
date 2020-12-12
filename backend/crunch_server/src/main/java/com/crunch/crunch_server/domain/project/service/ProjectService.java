@@ -13,6 +13,7 @@ import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
 // import javax.print.event.PrintJobAdapter;
 
 import com.crunch.crunch_server.domain.project.dto.ProjectTitleDdayDTO;
+import com.crunch.crunch_server.domain.project.dto.RecruitingProjectListDTO;
 import com.crunch.crunch_server.domain.project.entity.Project;
 import com.crunch.crunch_server.domain.project.entity.Tag;
 import com.crunch.crunch_server.domain.project.entity.TagIdentity;
@@ -59,6 +60,7 @@ public class ProjectService {
         project.setMwn(projectStartDTO.getMwn());
         project.setTarget_d_day(projectStartDTO.getTarget_d_day());
         project.setTarget_funding_money(projectStartDTO.getTarget_funding_money());
+        project.setState("collecting_writers");
 
         int projectId = repository.save(project).getId();
         System.out.println("----------------gettag------------------");
@@ -116,7 +118,9 @@ public class ProjectService {
         System.out.println(tagText);
         List<Integer> projectIdList = new ArrayList<Integer>();
         List<Tag> tList = new ArrayList<Tag>();
+        // tList = tagRepository.findByText(tagText);
         tList = tagRepository.findByText(tagText);
+
         System.out.println("=======*=======*=======*=======*=======");
         for (Tag tagEntity : tList) {
             System.out.println(tagEntity.getTagIdentity().getProjectId());
@@ -129,7 +133,9 @@ public class ProjectService {
             CompletedPostListDTO CompleteProject = new CompletedPostListDTO();
 
             // 제목
-            Project project = repository.findById(projectId.intValue());
+            Project project = repository.findByIdAndState(projectId.intValue(), "whole_complete");
+            if (project == null)
+                continue;
             System.out.println(project.getTitle());
             CompleteProject.setTitle(project.getTitle());
 
@@ -153,6 +159,49 @@ public class ProjectService {
             cDtos.add(CompleteProject);
         }
         return cDtos;
+    }
+
+    public List<RecruitingProjectListDTO> getRecruitingProjectListOfSelectedTag(String genre) {
+
+        List<Integer> projectIdList = new ArrayList<Integer>();
+        List<Tag> tList = new ArrayList<Tag>();
+        // tList = tagRepository.findByText(tagText);
+        tList = tagRepository.findByText(genre);
+
+        for (Tag tagEntity : tList) {
+            System.out.println(tagEntity.getTagIdentity().getProjectId());
+            projectIdList.add(tagEntity.getTagIdentity().getProjectId());
+        }
+
+        List<RecruitingProjectListDTO> rList = new ArrayList<RecruitingProjectListDTO>();
+
+        for (Integer projectId : projectIdList) {
+            // System.out.println("@@@@@@@@@@@@@@@@@@@@@@");
+            // System.out.println(projectId.intValue());
+            Project project = repository.findByIdAndState(projectId.intValue(), "collecting_writers");
+            if (project == null)
+                continue;
+            System.out.println("=======*=======*=======*=======*=======");
+            System.out.println(project.getTitle());
+            System.out.println("=======*=======*=======*=======*=======");
+            RecruitingProjectListDTO rDto = new RecruitingProjectListDTO();
+
+            List<WritersCrew> wCrews = writerCrewRepository.findByStateAndWriterCrewIdentityProjectId(State.ing,
+                    projectId.intValue());
+            WritersCrew mainWriter = writerCrewRepository.findByMainornotAndWriterCrewIdentityProjectId(1,
+                    projectId.intValue());
+            User user = userRepository.findById(mainWriter.getWriterCrewIdentity().getUserId());
+            rDto.setApplyingNum(wCrews.size());
+            rDto.setMainWriter(user.getNickname());
+
+            rDto.setRecruitingNum(project.getMwn());
+            rDto.setTargetDDay(project.getTarget_d_day());
+            rDto.setTitle(project.getTitle());
+
+            rList.add(rDto);
+        }
+
+        return rList;
     }
 
 }

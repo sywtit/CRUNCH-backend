@@ -8,6 +8,7 @@ import com.crunch.crunch_server.domain.project.dto.CompletedPostListDTO;
 import com.crunch.crunch_server.domain.project.dto.GenreDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectIdDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
+import com.crunch.crunch_server.domain.project.dto.RecruitingProjectListDTO;
 import com.crunch.crunch_server.domain.project.service.*;
 import com.crunch.crunch_server.util.JwtUtil;
 
@@ -78,7 +79,19 @@ public class ProjectController {
         System.out.println("====================================");
         System.out.println(genreDTO.getGenre());
         // tagDTO.getTagText()
-        return service.getProjectListOfSelectedTag("수학");
+        return service.getProjectListOfSelectedTag(genreDTO.getGenre());
+
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/getrecruitingPost")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<RecruitingProjectListDTO> getRecruitingPostList(@RequestHeader(value = "token") String token,
+            @RequestBody GenreDTO genreDTO) {
+
+        // int userId = jwtUtil.getUserId(token);
+        System.out.println("====================================");
+        return service.getRecruitingProjectListOfSelectedTag(genreDTO.getGenre());
 
     }
 }
