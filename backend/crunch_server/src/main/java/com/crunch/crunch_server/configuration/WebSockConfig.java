@@ -19,7 +19,7 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer{
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/channel");
+        config.enableSimpleBroker("/channel","/server");
         config.setApplicationDestinationPrefixes("/app");
     }
 
@@ -30,4 +30,18 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer{
         registry.addEndpoint("/ws").setAllowedOrigins("*")
                 .withSockJS();
     }
+
+
+
+    // <!-- websocket handler -->
+	// <bean id="echoHandler" class="mentor.socketHandler.EchoHandler" />
+ 
+	// <websocket:handlers>
+	// 	<websocket:mapping handler="echoHandler" path="/echo" />
+	// 	<websocket:handshake-interceptors>
+	//          <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+	//       </websocket:handshake-interceptors>
+ 
+	//       <websocket:sockjs/>
+	//  </websocket:handlers>
 }
