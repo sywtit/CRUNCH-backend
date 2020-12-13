@@ -96,8 +96,6 @@ public class ProjectController {
     public List<RecruitingProjectListDTO> getRecruitingPostList(@RequestHeader(value = "token") String token,
             @RequestBody GenreDTO genreDTO) {
 
-        // int userId = jwtUtil.getUserId(token);
-        System.out.println("====================================");
         return service.getRecruitingProjectListOfSelectedTag(genreDTO.getGenre());
 
     }
@@ -109,8 +107,18 @@ public class ProjectController {
             @RequestBody TmpDTO tmpDTO) {
 
         int userId = jwtUtil.getUserId(token);
-        System.out.println("====================================");
         return service.getMyPageWritingProjectList(userId);
+
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/mypageCompleteProjectList")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<MyWritingDTO> getMypageCompleteProject(@RequestHeader(value = "token") String token,
+            @RequestBody TmpDTO tmpDTO) {
+
+        int userId = jwtUtil.getUserId(token);
+        return service.getMypageCompleteProjectList(userId);
 
     }
 
@@ -121,7 +129,6 @@ public class ProjectController {
             @RequestBody ProjectIdDTO projectIdDTO) {
 
         int userId = jwtUtil.getUserId(token);
-        System.out.println("====================================");
         service.changeProjectStateToWriting(projectIdDTO.getId());
 
     }
@@ -133,7 +140,6 @@ public class ProjectController {
             @RequestBody ProjectIdDTO projectIdDTO) {
 
         int userId = jwtUtil.getUserId(token);
-        System.out.println("====================================");
         List<WriterListDTO> writerListDTOs = service.getWritersList(projectIdDTO.getId());
 
         return writerListDTOs;

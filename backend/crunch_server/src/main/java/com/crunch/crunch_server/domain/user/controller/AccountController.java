@@ -58,18 +58,9 @@ public class AccountController {
     @ResponseStatus(value = HttpStatus.OK)
     public List<AccountDTO> getAllAccount(@RequestHeader(value = "token") String token,
             @RequestBody UserIdDTO userIdDTO) {
-        System.out.println("heooollll");
-        // ChargePointDTO chargePointDTO = new ChargePointDTO();
-        // int id = chargePointDTO.getId();
-        int userId = jwtUtil.getUserId(token);
-        System.out.println("--------------------------------------------");
-        System.out.println(userId);
-        // // int id = 6;
-        // List<AccountDTO> accounts =
-        // System.out.println(accountService.getAllAccountsById(userId).get());
 
+        int userId = jwtUtil.getUserId(token);
         return accountService.getAllAccountsById(userId);
-        // return();
 
     }
 
@@ -77,7 +68,7 @@ public class AccountController {
     @PostMapping("/submitaccount")
     @ResponseStatus(value = HttpStatus.OK)
     public int addAccount(@RequestHeader(value = "token") String token, @RequestBody AccountDTO accountDTO) {
-        System.out.println("heooollll");
+
         int userId = jwtUtil.getUserId(token);
         accountService.addnewAccount(accountDTO, userId);
 
@@ -99,9 +90,6 @@ public class AccountController {
         for (Integer projectId : projectIdList) {
             eList.add(accountService.getEachMonthOfProfitForUser(userId, projectId));
         }
-        // accountService.getAllPostIndexLists(userId);
-        // accountService.getMoneyPercentForEachProject(userId);
-        // accountService.getWritersCrewListOfUser(userId);
 
         return eList;
     }

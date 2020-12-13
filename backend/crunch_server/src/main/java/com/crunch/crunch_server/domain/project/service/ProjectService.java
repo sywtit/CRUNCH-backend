@@ -216,6 +216,15 @@ public class ProjectService {
 
     public List<MyWritingDTO> getMyPageWritingProjectList(int userId) {
 
+        return getProjectListOfUserWritingOrComplete(userId, "writing");
+
+    }
+
+    public List<MyWritingDTO> getMypageCompleteProjectList(int userId) {
+        return getProjectListOfUserWritingOrComplete(userId, "whole_complete");
+    }
+
+    public List<MyWritingDTO> getProjectListOfUserWritingOrComplete(int userId, String projectState) {
         User user = userRepository.findById(userId);
         List<Project> pList = new ArrayList<Project>();
         List<WritersCrew> wCrews = writerCrewRepository.findByWriterCrewIdentityUserIdAndState(userId, State.selected);
@@ -228,7 +237,7 @@ public class ProjectService {
 
             Project project = repository.findById(projectId);
 
-            if (project.getState().equals("writing")) {
+            if (project.getState().equals(projectState)) {
                 System.out.println("@@@@@@@@@@@@@@@@@");
                 System.out.println(projectId);
                 MyWritingDTO mDto = new MyWritingDTO();
@@ -250,8 +259,9 @@ public class ProjectService {
 
         }
         return mList;
-
     }
+
+
 
     public void changeProjectStateToWriting(int projectId) {
         Project project = repository.findById(projectId);
