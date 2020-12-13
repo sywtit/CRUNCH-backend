@@ -225,9 +225,12 @@ public class ProjectService {
         List<MyWritingDTO> mList = new ArrayList<MyWritingDTO>();
         for (WritersCrew wCrew : wCrews) {
             int projectId = wCrew.getWriterCrewIdentity().getProjectId();
+
             Project project = repository.findById(projectId);
 
-            if (project.getState() == "writing") {
+            if (project.getState().equals("writing")) {
+                System.out.println("@@@@@@@@@@@@@@@@@");
+                System.out.println(projectId);
                 MyWritingDTO mDto = new MyWritingDTO();
                 mDto.setProjectId(projectId);
                 mDto.setTitle(project.getTitle());
