@@ -3,21 +3,27 @@ package com.crunch.crunch_server.domain.project.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.crunch.crunch_server.domain.crew.dto.WriterListDTO;
+import com.crunch.crunch_server.domain.crew.dto.WriterMoneyPercentDTO;
 import com.crunch.crunch_server.domain.crew.entity.State;
 import com.crunch.crunch_server.domain.crew.entity.WriterCrewIdentity;
 import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
 import com.crunch.crunch_server.domain.crew.repository.WriterCrewRepository;
 import com.crunch.crunch_server.domain.project.dto.CompletedPostListDTO;
 import com.crunch.crunch_server.domain.project.dto.MyWritingDTO;
+import com.crunch.crunch_server.domain.project.dto.PostindexTitleDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
 
 // import javax.print.event.PrintJobAdapter;
 
 import com.crunch.crunch_server.domain.project.dto.ProjectTitleDdayDTO;
 import com.crunch.crunch_server.domain.project.dto.RecruitingProjectListDTO;
+import com.crunch.crunch_server.domain.project.dto.SetIndexFeeDTO;
+import com.crunch.crunch_server.domain.project.entity.PostIndex;
 import com.crunch.crunch_server.domain.project.entity.Project;
 import com.crunch.crunch_server.domain.project.entity.Tag;
 import com.crunch.crunch_server.domain.project.entity.TagIdentity;
+import com.crunch.crunch_server.domain.project.repository.PostIndexRepository;
 import com.crunch.crunch_server.domain.project.repository.ProjectRepository;
 import com.crunch.crunch_server.domain.project.repository.TagRepository;
 import com.crunch.crunch_server.domain.user.entity.User;
@@ -41,6 +47,9 @@ public class ProjectService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PostIndexRepository postIndexRepository;
 
     // @s
 
@@ -244,6 +253,55 @@ public class ProjectService {
     public void changeProjectStateToWriting(int projectId) {
         Project project = repository.findById(projectId);
         project.setState("writing");
+        repository.save(project);
+    }
+
+    public List<WriterListDTO> getWritersList(int projectId) {
+        List<WritersCrew> wCrews = writerCrewRepository.findByWriterCrewIdentityProjectIdAndState(projectId,
+                State.selected);
+        List<WriterListDTO> wListDTOs = new ArrayList<WriterListDTO>();
+
+        for (WritersCrew wCrew : wCrews) {
+            User user = userRepository.findById(wCrew.getWriterCrewIdentity().getUserId());
+            WriterListDTO wDto = new WriterListDTO();
+            wDto.setUserId(user.getId());
+            wDto.setNickname(user.getNickname());
+            wDto.setMainOrnot(wCrew.getMainornot());
+
+            wListDTOs.add(wDto);
+
+        }
+        return wListDTOs;
+    }
+
+    public List<PostIndex> getTitleList(int projectId) {
+        return postIndexRepository.findByPostIndexIdentityProjectId(projectId);
+
+        // return null;
+    }
+
+    public void setWritersMoneyPercent(List<WriterMoneyPercentDTO> wPercentDTOs, int projectId) {
+        for (WriterMoneyPercentDTO wDto : wPercentDTOs) {
+            WritersCrew wCrew = writerCrewRepository
+                    .findByWriterCrewIdentityProjectIdAndWriterCrewIdentityUserId(projectId, wDto.getUserId());
+            wCrew.setMoney_percent(wDto.getSelectprofit());
+            writerCrewRepository.save(wCrew);
+        }
+
+    }
+
+    public void setPostIndexFee(List<SetIndexFeeDTO> iDtos, int projectId) {
+        for (SetIndexFeeDTO iDto : iDtos) {
+            PostIndex postIndex = postIndexRepository
+                    .findByPostIndexIdentityIdAndPostIndexIdentityProjectId(iDto.getIndexId(), projectId);
+            postIndex.setFee(iDto.getFee());
+            postIndexRepository.save(postIndex);
+        }
+    }
+
+    public void changeProjectStateToWholeComplete(int projectId) {
+        Project project = repository.findById(projectId);
+        project.setState("whole_complete");
         repository.save(project);
     }
 

@@ -34,6 +34,8 @@ public interface WriterCrewRepository extends JpaRepository<WritersCrew, WriterC
 
 	List<WritersCrew> findByWriterCrewIdentityUserIdAndState(int userId, State selected);
 
+	WritersCrew findByWriterCrewIdentityProjectIdAndWriterCrewIdentityUserId(int projectId, int userId);
+
 	// List<WritersCrew> findByWriterCrewIdentityProjectIdAndState(int intValue,
 	// String string);
 
