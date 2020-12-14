@@ -18,6 +18,7 @@ import com.crunch.crunch_server.domain.project.dto.RecruitingProjectListDTO;
 import com.crunch.crunch_server.domain.project.dto.SetIndexFeeDTO;
 import com.crunch.crunch_server.domain.project.dto.TmpDTO;
 import com.crunch.crunch_server.domain.project.entity.PostIndex;
+import com.crunch.crunch_server.domain.project.repository.ProjectRepository;
 import com.crunch.crunch_server.domain.project.service.*;
 import com.crunch.crunch_server.util.JwtUtil;
 
@@ -44,6 +45,9 @@ public class ProjectController {
 
     @Autowired
     private WriterCrewService writerCrewservice;
+
+    @Autowired
+    private ProjectRepository repository;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -81,20 +85,17 @@ public class ProjectController {
     @CrossOrigin(origins = "*")
     @PostMapping("/project/startup/banner")
     @ResponseStatus(value = HttpStatus.OK)
-    public int a(@RequestParam("img") MultipartFile files) throws Exception {
+    public int a(@RequestParam("img") MultipartFile files, ProjectIdDTO projectIdDTO) throws Exception {
         String rootPath = System.getProperty("user.dir");
 
         System.out.println("현재 프로젝트의 경로 : " + rootPath);
 
-        // String baseDir = "C:\\Users\\hyejin";
-        // String rootPath =
-        // FileSystemView.getFileSystemView().getHomeDirectory().toString();
-        // System.out.println(rootPath);
-        // String basePath = rootPath + "/" + "Temp";
-        // String filePath = basePath + "/" + files.getOriginalFilename();
-
-        String filePath = rootPath + "\\backend\\crunch_server\\src\\main\\resources\\static\\img\\"
-                + files.getOriginalFilename();
+        String frontHomePath = "C:\\Users\\valer\\crunch_git\\1210\\front_now\\";
+        String frontPath = "frontend\\src\\assets\\img\\projectBanner\\";
+        String filePath = frontHomePath + frontPath + projectIdDTO.getId() + ".jpg";
+        // String filePath = rootPath +
+        // "\\backend\\crunch_server\\src\\main\\resources\\static\\img\\"
+        // + files.getOriginalFilename();
         // String filePath = "C:/Temp/" + files.getOriginalFilename();
         files.transferTo(new File(filePath));
 
@@ -107,6 +108,16 @@ public class ProjectController {
     // public int a(@RequestParam("img") MultipartFile files) throws Exception {
 
     // }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/getTitle")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String getTitle(@RequestHeader(value = "token") String token, @RequestBody ProjectIdDTO projectIdDTO) {
+
+        int userId = jwtUtil.getUserId(token);
+
+        return repository.findById(projectIdDTO.getId()).getTitle();
+    }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/collaboProj")
