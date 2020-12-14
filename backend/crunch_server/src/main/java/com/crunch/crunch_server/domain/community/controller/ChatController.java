@@ -45,10 +45,10 @@ public class ChatController {
       List<TagNameDTO> tagNames = chatMessage.getTagName();
       String senderName = chatMessage.getUserName();
       System.out.println("==========="+senderName+"============");
-      
+
       for(int i =0; i<tagNames.size(); i++){
         String username = tagNames.get(i).getName();
-        messagingTemplate.convertAndSendToUser(username, "/server", senderName+"tag you" +username);
+        messagingTemplate.convertAndSendToUser(username, "/channel/main", senderName+"tag you" +username);
       }
 
     }
