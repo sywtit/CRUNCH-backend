@@ -32,8 +32,8 @@ public class Comment {
     private int projectId;
     private int userId;
     private String text;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime time;
+    private String time;
+    // @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    // private LocalDateTime time;
 
 }

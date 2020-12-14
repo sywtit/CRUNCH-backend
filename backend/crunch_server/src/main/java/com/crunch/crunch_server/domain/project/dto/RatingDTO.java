@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RatingDTO {
     // private int userId;
-    private int postId;
+    private int projectId;
+    private int indexId;
     private int rate;
 }
