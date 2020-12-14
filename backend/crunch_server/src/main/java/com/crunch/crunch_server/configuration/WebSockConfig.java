@@ -1,7 +1,13 @@
 package com.crunch.crunch_server.configuration;
 
+import java.util.List;
+
+import com.crunch.crunch_server.authentication.UserInterceptor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.converter.MessageConverter;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -19,9 +25,9 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer{
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/channel");
-        config.setApplicationDestinationPrefixes("/app","/private");
-        config.setUserDestinationPrefix("/private");
+        config.enableSimpleBroker("/channel", "/queue");
+        config.setApplicationDestinationPrefixes("/app");
+        config.setUserDestinationPrefix("/user");
     }
 
     //stomp websocket connection endpoint
@@ -32,17 +38,10 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer{
                 .withSockJS();
     }
 
+    @Override
+     public void configureClientInboundChannel(ChannelRegistration registration) {
+    registration.setInterceptors(new UserInterceptor());
+}
 
 
-    // <!-- websocket handler -->
-	// <bean id="echoHandler" class="mentor.socketHandler.EchoHandler" />
- 
-	// <websocket:handlers>
-	// 	<websocket:mapping handler="echoHandler" path="/echo" />
-	// 	<websocket:handshake-interceptors>
-	//          <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
-	//       </websocket:handshake-interceptors>
- 
-	//       <websocket:sockjs/>
-	//  </websocket:handlers>
 }

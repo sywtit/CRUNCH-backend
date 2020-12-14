@@ -16,6 +16,8 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +31,9 @@ public class ChatController {
 
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
+
+    @Autowired
+    private SimpMessagingTemplate messageTemplate;
 
     @Autowired
     private ChatService chatService;
@@ -49,10 +54,19 @@ public class ChatController {
       for(int i =0; i<tagNames.size(); i++){
         String username = tagNames.get(i).getName();
         System.out.println("==============="+username+"==========");
-        messagingTemplate.convertAndSendToUser(username, "/channel/main", senderName+"tag you" +username);
+        messageTemplate.convertAndSendToUser(username, "/queue", senderName+"tag you" +username);
       }
 
     }
+
+    // @MessageMapping("/singleShout")
+    // public void singleUser(StompHeaderAccessor stompHeaderAccessor) {
+    //     String message = shout.getMessage();
+    //              LOGGER.info("received message:" + message);
+    //     Principal user = stompHeaderAccessor.getUser();
+    //     simpMessageSendingOperations.convertAndSendToUser(user.getName(), "/queue/shouts", shout);
+    // }
+
   
     @MessageMapping("/chat/{roomId}/addUser")
     public void addUser(@DestinationVariable String roomId, @Payload ChatMessageDTO chatMessage,

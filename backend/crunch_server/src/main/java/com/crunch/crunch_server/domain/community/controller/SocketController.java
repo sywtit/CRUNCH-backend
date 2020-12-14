@@ -34,6 +34,8 @@ public class SocketController {
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
         logger.info("Received a new web socket connection");
+        StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
+
     }
 
     @EventListener

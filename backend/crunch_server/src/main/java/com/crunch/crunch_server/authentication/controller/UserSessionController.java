@@ -1,5 +1,6 @@
 package com.crunch.crunch_server.authentication.controller;
 
+import com.crunch.crunch_server.authentication.dto.User;
 import com.crunch.crunch_server.authentication.dto.UserSessionInfoDTO;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -27,5 +29,11 @@ public class UserSessionController {
         headerAccessor.getSessionAttributes().put("username", userSessionInfo.getSender());
     //  messagingTemplate.convertAndSend("/channel/"+ roomId, chatMessage);
     }
+
+    @SubscribeMapping("/queue")
+        public void test(User p) { 
+            // sendMessagesThatWereReceivedWhileUserWasOffline();
+            System.out.println("7777777777");
+        }
 
 }
