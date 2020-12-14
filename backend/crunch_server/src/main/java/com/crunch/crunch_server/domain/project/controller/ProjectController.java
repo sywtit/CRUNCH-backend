@@ -83,16 +83,19 @@ public class ProjectController {
     // }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/project/startup/banner")
+    @PostMapping("/{projectId}/startup/banner")
     @ResponseStatus(value = HttpStatus.OK)
-    public int a(@RequestParam("img") MultipartFile files, ProjectIdDTO projectIdDTO) throws Exception {
+    public int a(@RequestParam("img") MultipartFile files, @PathVariable int projectId) throws Exception {
         String rootPath = System.getProperty("user.dir");
 
         System.out.println("현재 프로젝트의 경로 : " + rootPath);
 
         String frontHomePath = "C:\\Users\\valer\\crunch_git\\1210\\front_now\\";
         String frontPath = "frontend\\src\\assets\\img\\projectBanner\\";
-        String filePath = frontHomePath + frontPath + projectIdDTO.getId() + ".jpg";
+
+        System.out.println("~@~@~@~@~@~@~@~@~@~@~@~@");
+        System.out.println(projectId);
+        String filePath = frontHomePath + frontPath + projectId + ".jpg";
         // String filePath = rootPath +
         // "\\backend\\crunch_server\\src\\main\\resources\\static\\img\\"
         // + files.getOriginalFilename();
