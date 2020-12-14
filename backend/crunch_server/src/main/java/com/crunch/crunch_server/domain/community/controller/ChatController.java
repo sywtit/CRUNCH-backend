@@ -48,6 +48,7 @@ public class ChatController {
 
       for(int i =0; i<tagNames.size(); i++){
         String username = tagNames.get(i).getName();
+        System.out.println("==============="+username+"==========");
         messagingTemplate.convertAndSendToUser(username, "/channel/main", senderName+"tag you" +username);
       }
 

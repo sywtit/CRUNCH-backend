@@ -21,6 +21,7 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer{
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/channel");
         config.setApplicationDestinationPrefixes("/app");
+        config.setUserDestinationPrefix("/private");
     }
 
     //stomp websocket connection endpoint
