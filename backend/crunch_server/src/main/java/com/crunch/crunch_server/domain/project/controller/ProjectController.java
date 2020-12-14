@@ -133,6 +133,7 @@ public class ProjectController {
 
     }
 
+    // 수익 정산 부분 작가목록 가져오기
     @CrossOrigin(origins = "*")
     @PostMapping("/getWriterList")
     @ResponseStatus(value = HttpStatus.OK)
@@ -146,6 +147,7 @@ public class ProjectController {
 
     }
 
+    // 수익 정산 부분 목차 가져오기
     @CrossOrigin(origins = "*")
     @PostMapping("/getIndexList")
     @ResponseStatus(value = HttpStatus.OK)
@@ -183,6 +185,10 @@ public class ProjectController {
         service.setPostIndexFee(iDtos, projectId);
 
         service.changeProjectStateToWholeComplete(projectId);
+
+        service.lastSubmitToCompletePost(projectId);
     }
+
+    
 
 }

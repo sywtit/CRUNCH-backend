@@ -1,5 +1,6 @@
 package com.crunch.crunch_server.domain.project.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import com.crunch.crunch_server.domain.crew.entity.WriterCrewIdentity;
 import com.crunch.crunch_server.domain.crew.entity.WritersCrew;
 import com.crunch.crunch_server.domain.crew.repository.WriterCrewRepository;
 import com.crunch.crunch_server.domain.project.dto.CompletedPostListDTO;
+import com.crunch.crunch_server.domain.project.dto.ContentsReadingDTO;
 import com.crunch.crunch_server.domain.project.dto.MyWritingDTO;
 import com.crunch.crunch_server.domain.project.dto.PostindexTitleDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
@@ -17,15 +19,19 @@ import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
 // import javax.print.event.PrintJobAdapter;
 
 import com.crunch.crunch_server.domain.project.dto.ProjectTitleDdayDTO;
+import com.crunch.crunch_server.domain.project.dto.ReadingIndexListDTO;
 import com.crunch.crunch_server.domain.project.dto.RecruitingProjectListDTO;
 import com.crunch.crunch_server.domain.project.dto.SetIndexFeeDTO;
 import com.crunch.crunch_server.domain.project.entity.PostIndex;
+import com.crunch.crunch_server.domain.project.entity.Posts;
 import com.crunch.crunch_server.domain.project.entity.Project;
 import com.crunch.crunch_server.domain.project.entity.Tag;
 import com.crunch.crunch_server.domain.project.entity.TagIdentity;
 import com.crunch.crunch_server.domain.project.repository.PostIndexRepository;
+import com.crunch.crunch_server.domain.project.repository.PostRepository;
 import com.crunch.crunch_server.domain.project.repository.ProjectRepository;
 import com.crunch.crunch_server.domain.project.repository.TagRepository;
+import com.crunch.crunch_server.domain.user.dto.UserIdNickDTO;
 import com.crunch.crunch_server.domain.user.entity.User;
 import com.crunch.crunch_server.domain.user.respository.UserRepository;
 import com.crunch.crunch_server.domain.project.mapper.ProjectTitleDdayMapper;
@@ -50,6 +56,9 @@ public class ProjectService {
 
     @Autowired
     private PostIndexRepository postIndexRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     // @s
 
@@ -261,8 +270,6 @@ public class ProjectService {
         return mList;
     }
 
-
-
     public void changeProjectStateToWriting(int projectId) {
         Project project = repository.findById(projectId);
         project.setState("writing");
@@ -315,7 +322,79 @@ public class ProjectService {
     public void changeProjectStateToWholeComplete(int projectId) {
         Project project = repository.findById(projectId);
         project.setState("whole_complete");
+        // SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy년 MM월dd일 HH시mm분ss초");
+        // String time2 = format2.format(time);
+        LocalDate currentDate = LocalDate.now();
+        project.setComplete_time(currentDate.toString());
         repository.save(project);
+    }
+
+    public ContentsReadingDTO getContentsOfProjectId(int projectId, int postIndex) {
+        System.out.println("*****************************");
+        Project project = repository.findById(projectId);
+
+        PostIndex index = postIndexRepository.findByPostIndexIdentityIdAndPostIndexIdentityProjectId(postIndex,
+                projectId);
+        Posts post = postRepository.findByProjectIdAndIndexId(projectId, postIndex);
+
+        ContentsReadingDTO cDto = new ContentsReadingDTO();
+        cDto.setProjectId(projectId);
+        cDto.setTitle(project.getTitle());
+        cDto.setSubtitle(index.getTitle());
+
+        List<Tag> tagList = tagRepository.findByTagIdentityProjectId(projectId);
+        List<String> tList = new ArrayList<String>();
+        for (Tag tag : tagList) {
+            tList.add(tag.getText());
+        }
+        cDto.setTagList(tList);
+        System.out.println(post.getComplete_post());
+        cDto.setCompletePost(post.getComplete_post());
+        cDto.setComplete_time(project.getComplete_time());
+        cDto.setStarRate(4.0);
+
+        cDto.setWriterNicknameList(getNickListOfProjectId(projectId));
+
+        return cDto;
+
+    }
+
+    public List<UserIdNickDTO> getNickListOfProjectId(int projectId) {
+        List<String> nickList = new ArrayList<String>();
+        List<UserIdNickDTO> userIdNickDTOs = new ArrayList<UserIdNickDTO>();
+        List<WritersCrew> wCrews = writerCrewRepository.findByWriterCrewIdentityProjectIdAndState(projectId,
+                State.selected);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~");
+        for (WritersCrew wCrew : wCrews) {
+            User user = userRepository.findById(wCrew.getWriterCrewIdentity().getUserId());
+            UserIdNickDTO uDto = new UserIdNickDTO();
+            uDto.setUserId(user.getId());
+            uDto.setNickname(user.getNickname());
+            userIdNickDTOs.add(uDto);
+            System.out.println(user.getNickname());
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~");
+        return userIdNickDTOs;
+    }
+
+    public List<ReadingIndexListDTO> getContentsIndexListOfProjectId(int projectId) {
+        List<ReadingIndexListDTO> rListDTOs = new ArrayList<ReadingIndexListDTO>();
+        List<PostIndex> postIndexs = postIndexRepository.findByPostIndexIdentityProjectId(projectId);
+        for (PostIndex pIndex : postIndexs) {
+            ReadingIndexListDTO rDto = new ReadingIndexListDTO();
+            rDto.setProjectId(projectId);
+            rDto.setIndexId(pIndex.getPostIndexIdentity().getId());
+            rDto.setFee(pIndex.getFee());
+            rDto.setTitle(pIndex.getTitle());
+
+            rListDTOs.add(rDto);
+        }
+
+        return rListDTOs;
+    }
+
+    public void lastSubmitToCompletePost(int projectId) {
+
     }
 
 }
