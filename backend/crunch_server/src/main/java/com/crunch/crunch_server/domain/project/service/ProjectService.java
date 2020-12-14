@@ -253,6 +253,19 @@ public class ProjectService {
                 mDto.setProjectId(projectId);
                 mDto.setTitle(project.getTitle());
                 mDto.setIntroduction(project.getIntroduction());
+                List<Tag> tagList = tagRepository.findByTagIdentityProjectId(projectId);
+                if (tagList.size() != 0) {
+                    List<String> tList = new ArrayList<String>();
+                    for (Tag tag : tagList) {
+                        tList.add(tag.getText());
+                    }
+
+                    mDto.setTagList(tList);
+                    // mDto.setGenre(tList.;
+                } else if (tagList.size() == 0) {
+                    mDto.setTagList(null);
+                    // mDto.setGenre(null);
+                }
 
                 List<WritersCrew> writerList = writerCrewRepository
                         .findByStateAndWriterCrewIdentityProjectId(State.selected, projectId);
@@ -354,6 +367,9 @@ public class ProjectService {
         cDto.setStarRate(4.0);
 
         cDto.setWriterNicknameList(getNickListOfProjectId(projectId));
+
+        List<Tag> tags = tagRepository.findByTagIdentityProjectId(projectId);
+        cDto.setGenre(tags.get(0).getText());
 
         return cDto;
 

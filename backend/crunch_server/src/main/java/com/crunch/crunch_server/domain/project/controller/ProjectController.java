@@ -1,7 +1,10 @@
 // package com.crunch.crunch_server.domain.project.controller;
 package com.crunch.crunch_server.domain.project.controller;
 
+import java.io.File;
 import java.util.List;
+
+import javax.swing.filechooser.FileSystemView;
 
 import com.crunch.crunch_server.domain.crew.dto.WriterListDTO;
 import com.crunch.crunch_server.domain.crew.dto.WriterMoneyPercentDTO;
@@ -21,13 +24,16 @@ import com.crunch.crunch_server.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api")
@@ -56,6 +62,51 @@ public class ProjectController {
         writerCrewservice.addMainWriter(userId, projectId);
         return projectId;
     }
+
+    // @CrossOrigin(origins = "*")
+    // @PostMapping("/project/startup/banner")
+    // @ResponseStatus(value = HttpStatus.OK)
+    // public void a(@RequestParam("photo") MultipartFile file) throws Exception {
+    // String rootPath =
+    // FileSystemView.getFileSystemView().getHomeDirectory().toString();
+    // String basePath = rootPath + "/" + "Temp";
+
+    // String filePath = basePath + "/" + file.getOriginalFilename();
+
+    // File dest = new File(filePath);
+    // photo.transferTo(dest);
+
+    // }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/project/startup/banner")
+    @ResponseStatus(value = HttpStatus.OK)
+    public int a(@RequestParam("img") MultipartFile files) throws Exception {
+        String rootPath = System.getProperty("user.dir");
+
+        System.out.println("현재 프로젝트의 경로 : " + rootPath);
+
+        // String baseDir = "C:\\Users\\hyejin";
+        // String rootPath =
+        // FileSystemView.getFileSystemView().getHomeDirectory().toString();
+        // System.out.println(rootPath);
+        // String basePath = rootPath + "/" + "Temp";
+        // String filePath = basePath + "/" + files.getOriginalFilename();
+
+        String filePath = rootPath + "\\backend\\crunch_server\\src\\main\\resources\\static\\img\\"
+                + files.getOriginalFilename();
+        // String filePath = "C:/Temp/" + files.getOriginalFilename();
+        files.transferTo(new File(filePath));
+
+        return 100;
+    }
+
+    // @CrossOrigin(origins = "*")
+    // @GetMapping("/display")
+    // @ResponseStatus(value = HttpStatus.OK)
+    // public int a(@RequestParam("img") MultipartFile files) throws Exception {
+
+    // }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/collaboProj")
@@ -188,7 +239,5 @@ public class ProjectController {
 
         service.lastSubmitToCompletePost(projectId);
     }
-
-    
 
 }

@@ -27,5 +27,6 @@ public class ContentsReadingDTO {
     private double starRate;
     // 내용
     private String completePost;
+    private String genre;
 
 }
