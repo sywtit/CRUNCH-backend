@@ -24,6 +24,7 @@ public class ChatService {
             chat.setText(chatMessage.getContent());
             chat.setTime(chatMessage.getTime());
             chat.setUserNickname(chatMessage.getUserName());
+            chat.setSameChat(0);
         
             chatRepository.save(chat);
         }

@@ -21,7 +21,7 @@ public class CommunityContoller {
       //get community blob
       @CrossOrigin(origins="*")
       @GetMapping("/{projectId}/index/{indexId}/CommunityBlob")
-      public FirstCommunityBlobDTO makeChatCommunity(@PathVariable int projectId, @PathVariable int indexId)
+      public FirstCommunityBlobDTO makeChatCommunity(@PathVariable(value="projectId") int projectId, @PathVariable(value="indexId") int indexId)
       {
          return communityService.getCommunityBlob(projectId, indexId);
       }

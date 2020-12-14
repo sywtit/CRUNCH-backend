@@ -1,7 +1,10 @@
 package com.crunch.crunch_server.domain.community.controller;
 
+import java.util.List;
+
 import com.crunch.crunch_server.domain.community.dto.ChatMessageDTO;
 import com.crunch.crunch_server.domain.community.dto.SocketDTO;
+import com.crunch.crunch_server.domain.community.dto.TagNameDTO;
 import com.crunch.crunch_server.domain.community.service.ChatService;
 
 import org.slf4j.Logger;
@@ -36,9 +39,18 @@ public class ChatController {
 
       //have to save all
       chatService.saveChat(roomId, chatMessage);
-
-      //have to check tag name and save in notice
       
+      //have to check tag name and save in notice
+      //before that send just check message to specific user
+      List<TagNameDTO> tagNames = chatMessage.getTagName();
+      String senderName = chatMessage.getUserName();
+      System.out.println("==========="+senderName+"============");
+      
+      for(int i =0; i<tagNames.size(); i++){
+        String username = tagNames.get(i).getName();
+        messagingTemplate.convertAndSendToUser(username, "/server", senderName+"tag you" +username);
+      }
+
     }
   
     @MessageMapping("/chat/{roomId}/addUser")
