@@ -64,13 +64,19 @@ public class CommunityService {
 
         for(int i =0; i<chatEntity.size(); i++)
         {
-            if(chatEntity.get(i).getSameChat() == 0)
+            if(chatEntity.get(i).getSameChat() == 1)
             {
                 checkSameChatCount = 0;
                 tagList = new ArrayList<TagNameDTO>();
                 TagNameDTO indexTagName = new TagNameDTO();
                 indexTagName.setName(chatEntity.get(i).getTagNickname());
                 tagList.add(indexTagName);
+                chat.add(ChatMapper.Instance.toBlobChatDTO(chatEntity.get(i), tagList));
+            }
+            else if(chatEntity.get(i).getSameChat() == 0)
+            {
+                checkSameChatCount = 0;
+                tagList = new ArrayList<TagNameDTO>();
                 chat.add(ChatMapper.Instance.toBlobChatDTO(chatEntity.get(i), tagList));
             }
             else
