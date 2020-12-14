@@ -44,6 +44,8 @@ public class ChatController {
       //before that send just check message to specific user
       List<TagNameDTO> tagNames = chatMessage.getTagName();
       String senderName = chatMessage.getUserName();
+      System.out.println("==========="+senderName+"============");
+      
       for(int i =0; i<tagNames.size(); i++){
         String username = tagNames.get(i).getName();
         messagingTemplate.convertAndSendToUser(username, "/server", senderName+"tag you" +username);

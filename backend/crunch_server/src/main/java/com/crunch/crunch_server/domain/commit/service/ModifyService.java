@@ -274,6 +274,7 @@ public class ModifyService {
         int afterPostLength = Integer.parseInt(lengthResult[5]);
 
         PostModification postModification = CommitPostModificationMapper.Instance.toModifiedPMEntity(diffResult, beforePostLength, afterPostLength);
+
         postModification.setCommits(commitRevertVersion);
         return postModification;
     }
