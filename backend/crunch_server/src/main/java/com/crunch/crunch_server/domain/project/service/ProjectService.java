@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.crunch.crunch_server.domain.commit.dto.BlobDTO;
+import com.crunch.crunch_server.domain.commit.dto.RecentCommitDTO;
+import com.crunch.crunch_server.domain.commit.service.BlobService;
 import com.crunch.crunch_server.domain.crew.dto.WriterListDTO;
 import com.crunch.crunch_server.domain.crew.dto.WriterMoneyPercentDTO;
 import com.crunch.crunch_server.domain.crew.entity.State;
@@ -59,6 +62,12 @@ public class ProjectService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private PostService postService;
+
+    @Autowired
+    private BlobService blobService;
 
     // @s
 
@@ -410,6 +419,31 @@ public class ProjectService {
     }
 
     public void lastSubmitToCompletePost(int projectId) {
+
+        //post
+        //complete post
+        //how to get complete post 
+
+        //1. get index id list by projectID
+        List<PostIndex> postIndexList = new ArrayList<PostIndex>();
+        postIndexList = postIndexRepository.findByPostIndexIdentityProjectId(projectId);
+
+        //2. by matching index id and projectId get postId
+        for(int i = 0; i< postIndexList.size(); i++)
+        {
+            int postId = postService.getPostID(projectId, postIndexList.get(i).getPostIndexIdentity().getId());
+            RecentCommitDTO recentCommitDTO = new RecentCommitDTO();
+            recentCommitDTO = blobService.getRecentCommitInfo(postId);
+
+            BlobDTO blobDTO = new BlobDTO();
+            blobDTO = blobService.getProjectBlob(recentCommitDTO);
+            String whole_post = blobDTO.getPost();
+
+            Posts post = postRepository.findByProjectIdAndIndexId(projectId, postIndexList.get(i).getPostIndexIdentity().getId());
+            post.setComplete_post(whole_post);
+            
+            postRepository.save(post);
+        }
 
     }
 
