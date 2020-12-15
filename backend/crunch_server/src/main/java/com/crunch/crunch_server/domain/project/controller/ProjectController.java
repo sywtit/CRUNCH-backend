@@ -1,7 +1,10 @@
 // package com.crunch.crunch_server.domain.project.controller;
 package com.crunch.crunch_server.domain.project.controller;
 
+import java.io.File;
 import java.util.List;
+
+import javax.swing.filechooser.FileSystemView;
 
 import com.crunch.crunch_server.domain.crew.dto.WriterListDTO;
 import com.crunch.crunch_server.domain.crew.dto.WriterMoneyPercentDTO;
@@ -10,24 +13,30 @@ import com.crunch.crunch_server.domain.project.dto.CompletedPostListDTO;
 import com.crunch.crunch_server.domain.project.dto.GenreDTO;
 import com.crunch.crunch_server.domain.project.dto.MyWritingDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectIdDTO;
+import com.crunch.crunch_server.domain.project.dto.ProjectIndexUserDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
 import com.crunch.crunch_server.domain.project.dto.RecruitingProjectListDTO;
 import com.crunch.crunch_server.domain.project.dto.SetIndexFeeDTO;
 import com.crunch.crunch_server.domain.project.dto.TmpDTO;
 import com.crunch.crunch_server.domain.project.entity.PostIndex;
+import com.crunch.crunch_server.domain.project.repository.PostIndexRepository;
+import com.crunch.crunch_server.domain.project.repository.ProjectRepository;
 import com.crunch.crunch_server.domain.project.service.*;
 import com.crunch.crunch_server.util.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api")
@@ -40,7 +49,13 @@ public class ProjectController {
     private WriterCrewService writerCrewservice;
 
     @Autowired
+    private ProjectRepository repository;
+
+    @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private PostIndexRepository postIndexRepository;
 
     @CrossOrigin(origins = "*")
     @PostMapping("/project/startup")
@@ -55,6 +70,87 @@ public class ProjectController {
         int projectId = service.addProject(projectStartDTO, userId);
         writerCrewservice.addMainWriter(userId, projectId);
         return projectId;
+    }
+
+    // @CrossOrigin(origins = "*")
+    // @PostMapping("/project/startup/banner")
+    // @ResponseStatus(value = HttpStatus.OK)
+    // public void a(@RequestParam("photo") MultipartFile file) throws Exception {
+    // String rootPath =
+    // FileSystemView.getFileSystemView().getHomeDirectory().toString();
+    // String basePath = rootPath + "/" + "Temp";
+
+    // String filePath = basePath + "/" + file.getOriginalFilename();
+
+    // File dest = new File(filePath);
+    // photo.transferTo(dest);
+
+    // }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/{projectId}/startup/banner")
+    @ResponseStatus(value = HttpStatus.OK)
+    public int a(@RequestParam("img") MultipartFile files, @PathVariable int projectId) throws Exception {
+        String rootPath = System.getProperty("user.dir");
+
+        System.out.println("현재 프로젝트의 경로 : " + rootPath);
+
+        String frontHomePath = "C:\\Users\\valer\\crunch_git\\1210\\front_now\\";
+        String frontPath = "frontend\\src\\assets\\img\\projectBanner\\";
+
+        System.out.println("~@~@~@~@~@~@~@~@~@~@~@~@");
+        System.out.println(projectId);
+        String filePath = frontHomePath + frontPath + projectId + ".jpg";
+        // String filePath = rootPath +
+        // "\\backend\\crunch_server\\src\\main\\resources\\static\\img\\"
+        // + files.getOriginalFilename();
+        // String filePath = "C:/Temp/" + files.getOriginalFilename();
+        files.transferTo(new File(filePath));
+
+        return 100;
+    }
+
+    // @CrossOrigin(origins = "*")
+    // @GetMapping("/display")
+    // @ResponseStatus(value = HttpStatus.OK)
+    // public int a(@RequestParam("img") MultipartFile files) throws Exception {
+
+    // }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/getTitle")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String getTitle(@RequestHeader(value = "token") String token, @RequestBody ProjectIdDTO projectIdDTO) {
+
+        int userId = jwtUtil.getUserId(token);
+
+        return repository.findById(projectIdDTO.getId()).getTitle();
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/getSubtitle")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String getSubtitle(@RequestHeader(value = "token") String token,
+            @RequestBody ProjectIndexUserDTO projectIndexUserDTO) {
+
+        int userId = jwtUtil.getUserId(token);
+
+        String subtitle = postIndexRepository.findByPostIndexIdentityIdAndPostIndexIdentityProjectId(
+                projectIndexUserDTO.getPostIndex(), projectIndexUserDTO.getProjectId()).getTitle();
+        System.out.println("@@@@@@@@");
+        System.out.println(subtitle);
+        return subtitle;
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/getWriterListOfBasicCollaboTool")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<WriterListDTO> getWriterListOfBasicCollaboTool(@RequestHeader(value = "token") String token,
+            @RequestBody ProjectIdDTO projectIdDTO) {
+
+        int userId = jwtUtil.getUserId(token);
+
+        return service.getWritersList(projectIdDTO.getId());
     }
 
     @CrossOrigin(origins = "*")
@@ -133,6 +229,7 @@ public class ProjectController {
 
     }
 
+    // 수익 정산 부분 작가목록 가져오기
     @CrossOrigin(origins = "*")
     @PostMapping("/getWriterList")
     @ResponseStatus(value = HttpStatus.OK)
@@ -146,6 +243,7 @@ public class ProjectController {
 
     }
 
+    // 수익 정산 부분 목차 가져오기
     @CrossOrigin(origins = "*")
     @PostMapping("/getIndexList")
     @ResponseStatus(value = HttpStatus.OK)
@@ -183,6 +281,8 @@ public class ProjectController {
         service.setPostIndexFee(iDtos, projectId);
 
         service.changeProjectStateToWholeComplete(projectId);
+
+        service.lastSubmitToCompletePost(projectId);
     }
 
 }

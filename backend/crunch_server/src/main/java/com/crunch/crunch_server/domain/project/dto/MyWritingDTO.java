@@ -16,5 +16,7 @@ public class MyWritingDTO {
     private String introduction;
     private int projectId;
     private List<String> writerNicknameList;
+    // private String genre;
+    private List<String> tagList;
 
 }

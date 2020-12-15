@@ -16,6 +16,8 @@ public interface TagRepository extends JpaRepository<Tag, TagIdentity> {
 
 	List<Tag> findByText(String tagText);
 
+	List<Tag> findByTagIdentityProjectId(int projectId);
+
 	// List<Tag> findByTextAndState(String tagText, String string);
 
 }

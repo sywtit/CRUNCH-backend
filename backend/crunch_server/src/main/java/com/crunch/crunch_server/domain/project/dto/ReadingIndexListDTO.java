@@ -9,9 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RatingDTO {
-    // private int userId;
+public class ReadingIndexListDTO {
     private int projectId;
     private int indexId;
-    private int rate;
+    private String title;
+    private int fee;
+
 }

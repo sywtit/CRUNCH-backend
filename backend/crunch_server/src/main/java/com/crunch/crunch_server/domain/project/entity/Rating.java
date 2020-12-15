@@ -1,6 +1,7 @@
 package com.crunch.crunch_server.domain.project.entity;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,12 +24,13 @@ import lombok.Setter;
 @Setter
 @Table(name = "rating")
 public class Rating {
-    @Id
-    @GeneratedValue
+    // @Id
+    // @GeneratedValue
+
+    @EmbeddedId
+    private RatingIdentity ratingIdentity;
 
     private int id;
-    private int postId;
-    private int userId;
     private int rate;
     private int rateCount;
 }

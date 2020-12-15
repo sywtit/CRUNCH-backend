@@ -33,12 +33,23 @@ public class RatingLikeController {
     private RatingLikeService service;
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/rating")
+    @PostMapping("/addRating")
     @ResponseStatus(value = HttpStatus.OK)
-    public void addRating(@RequestHeader(value = "token") String token, @RequestBody RatingDTO ratingDTO) {
+    public boolean addRating(@RequestHeader(value = "token") String token, @RequestBody RatingDTO ratingDTO) {
 
         int userId = jwtUtil.getUserId(token);
-        service.addrating(userId, ratingDTO);
+        return service.addrating(userId, ratingDTO);
+
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/getAvgRating")
+    @ResponseStatus(value = HttpStatus.OK)
+    public double getRating(@RequestHeader(value = "token") String token,
+            @RequestBody ProjectIndexUserDTO pIndexUserDTO) {
+
+        int userId = jwtUtil.getUserId(token);
+        return service.getRatingOfProjectIdAndIndexId(pIndexUserDTO.getProjectId(), pIndexUserDTO.getPostIndex());
 
     }
 }
