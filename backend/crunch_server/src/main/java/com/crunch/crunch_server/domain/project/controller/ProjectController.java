@@ -13,11 +13,13 @@ import com.crunch.crunch_server.domain.project.dto.CompletedPostListDTO;
 import com.crunch.crunch_server.domain.project.dto.GenreDTO;
 import com.crunch.crunch_server.domain.project.dto.MyWritingDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectIdDTO;
+import com.crunch.crunch_server.domain.project.dto.ProjectIndexUserDTO;
 import com.crunch.crunch_server.domain.project.dto.ProjectStartDTO;
 import com.crunch.crunch_server.domain.project.dto.RecruitingProjectListDTO;
 import com.crunch.crunch_server.domain.project.dto.SetIndexFeeDTO;
 import com.crunch.crunch_server.domain.project.dto.TmpDTO;
 import com.crunch.crunch_server.domain.project.entity.PostIndex;
+import com.crunch.crunch_server.domain.project.repository.PostIndexRepository;
 import com.crunch.crunch_server.domain.project.repository.ProjectRepository;
 import com.crunch.crunch_server.domain.project.service.*;
 import com.crunch.crunch_server.util.JwtUtil;
@@ -51,6 +53,9 @@ public class ProjectController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private PostIndexRepository postIndexRepository;
 
     @CrossOrigin(origins = "*")
     @PostMapping("/project/startup")
@@ -120,6 +125,21 @@ public class ProjectController {
         int userId = jwtUtil.getUserId(token);
 
         return repository.findById(projectIdDTO.getId()).getTitle();
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/getSubtitle")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String getSubtitle(@RequestHeader(value = "token") String token,
+            @RequestBody ProjectIndexUserDTO projectIndexUserDTO) {
+
+        int userId = jwtUtil.getUserId(token);
+
+        String subtitle = postIndexRepository.findByPostIndexIdentityIdAndPostIndexIdentityProjectId(
+                projectIndexUserDTO.getPostIndex(), projectIndexUserDTO.getProjectId()).getTitle();
+        System.out.println("@@@@@@@@");
+        System.out.println(subtitle);
+        return subtitle;
     }
 
     @CrossOrigin(origins = "*")
