@@ -45,17 +45,17 @@ public class ChatController {
       //have to save all
       chatService.saveChat(roomId, chatMessage);
       
-      //have to check tag name and save in notice
-      //before that send just check message to specific user
-      List<TagNameDTO> tagNames = chatMessage.getTagName();
-      String senderName = chatMessage.getUserName();
-      System.out.println("==========="+senderName+"============");
+      // //have to check tag name and save in notice
+      // //before that send just check message to specific user
+      // List<TagNameDTO> tagNames = chatMessage.getTagName();
+      // String senderName = chatMessage.getUserName();
+      // System.out.println("==========="+senderName+"============");
 
-      for(int i =0; i<tagNames.size(); i++){
-        String username = tagNames.get(i).getName();
-        System.out.println("==============="+username+"==========");
-        messageTemplate.convertAndSendToUser(username, "/queue", senderName+"tag you" +username);
-      }
+      // for(int i =0; i<tagNames.size(); i++){
+      //   String username = tagNames.get(i).getName();
+      //   System.out.println("==============="+username+"==========");
+      //   messageTemplate.convertAndSendToUser(username, "/queue", senderName+"tag you" +username);
+      // }
 
     }
 

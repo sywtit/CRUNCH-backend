@@ -1,16 +1,17 @@
-package com.crunch.crunch_server.authentication.dto;
+// package com.crunch.crunch_server.authentication.dto;
 
-import java.security.Principal;
+// // import java.security.Principal;
+// //implements Principal
+// //final class User
+// public class User{
+//     private final String username;
 
-public final class User implements Principal{
-    private final String username;
+//     public User(String username) {
+//         this.username = username;
+//     }
 
-    public User(String username) {
-        this.username = username;
-    }
-
-    @Override
-    public String getName() {
-        return username;
-    }
-}
+//     @Override
+//     public String getName() {
+//         return username;
+//     }
+// }

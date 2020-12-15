@@ -2,8 +2,6 @@ package com.crunch.crunch_server.configuration;
 
 import java.util.List;
 
-import com.crunch.crunch_server.authentication.UserInterceptor;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.MessageConverter;
@@ -25,9 +23,11 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer{
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/channel", "/queue");
+        config.enableSimpleBroker("/channel");
         config.setApplicationDestinationPrefixes("/app");
-        config.setUserDestinationPrefix("/user");
+        // config.setUserDestinationPrefix("/user");
+        //        config.enableSimpleBroker("/channel", "/queue");
+
     }
 
     //stomp websocket connection endpoint
@@ -38,10 +38,10 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer{
                 .withSockJS();
     }
 
-    @Override
-     public void configureClientInboundChannel(ChannelRegistration registration) {
-    registration.setInterceptors(new UserInterceptor());
-}
+//     @Override
+//      public void configureClientInboundChannel(ChannelRegistration registration) {
+//     registration.setInterceptors(new UserInterceptor());
+// }
 
 
 }
