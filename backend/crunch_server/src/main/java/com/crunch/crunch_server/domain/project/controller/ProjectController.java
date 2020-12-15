@@ -94,8 +94,7 @@ public class ProjectController {
         String rootPath = System.getProperty("user.dir");
 
         System.out.println("현재 프로젝트의 경로 : " + rootPath);
-
-        String frontHomePath = "C:\\Users\\valer\\crunch_git\\1210\\front_now\\";
+        String frontHomePath = "C:\\Users\\kim\\capston_design\\Crunch\\HAISHEN-project\\";
         String frontPath = "frontend\\src\\assets\\img\\projectBanner\\";
 
         System.out.println("~@~@~@~@~@~@~@~@~@~@~@~@");

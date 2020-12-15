@@ -24,6 +24,7 @@ public interface PostIndexRepository extends JpaRepository<PostIndex, PostIndexI
 
 	List<PostIndex> findByPostIndexIdentityProjectId(int intValue);
 
+
 	// @Modifying
 	// @Query(value = "INSERT INTO postindex (id, projectId, title) SELECT
 	// :projectId, :indexId, :title", nativeQuery = true)
