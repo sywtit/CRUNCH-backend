@@ -123,6 +123,17 @@ public class ProjectController {
     }
 
     @CrossOrigin(origins = "*")
+    @PostMapping("/getWriterListOfBasicCollaboTool")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<WriterListDTO> getWriterListOfBasicCollaboTool(@RequestHeader(value = "token") String token,
+            @RequestBody ProjectIdDTO projectIdDTO) {
+
+        int userId = jwtUtil.getUserId(token);
+
+        return service.getWritersList(projectIdDTO.getId());
+    }
+
+    @CrossOrigin(origins = "*")
     @PostMapping("/collaboProj")
     @ResponseStatus(value = HttpStatus.OK)
     public ProjectStartDTO getRecruitingCollaboProj(@RequestHeader(value = "token") String token,
