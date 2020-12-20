@@ -9,6 +9,7 @@ import com.crunch.crunch_server.domain.crew.repository.WriterCrewRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ChatRoomService {
@@ -19,7 +20,6 @@ public class ChatRoomService {
     @Autowired
     private WriterCrewRepository writerCrewRepository;
 
-    
     public void makeSaveCommunity(int projectId, int indexId)
     {
             Community community = new Community();

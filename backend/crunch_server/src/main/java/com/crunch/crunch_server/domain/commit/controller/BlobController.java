@@ -24,7 +24,6 @@ public class BlobController {
 
     @Autowired
     private BlobService service;
-    private RecentCommitDTO recentCommitDTO;
 
     @Autowired
     private PostService postService;
@@ -50,7 +49,7 @@ public class BlobController {
             }
             else if(!checkNewPost && !checkModifying)
             {
-                recentCommitDTO = service.getRecentCommitInfo(postId);
+                RecentCommitDTO recentCommitDTO = service.getRecentCommitInfo(postId);
                 return service.getProjectBlob(recentCommitDTO);
             }
             else if(checkNewPost && checkModifying)
@@ -59,7 +58,7 @@ public class BlobController {
             }
             else
             {
-                recentCommitDTO = service.getRecentCommitInfo(postId);
+                RecentCommitDTO recentCommitDTO = service.getRecentCommitInfo(postId);
                 return service.getProjectBlobWhenNotNewPostAndModifyingNow(recentCommitDTO, postId);
             }
         

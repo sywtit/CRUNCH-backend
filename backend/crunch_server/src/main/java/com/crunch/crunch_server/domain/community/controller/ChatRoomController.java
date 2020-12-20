@@ -20,10 +20,11 @@ public class ChatRoomController {
     //make chat romm(community)
     @CrossOrigin(origins="*")
     @GetMapping("/{projectId}/index/{indexId}/makeChatRoom")
-    public void makeChatCommunity(@PathVariable int projectId, @PathVariable int indexId)
+    public void makeChatCommunity(@PathVariable(value="projectId") int projectId, @PathVariable(value="indexId") int indexId)
     {
         chatRoomService.makeSaveCommunity(projectId, indexId);
     }
+
 
     // //when get in the chatroom
     // //give room id
