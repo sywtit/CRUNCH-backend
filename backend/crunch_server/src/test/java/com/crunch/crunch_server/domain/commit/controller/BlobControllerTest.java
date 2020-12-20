@@ -1,10 +1,12 @@
-package com.crunch.crunch_server.domain.community.controller;
+package com.crunch.crunch_server.domain.commit.controller;
+
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.hamcrest.Matchers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -31,34 +33,20 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-import com.crunch.crunch_server.domain.community.dto.FirstCommunityBlobDTO;
-import com.crunch.crunch_server.domain.community.entity.Community;
-import com.crunch.crunch_server.domain.community.repository.ChatRepository;
-import com.crunch.crunch_server.domain.community.repository.ChatRoomRepository;
-import com.crunch.crunch_server.domain.community.service.ChatRoomService;
 
 @RunWith(SpringRunner.class) 
 @AutoConfigureMockMvc
 @SpringBootTest
 @Transactional
-public class ChatRoomControllerTest {
-    
-     
+public class BlobControllerTest {
+
     @Autowired
     private MockMvc mvc;
 
     @Autowired
-    private ChatRoomRepository chatRoomRepository;
-    
-    @Autowired
-    private ChatRepository chatRepository;
-
-    @Autowired
     private WebApplicationContext wac;
-
-    // @MockBean
-    // private ChatRoomService chatRoomService;
 
     @Before
     public void setup(){
@@ -66,39 +54,22 @@ public class ChatRoomControllerTest {
                 .webAppContextSetup(wac)
                 .alwaysDo(print())
                 .build();
-    
     }
 
     
     @Test
-    public void makeChatCommunity() throws Exception{
+    public void showFirstPost() throws Exception{
 
         //setup fixture
-        int projectId = 244;
-        int indexId = 4;
+        int projectId = 249;
 
         mvc.perform(
-            MockMvcRequestBuilders.get("/api/project/244/index/4/makeChatRoom"))
-            .andExpect(status().isOk());
-        
-            //check if server save new community
-            //verify Outcome
-            Community actualCommunity = chatRoomRepository.findByProjectIdAndPostindexId(projectId, indexId);
-            Community expectedCommunity = new Community();
-            expectedCommunity.setProjectId(projectId);
-            expectedCommunity.setPostindexId(indexId);
-
-            assertCommunityEquals(actualCommunity, expectedCommunity);
-            
+            MockMvcRequestBuilders.get("/api/project/249/blob/basicTool/1"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0]").doesNotExist())
+            .andExpect(jsonPath("$[0].post").doesNotExist())
+            .andExpect(jsonPath("$[0].postDetailList").doesNotExist());
             
     }
-
-    private void assertCommunityEquals(Community actualCommunity, Community expectedCommunity) {
-
-        assertNotNull("community is null", actualCommunity);
-        assertTrue(actualCommunity.getProjectId() == expectedCommunity.getProjectId());
-        assertTrue(actualCommunity.getPostindexId() == expectedCommunity.getPostindexId());
-    }
-
 
 }
