@@ -20,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.web.JsonPath;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,18 +33,28 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.crunch.crunch_server.domain.commit.dto.ModifyDTO;
+import com.crunch.crunch_server.domain.commit.dto.ModifyTestDTO;
+import com.crunch.crunch_server.domain.commit.entity.Commits;
+import com.crunch.crunch_server.domain.commit.repository.ModifyCommitRepoistory;
 import com.crunch.crunch_server.domain.project.entity.Posts;
 import com.crunch.crunch_server.domain.project.repository.PostRepository;
+import com.crunch.crunch_server.domain.project.service.PostService;
 import com.crunch.crunch_server.domain.user.dto.SessionRequestDTO;
 import com.crunch.crunch_server.domain.user.service.UserService;
 import com.crunch.crunch_server.util.JwtUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -70,11 +81,41 @@ public class ModifyControllerTest {
     private PostRepository postRepository;
 
     @Autowired
+    private PostService postService;
+
+    @Autowired
+    private ModifyCommitRepoistory modifyCommitRepository;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
+    private SessionRequestDTO session;
+    private ModifyDTO modifyDTO;
+
+    private String now = "2020-12-22 12:13";
+    private LocalDateTime defaultCurrentTime1;
+    
     @Before
-    public void setup() {
+    public void setup() throws Exception{
         mvc = MockMvcBuilders.webAppContextSetup(wac).alwaysDo(print()).build();
+
+        session = new SessionRequestDTO();
+        session.setIdentity("hello");
+        session.setPassword("1234");
+
+        firstModifyDTO();
+
+        mapper = new ObjectMapper();
+
+    }
+
+    private void firstModifyDTO() {
+        modifyDTO = new ModifyDTO();
+        modifyDTO.setAfter("<p>first paragraph</p>\n");
+        modifyDTO.setCommit_comment("first commit"); 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        defaultCurrentTime1 = LocalDateTime.parse(now, formatter);
+        modifyDTO.setTime(defaultCurrentTime1);
     }
 
     @Test
@@ -86,10 +127,6 @@ public class ModifyControllerTest {
         Map<String, Object> tmpnull = new HashMap<String, Object>();
         tmpnull.put("tmp", "nothing");
 
-        System.out.println("for just check");
-        SessionRequestDTO session = new SessionRequestDTO();
-        session.setIdentity("hello");
-        session.setPassword("1234");
         String token = userService.createToken(session);
 
         mvc.perform(MockMvcRequestBuilders.post("/api/project/249/pressModifyButton/2").contentType(MediaType.ALL)
@@ -106,7 +143,6 @@ public class ModifyControllerTest {
 
         // cleaning up fixture
         deleteObject(tmpnull);
-        deleteObject(session);
     }
 
     @Test
@@ -119,9 +155,6 @@ public class ModifyControllerTest {
         tmpnull.put("tmp", "nothing");
 
         System.out.println("for just check");
-        SessionRequestDTO session = new SessionRequestDTO();
-        session.setIdentity("hello");
-        session.setPassword("1234");
         String token = userService.createToken(session);
 
         mvc.perform(MockMvcRequestBuilders.post("/api/project/249/pressModifyCancelButton/2").contentType(MediaType.ALL)
@@ -137,10 +170,46 @@ public class ModifyControllerTest {
 
         // cleaning up fixture
         deleteObject(tmpnull);
-        deleteObject(session);
     }
 
-     
+    
+    @Test
+    public void modifyFunctionCheck() throws Exception {
+
+        // setup fixture
+        int projectId = 249;
+        int indexId = 2;
+
+        System.out.println("for just check");
+        String token = userService.createToken(session);
+      
+        ModifyTestDTO modifyTestDTO1 = new ModifyTestDTO("<p>first paragraph</p>", now, "first commit");
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/project/249/modify/basicTool/2")
+                .accept(MediaType.MULTIPART_FORM_DATA_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(toJsonModifyString(modifyTestDTO1))
+                .header("token", token)
+                .with(csrf())
+                ).andExpect(status().isOk());
+
+        // verify Outcome
+        int postId = postService.getPostID(projectId, indexId);
+        Commits actualCommits = modifyCommitRepository.findByPostIdAndGetNew(postId);
+        assertCommitsUpdateProperly(actualCommits);
+
+        // cleaning up fixture
+        // nothing to clean up
+    
+    }
+
+
+    private void assertCommitsUpdateProperly(Commits actualCommits) {
+        assertNotNull("commit is null", actualCommits);
+        assertEquals(actualCommits.getCommit_comment(), modifyDTO.getCommit_comment());
+        assertEquals(actualCommits.getPost(), modifyDTO.getAfter());
+        assertEquals(actualCommits.getTime(), modifyDTO.getTime());
+    }
 
     private void assertPostsModifyingStatusInitialize(Posts actualPosts) {
         assertNotNull("post is null", actualPosts);
@@ -182,6 +251,10 @@ public class ModifyControllerTest {
         }
         
         return jsonObject.toString();
+    }
+
+    private String toJsonModifyString(ModifyTestDTO dto) throws JsonProcessingException {
+        return mapper.writeValueAsString(dto);
     }
 
     private void deleteObject(Object ob) {
