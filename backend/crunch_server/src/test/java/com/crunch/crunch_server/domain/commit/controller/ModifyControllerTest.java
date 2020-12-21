@@ -109,6 +109,45 @@ public class ModifyControllerTest {
         deleteObject(session);
     }
 
+    @Test
+    public void whenPressModifyCancelButton() throws Exception {
+
+        // setup fixture
+        int projectId = 249;
+        int indexId = 2;
+        Map<String, Object> tmpnull = new HashMap<String, Object>();
+        tmpnull.put("tmp", "nothing");
+
+        System.out.println("for just check");
+        SessionRequestDTO session = new SessionRequestDTO();
+        session.setIdentity("hello");
+        session.setPassword("1234");
+        String token = userService.createToken(session);
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/project/249/pressModifyCancelButton/2").contentType(MediaType.ALL)
+                .accept(MediaType.APPLICATION_JSON_UTF8).contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(toJsonStringWithMap(tmpnull))
+                .header("token", token)
+                .with(csrf())
+                ).andExpect(status().isOk());
+
+        // verify Outcome
+        Posts actualPosts = postRepository.findByProjectIdAndIndexId(projectId, indexId);
+        assertPostsModifyingStatusInitialize(actualPosts);
+
+        // cleaning up fixture
+        deleteObject(tmpnull);
+        deleteObject(session);
+    }
+
+     
+
+    private void assertPostsModifyingStatusInitialize(Posts actualPosts) {
+        assertNotNull("post is null", actualPosts);
+        noWriterModifyingNow(actualPosts);
+        noWriterIdModifyingNow(actualPosts);
+    }
+
     private void assertPostsModifyingStatusUpdate(Posts actualPosts, int userId) {
 
         assertNotNull("post is null", actualPosts);
@@ -122,6 +161,15 @@ public class ModifyControllerTest {
 
     private void SomeWriterModifyingNow(Posts actualPosts) {
         assertTrue(actualPosts.getModifying() == 1);
+    }
+
+    private void noWriterIdModifyingNow(Posts actualPosts) {
+        assertTrue(actualPosts.getModifyingUserId() == -1);
+    }
+
+
+    private void noWriterModifyingNow(Posts actualPosts) {
+        assertTrue(actualPosts.getModifying() == 0);
     }
 
     private String toJsonStringWithMap(Map<String, Object> dto) throws JsonProcessingException, JSONException {
@@ -141,14 +189,4 @@ public class ModifyControllerTest {
     }
 
 
-    // @CrossOrigin(origins = "*")
-    // @PostMapping("/{projectId}/pressModifyCancelButton/{indexId}")
-    // @ResponseStatus(value = HttpStatus.OK)
-    // public void checkAccessCancel(@RequestHeader(value = "token") String token, @PathVariable int projectId,
-    //         @PathVariable int indexId, @RequestBody Map<String, Object> requestString) throws JsonParseException {
-    //     int postId = postService.getPostID(projectId, indexId);
-
-    //     modifyService.cancelModifying(token, postId);
-
-    // }
 }
