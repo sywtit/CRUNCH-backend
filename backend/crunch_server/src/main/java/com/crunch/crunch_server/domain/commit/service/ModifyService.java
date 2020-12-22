@@ -279,7 +279,7 @@ public class ModifyService {
         return postModification;
     }
 
-    private void savePostLineDetail(int userId, int postId, PostModification postModification) {
+    public void savePostLineDetail(int userId, int postId, PostModification postModification) {
         String diffResult = postModification.getDiffResult();
         String[] lengthShowLine = diffResult.split("\n");
         int realLineCount = 0;

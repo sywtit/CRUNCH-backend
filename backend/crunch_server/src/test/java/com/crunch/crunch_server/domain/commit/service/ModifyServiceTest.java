@@ -3,9 +3,15 @@ package com.crunch.crunch_server.domain.commit.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import com.crunch.crunch_server.diff.DiffProvider;
 import com.crunch.crunch_server.domain.commit.entity.Commits;
@@ -16,6 +22,7 @@ import com.crunch.crunch_server.domain.commit.repository.ModifyCommitRepoistory;
 import com.crunch.crunch_server.domain.commit.repository.ModifyPostModificationRepository;
 import com.crunch.crunch_server.domain.project.repository.PostRepository;
 import com.crunch.crunch_server.domain.project.service.PostService;
+import com.crunch.crunch_server.domain.user.entity.User;
 import com.crunch.crunch_server.domain.user.respository.UserRepository;
 import com.crunch.crunch_server.util.JwtUtil;
 
@@ -52,6 +59,8 @@ public class ModifyServiceTest {
       private CommitDetailRepository commitDetailRepository;
  
 
+      private PostModification newPostModification;
+      
       @Test
       public void getDiffResult() throws Exception {
           //setup fixture
@@ -63,7 +72,7 @@ public class ModifyServiceTest {
           Commits newCommit  = new Commits(1,1,1,"let's start",currentTime, "",after);
           
           //verify outcome
-          PostModification newPostModification = modifyService.getPostModificationEntity(after, before, newCommit);
+          newPostModification = modifyService.getPostModificationEntity(after, before, newCommit);
           String expectedDiffResult = DiffProvider.getDiffStr(before, after, "Diff");
           assertTrue(newPostModification.getAfterPostLength() == 2);
           assertTrue(newPostModification.getBeforePostLength() == 1);
@@ -73,6 +82,32 @@ public class ModifyServiceTest {
           deleteObject(newCommit);
 
       }
+
+      @Test
+      public void checkPostLineDetail() throws Exception {
+          //setup fixture
+          String before = "<p>hello everyone</p>\n";
+          String after = "<p>hi everyone</p>\n";
+          String timeNow = "2020-12-22 12:33";
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+          LocalDateTime currentTime = LocalDateTime.parse(timeNow, formatter);
+          Commits newCommit  = new Commits(1,1,6,"let's start",currentTime, "",after);
+          
+          //verify outcome
+          when(userRepository.findByIdNumber(6))
+          .thenReturn(new User(1,"hello", "1234", "sooyoung","star","female","","itDeveloper",0,"123"));
+    
+          newPostModification = modifyService.getPostModificationEntity(after, before, newCommit);
+          modifyService.savePostLineDetail(6,1,newPostModification);
+        
+          verify(commitDetailRepository, times(1)).save(argThat(new IsPostLineDetailWillBeInserted()));
+        
+          //cleaning up fixture
+          deleteObject(newCommit);
+
+      }
+
+
 
       private void deleteObject(Object ob) {
         ob = null;
