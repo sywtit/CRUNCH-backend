@@ -264,7 +264,7 @@ public class ModifyService {
 
     }
 
-    private PostModification getPostModificationEntity(String after, String before, Commits commitRevertVersion) throws Exception {
+    public PostModification getPostModificationEntity(String after, String before, Commits commitRevertVersion) throws Exception {
         String diffResult = DiffProvider.getDiffStr(before, after, "Diff");
 
         String[] lengthShowLine = diffResult.split("\n");
