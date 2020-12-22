@@ -180,7 +180,6 @@ public class ModifyControllerTest {
         int projectId = 249;
         int indexId = 2;
 
-        System.out.println("for just check");
         String token = userService.createToken(session);
       
         ModifyTestDTO modifyTestDTO1 = new ModifyTestDTO("<p>first paragraph</p>", now, "first commit");

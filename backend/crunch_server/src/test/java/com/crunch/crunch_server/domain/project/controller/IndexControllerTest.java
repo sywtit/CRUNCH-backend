@@ -82,7 +82,7 @@ public class IndexControllerTest {
 
         //setup fixture
         int projectId = 249;
-        int indexId = 3;
+        int indexId = 5;
         IndexEditDTO dto = new IndexEditDTO(indexId, projectId, "test");
         SessionRequestDTO session = new SessionRequestDTO();
         session.setIdentity("hello");
@@ -103,7 +103,7 @@ public class IndexControllerTest {
             //verify Outcome
             Posts actualPosts = postRepository.findByProjectIdAndIndexId(projectId, indexId);
             Posts expectedPosts = new Posts();
-            expectedPosts.setIndex_id(3);
+            expectedPosts.setIndex_id(5);
             expectedPosts.setProject_id(249);
 
             assertPostsEquals(actualPosts, expectedPosts);
