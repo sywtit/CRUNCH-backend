@@ -264,7 +264,7 @@ public class ModifyService {
 
     }
 
-    private PostModification getPostModificationEntity(String after, String before, Commits commitRevertVersion) throws Exception {
+    public PostModification getPostModificationEntity(String after, String before, Commits commitRevertVersion) throws Exception {
         String diffResult = DiffProvider.getDiffStr(before, after, "Diff");
 
         String[] lengthShowLine = diffResult.split("\n");
@@ -279,7 +279,7 @@ public class ModifyService {
         return postModification;
     }
 
-    private void savePostLineDetail(int userId, int postId, PostModification postModification) {
+    public void savePostLineDetail(int userId, int postId, PostModification postModification) {
         String diffResult = postModification.getDiffResult();
         String[] lengthShowLine = diffResult.split("\n");
         int realLineCount = 0;

@@ -116,6 +116,8 @@ dependencies {
 
 	testCompile group: 'org.springframework.security', name: 'spring-security-test', version: '5.3.5.RELEASE'
 
+	//junit mokito
+	testImplementation 'org.mockito:mockito-junit-jupiter'
 
 }
 
