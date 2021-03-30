@@ -37,34 +37,33 @@ CRUNCH는 이러한 트렌드에 맞춘 글쓰기 플랫폼이다. CRUNCH는 타
 
 **공동 글쓰기 페이지** - 여러 작가들이 함께 글을 쓸 수 있는 글쓰기 환경. 글을 목차별로 편집할 수 있고, 수정 내역을 작가별로 저장할 수 있다.
 
-<center><img src = "https://user-images.githubusercontent.com/52434154/112961179-16d79280-9180-11eb-9cab-74ba47fec016.png"></center>
+<p align="center"><img src = "https://user-images.githubusercontent.com/52434154/112961179-16d79280-9180-11eb-9cab-74ba47fec016.png"></p>
 
 
 **히스토리 확인 페이지** - 저장된 수정내역을 확인하고 되돌리기를 할 수 있다. 공동 작업물 관리를 편리하게 한다.
 
-<center><img src = "https://user-images.githubusercontent.com/52434154/112961324-3b336f00-9180-11eb-93e9-9ef1536fd8fd.png"></center>
+<p align="center"><img src = "https://user-images.githubusercontent.com/52434154/112961324-3b336f00-9180-11eb-93e9-9ef1536fd8fd.png"></p>
 
 **공동 프로젝트 커뮤니티** - 프로젝트에 참여하는 작가들이 소통할 수 있는 채팅 서비스. 목차별로 나눠진 대화방에서 프로젝트에 관한 대화를 나눌 수 있다. 
 
-<center><img src = "https://user-images.githubusercontent.com/52434154/112957143-1d640b00-917c-11eb-90e9-f4a5b56d68f5.png"></center>
+<p align="center"><img src = "https://user-images.githubusercontent.com/52434154/112957143-1d640b00-917c-11eb-90e9-f4a5b56d68f5.png"></p>
 
 **컨텐츠 열람 페이지** - 독자가 컨텐츠를 열람할 수 있는 페이지. 유료 컨텐츠 열람시에는 포인트가 차감된다. 구독, 댓글, 좋아요 등이 있다.
 
-<center><img src = "https://user-images.githubusercontent.com/52434154/112961895-c3b20f80-9180-11eb-98c4-342282cd272f.png"></center>
+<p align="center"><img src = "https://user-images.githubusercontent.com/52434154/112961895-c3b20f80-9180-11eb-98c4-342282cd272f.png"></p>
 
 **포인트 결제 페이지** - Crunch 플랫폼에서 유료 컨텐츠 구매 혹은 펀딩을 위해 사용하는 포인트를 충전할 수 있는 결제 페이지. I’mport를 활용하여 구현하였다. 
 
-![f4](https://user-images.githubusercontent.com/52434154/112962282-2c998780-9181-11eb-937d-103964eed490.png)
+<p align="center"><img src = "https://user-images.githubusercontent.com/52434154/112962282-2c998780-9181-11eb-937d-103964eed490.png"></p>
+
 
 **수익 정산 내역 확인** - 자신이 참여한 프로젝트의 목차별 포스트들로 발생한 유료 수익을 확인할 수 있는 페이지. 
 
-![image](https://user-images.githubusercontent.com/52434154/112957420-60be7980-917c-11eb-94f9-3f54b7e70f2e.png)
-![image](https://user-images.githubusercontent.com/52434154/112957447-687e1e00-917c-11eb-8aeb-8ddb24ae04b6.png)
+<p align="center"><img src = "https://user-images.githubusercontent.com/52434154/112963595-7d5db000-9182-11eb-95ea-b3b3fb22db1b.png"></p>
 
 **이외의 기능** 
 
 프로젝트 모집하기, 지원/채택하기, 프로젝트 사전 펀딩하기, eBook 다운받기
-
 
 ### 결과 및 분석
 -----
